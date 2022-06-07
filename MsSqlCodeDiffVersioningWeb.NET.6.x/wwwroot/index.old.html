@@ -1,0 +1,472 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>MS SQL Code Diff Verioning</title>
+
+    <script src="libs/knockout/knockout-3.5.1.debug.js" type="text/javascript"></script>
+    <script src="libs/jquery/jquery-3.5.1.js" type="text/javascript"></script>
+    
+    <link rel="stylesheet" href="libs/jquery-ui/jquery-ui-1.12.1.css">
+    <script src="libs/jquery-ui/jquery-ui-1.12.1.js"></script>
+
+    <link href="libs/driver.js/driver.min.css" rel="stylesheet" />
+    <script src="libs/driver.js/driver.min.js"></script>
+
+    <script src="libs/splitjs/split.js"></script>
+    
+    <script src="libs/monaco-editor/min/vs/loader.js"></script>
+
+    <style type="text/css">
+        body {
+            font-size: 12px;
+            font-family: Sans-Serif;
+        }
+
+        h2 {
+            margin: 0.5em 0 0.1em;
+            text-align: center;
+        }
+
+        .top {
+            text-align: center;
+        }
+
+        .textInput {
+            display: block;
+            width: 49%;
+            float: left;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+        }
+
+        label:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .spacer {
+            margin-left: 10px;
+        }
+
+        .viewType {
+            font-size: 16px;
+            clear: both;
+            text-align: center;
+            padding: 1em;
+        }
+
+        #diffoutput {
+            width: 100%;
+        }
+    </style>
+    <!--split.js css-->
+    <style>
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            padding: 8px;
+            background-color: #F6F6F6;
+            box-sizing: border-box;
+        }
+
+        .split {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .content {
+            border: 1px solid #C0C0C0;
+            box-shadow: inset 0 1px 2px #e4e4e4;
+            background-color: #fff;
+        }
+
+        .gutter {
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position: 50%;
+        }
+
+        .gutter.gutter-horizontal {
+            cursor: col-resize;
+            /* background-image: url('../grips/vertical.png');*/
+        }
+
+        .gutter.gutter-vertical {
+            cursor: row-resize;
+            /*background-image: url('../grips/horizontal.png');*/
+        }
+
+        .split.split-horizontal,
+        .gutter.gutter-horizontal {
+            height: 100%;
+            float: left;
+        }
+    </style>
+
+    <style type="text/css">
+        #loading {
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            filter: alpha(opacity=60);
+            background-color: #777;
+            z-index: 1002;
+            left: 0px;
+            display: none;
+            opacity: 0.5;
+            /*-moz-opacity: 0.5;*/
+            padding-top: 100px;
+            color: #000000
+        }
+    </style>
+    <link href="styles/taiji.css" rel="stylesheet" />
+    <link href="styles/fan.css" rel="stylesheet" />
+    <link href="styles/text-magic.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+
+        $(document).keyup(function (e) {
+            if (e.key === "Escape") { // escape key maps to keycode `27`
+                // <DO YOUR WORK HERE>
+                $('#loading').hide();
+            }
+        });
+
+        window.jwtToken = "";
+        $(document).ready(function () {
+            $('#loading').hide();
+        });
+        $(function () {
+            $('#datepicker1').datepicker();
+        });
+        var baseUrl = "http://localhost:5000";
+        baseUrl = "";
+        function GetObjectsTexts() {
+            $('#loading').fadeIn();
+            //debugger;
+            var left = -1;
+            if (vm.SelectedItem() != undefined) {
+                left = vm.SelectedItem().ID;
+            } else {
+                $('#loading').fadeOut();
+                return;
+            }
+            var right = -1;
+            if (vm.SelectedDetailItem() != undefined) {
+                right = vm.SelectedDetailItem().ID;
+            } else {
+                right = left;
+            }
+            if (left > right) {
+                left += right;
+                right = left - right;
+                left -= right;
+            }
+            var ids = left + ',' + right;
+            var url = baseUrl + "/api/StoreProcedureExecutor/result/mssql/aaa/ccc/objects?SearchIdsList=" + ids;
+            $.getJSON(
+                url
+                , function (data) {
+                    data = data["Outputs"]["ResultSets"][0]["Rows"];
+                    var x1 = { Name: data[0].ObjectName, Text: data[0].TSQLCommand, TimeStamp: data[0].PostTime };
+                    var x2;
+                    if (data.length <= 1) {
+                        x2 = x1;
+                    }
+                    else {
+                        x2 = { Name: data[1].ObjectName, Text: data[1].TSQLCommand, TimeStamp: data[1].PostTime }
+                    }
+                    diffUsingJS(parseInt(vm.SelectedDiffViewType()),
+                        x1, x2
+                    );
+                    $('#loading').fadeOut();
+                }
+            );
+        }
+    </script>
+</head>
+<body>
+    <div id="loading" align="center">
+
+        <font size="10" color="red"><strong>Loading ...</strong></font>
+        <br>
+        <font size="10" color="red"><strong>press Esc for cancel waiting</strong></font>
+
+        <!--
+            <div class="fan-wrapper">
+                <div class="fan"></div>
+            </div>
+        -->
+        <div class="text-magic" data-word="Loading...">
+            <div class="white"></div>
+        </div>
+
+        <div class="box-taiji">
+        </div>
+    </div>
+        <div>
+            <a href="#" class="btn__run-demo">Show Demo</a>
+        </div>
+        <div>
+            Search Object's Name Contains Text:<input id="search" type="text" />
+            Search Host Name Contains Text:<input id="searchHostName" type="text" />
+            Search DataBase Name Contains Text:<input id="searchDatabaseName" type="text" />
+            Post Time Before:<input id="datepicker1" type="text" />
+            <button id="searching" onclick="GetMasterList()">Search and Append</button>
+            <br />
+            <button onclick="vm.Items.removeAll();vm.Counter = 0;">clear</button>
+            <button data-bind="text: SortByObjectNameDirection"
+                    onclick="vm.SortByObjectName()">
+                SortByObjectName
+            </button>
+            <button data-bind="text: SortByAddSequenceDirection"
+                    onclick="vm.SortByAddSequence()">
+                SortByAddSequence
+            </button>
+            <br />
+        </div>
+                                
+        <div id="up" class="split" style="border: 1px solid black">
+            <!--<label>Master Search Result:</label> <br />-->
+            <select
+                    multiple="multiple"
+                    id="left"
+                    class="split content split-horizontal"
+                    data-bind="options: Items
+                                , optionsText: 'OptionText'
+                                , selectedOptions: SelectedItems">
+            </select>
+            <!--<label>Master Selected Detail :</label>-->
+            <select
+                    multiple="multiple"
+                    id="right"
+                    class="split content split-horizontal"
+                    data-bind="options: DetailItems
+                                , optionsText: 'OptionText'
+                                , selectedOptions: SelectedDetailItems
+                                , optionsAfterRender: SetDetailItemOptionDisable">
+            </select>
+        </div>
+    
+    <div id="down" class="split content">
+        <div class="viewType">
+            Diff View Type:
+            <br />
+            <input type="radio" id="diffViewType0" value="0" data-bind="checked:SelectedDiffViewType" />
+            <label for="diffViewType0" onclick="GetObjectsTexts();">Side</label>
+            <input type="radio" id="diffViewType1" value="1" data-bind="checked:SelectedDiffViewType" />
+            <label for="diffViewType1" onclick="GetObjectsTexts();">Inline</label>
+        </div>
+        <div id="diffoutput">
+            <div id="container" style="width:100%;height:600px;border:1px solid grey"></div>
+        </div>
+    </div>
+
+    <script>
+        Split(['#up', '#down'], {
+            gutterSize: 10,
+            cursor: 'row-resize',
+            direction: 'vertical',
+        });
+        Split(['#left', '#right'], {
+            sizes: [50, 50],
+            gutterSize: 10,
+            cursor: 'col-resize',
+        });
+
+        var driver = new Driver();
+        // Define the steps for introduction
+        driver.defineSteps([
+            {
+                element: '#search',
+                popover: {
+                    className: 'first-step-popover-class',
+                    title: 'Title on Popover',
+                    description: 'Body of the popover',
+                    position: 'bottom'
+                }
+            },
+            {
+                element: '#searchHostName',
+                popover: {
+                    title: 'Title on Popover',
+                    description: 'Body of the popover',
+                    position: 'bottom'
+                }
+            },
+            {
+                element: '#searchDatabaseName',
+                popover: {
+                    title: 'Title on Popover',
+                    description: 'Body of the popover',
+                    position: 'bottom'
+                }
+            },
+            {
+                element: '#datepicker1',
+                popover: {
+                    title: 'Title on Popover',
+                    description: 'Body of the popover',
+                    position: 'bottom'
+                }
+            },
+            {
+                element: '#searching',
+                popover: {
+                    title: 'Title on Popover',
+                    description: 'Body of the popover',
+                    position: 'bottom'
+                }
+            },
+        ]);
+        // Start the introduction
+        driver.start();
+
+        require.config({ paths: { 'vs': 'libs/monaco-editor/min/vs' } });
+        var diffEditor;
+        require(['vs/editor/editor.main'], function () {
+            diffEditor = monaco.editor.createDiffEditor(document.getElementById('container'));
+        });
+        var viewModel = function (data) {
+            var self = this;
+            this.Counter = 0;
+            this.SelectedDiffViewType = ko.observable("0");
+            this.Items = ko.observableArray(data);
+            this.SelectedItems = ko.observableArray([]);
+            this.SelectedItem = ko.computed(function () {
+                return this.SelectedItems()[0];
+            }, this);
+            this.DetailItems = ko.computed(function () {
+                return this.Items().filter(function (x) {
+                    var r = false;
+                    r = self.SelectedItem() != undefined;
+                    if (r) {
+                        var xx = self.SelectedItem();
+                        x.DisableInDetail(x.ID == xx.ID);
+                        r = (x.ObjectName == xx.ObjectName);
+                    }
+                    return r;
+                });
+            }, this);
+            this.SelectedDetailItems = ko.observableArray([]);
+            this.SelectedDetailItem = ko.computed(function () {
+                return this.SelectedDetailItems()[0];
+            }, this);
+            this.SetDetailItemOptionDisable = function (option, item) {
+                ko.applyBindingsToNode(option, { disable: item.DisableInDetail }, item);
+            };
+            this.SortByAddSequenceState = ko.observable(false);
+            this.SortByAddSequenceDirection = ko.computed(function () {
+                var r = "SortByAddSequence ";
+                if (self.SortByAddSequenceState) {
+                    if (self.SortByAddSequenceState()) {
+                        r += " Asc";
+                    } else {
+                        r += " Desc";
+                    }
+                }
+                return r;
+            });
+            this.SortByAddSequence = function () {
+                $('#loading').fadeIn();
+                self.Items.sort(function (x, y) {
+                    var r = x.AddSequence > y.AddSequence ? -1 : 1;
+                    if (self.SortByAddSequenceState()) {
+                        r = -1 * r;
+                    }
+                    return r;
+                });
+                self.SortByAddSequenceState(!self.SortByAddSequenceState());
+                $('#loading').fadeOut();
+            };
+            this.SortByObjectNameState = ko.observable(false);
+            this.SortByObjectNameDirection = ko.computed(function () {
+                var r = "SortByObjectName ";
+                if (self.SortByObjectNameState) {
+                    if (self.SortByObjectNameState()) {
+                        r += " Asc";
+                    } else {
+                        r += " Desc";
+                    }
+                }
+                return r;
+            });
+            this.SortByObjectName = function () {
+                $('#loading').fadeIn();
+                this.Items.sort(
+                    function (x, y) {
+                        var r = (
+                            x.ObjectName == y.ObjectName ?
+                                (x.ID < y.ID ? -1 : 1) :
+                                (x.ObjectName < y.ObjectName ? -1 : 1)
+                        );
+                        if (self.SortByObjectNameState()) {
+                            r = -1 * r;
+                        }
+                        return r;
+                    });
+                self.SortByObjectNameState(!self.SortByObjectNameState());
+                $('#loading').fadeOut();
+            };
+        };
+        var vm = new viewModel([]);
+        ko.applyBindings(vm);
+        function diffUsingJS(viewType, baseObject, newObject) {
+            var originalTxt = baseObject.Text;
+            var modifiedTxt = newObject.Text;
+            diffEditor.updateOptions({
+                renderSideBySide: !viewType,
+                readOnly: true
+            });
+            diffEditor.setModel({
+                original: monaco.editor.createModel(originalTxt, 'sql'),
+                modified: monaco.editor.createModel(modifiedTxt, 'sql')
+            });
+            $('#loading').fadeOut();
+        }
+        function Clear() {
+            vm.Items.removeAll();
+            vm.Counter = 0;
+        }
+        function GetMasterList() {
+            $('#loading').fadeIn();
+            //jsonp cross domain
+            var search = document.getElementById("search").value;
+            var beforeTime = document.getElementById("datepicker1").value;
+            var searchHostName = document.getElementById("searchHostName").value;
+            var searchDatabaseName = document.getElementById("searchDatabaseName").value;
+            var url = baseUrl + "/api/StoreProcedureExecutor/result/mssql/aaa/bbb/objects?searchobjectname=" + search + "&searchhostname=" + searchHostName + "&searchdatabasename=" + searchDatabaseName + "&beforetime=" + beforeTime;
+            $.getJSON(
+                url,
+                function (data) {
+                    $.each(data.Outputs.ResultSets[0].Rows, function (i, item) {
+                        var items = vm.Items();
+                        var found = items.find(function (x) {
+                            return x.ID == item.ID;
+                        });
+                        if (found == undefined) {
+                            item.OptionText = item.ObjectName + '(' + item.ID + ')' + ' @ ' + item.DatabaseName + ' @ ' + item.DatabaseServerName + ' @ ' + item.PostTime + ' By ' + item.HostName;
+                            item.DisableInDetail = ko.observable(false);
+                            item.AddSequence = (++vm.Counter);
+                            vm.Items.push(item);
+                        }
+                    });
+                    $('#loading').fadeOut();
+                });
+        }
+    </script>
+</body>
+</html>

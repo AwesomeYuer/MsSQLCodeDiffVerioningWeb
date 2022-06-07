@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "21.Plugins.RequestJTokenVal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JTokenValidatorSamplePlugin.NET.6.x", "Plugins.RequestJTokenValidators\JTokenValidatorSamplePlugin.NET.6.x\JTokenValidatorSamplePlugin.NET.6.x.csproj", "{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "90.Samples", "90.Samples", "{3025F7B5-651F-4963-825E-5631348F1271}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsSqlCodeDiffVersioningWeb.NET.6.x", "MsSqlCodeDiffVersioningWeb.NET.6.x\MsSqlCodeDiffVersioningWeb.NET.6.x.csproj", "{0AFC5908-5203-416C-B137-C8510EEB0FC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,10 @@ Global
 		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AFC5908-5203-416C-B137-C8510EEB0FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AFC5908-5203-416C-B137-C8510EEB0FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AFC5908-5203-416C-B137-C8510EEB0FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AFC5908-5203-416C-B137-C8510EEB0FC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +79,7 @@ Global
 		{3D732C04-0111-4B54-A462-8D515925C3DC} = {6CA30516-47D9-4B1F-BD8F-0374D9714624}
 		{4A87DDA4-97FF-4873-B184-F73200287B8E} = {6CA30516-47D9-4B1F-BD8F-0374D9714624}
 		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519} = {F29D6A8E-DD43-4AAD-B215-F9A7C8DB59CC}
+		{0AFC5908-5203-416C-B137-C8510EEB0FC8} = {3025F7B5-651F-4963-825E-5631348F1271}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0669E030-A1FE-4EF0-994F-FC8C85086896}
