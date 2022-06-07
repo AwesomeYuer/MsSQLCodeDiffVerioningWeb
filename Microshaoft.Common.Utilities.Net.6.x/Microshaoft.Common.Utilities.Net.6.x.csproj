@@ -28,7 +28,6 @@
     <Compile Remove="Collections\EmptyReadOnlyDictionary.cs" />
     <Compile Remove="ConcurrentDictionary\ConcurrentDictionaryHelper.cs" />
     <Compile Remove="Configuration\ConfigurationAppSettingsHelper.cs" />
-    <Compile Remove="Configuration\ConfigurationExtensions.cs" />
     <Compile Remove="Console\ConsoleTables.cs" />
   </ItemGroup>
 
@@ -44,6 +43,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Composition" Version="6.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.19.0" />
     <PackageReference Include="System.IO.Pipelines" Version="6.0.3" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.18" />
   </ItemGroup>

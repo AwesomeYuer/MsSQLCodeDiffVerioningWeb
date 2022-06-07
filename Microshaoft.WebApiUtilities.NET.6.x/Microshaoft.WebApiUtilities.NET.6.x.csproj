@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -11,6 +11,10 @@
     <Compile Remove="Web.Cors\**" />
     <EmbeddedResource Remove="Web.Cors\**" />
     <None Remove="Web.Cors\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="MEF.Composition\MEFHelper.NET.Core.Standard.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +32,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
+    <ProjectReference Include="..\Microshaoft.Json.NET.6.x\Microshaoft.Json.NET.6.x.csproj" />
+    <ProjectReference Include="..\Microshaoft.StoreProceduresExecutors.NET.6.x\Microshaoft.StoreProceduresExecutors.NET.6.x.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="MEF.Composition\" />
   </ItemGroup>
 
 </Project>

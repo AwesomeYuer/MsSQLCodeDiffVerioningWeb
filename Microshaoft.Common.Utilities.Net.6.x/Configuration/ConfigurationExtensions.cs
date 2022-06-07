@@ -3,16 +3,16 @@
     using Microsoft.Extensions.Configuration;
     public static class ConfigurationExtensions
     {
-      public static bool TryGetSection
-                    (
-                        this IConfiguration @this
-                        , string sectionKey
-                        , out IConfigurationSection section
-                    )
+        public static bool TryGetSection
+                      (
+                          this IConfiguration @this
+                          , string sectionKey
+                          , out IConfigurationSection section
+                      )
         {
             if (sectionKey == null)
             {
-                section = (IConfigurationSection) @this;
+                section = (IConfigurationSection)@this;
             }
             else
             {
@@ -25,7 +25,7 @@
             var r = section.Exists();
             if (!r)
             {
-                section = null;
+                section = null!;
             }
             return r;
         }
@@ -34,7 +34,7 @@
                             (
                                 this IConfiguration @this
                                 , string sectionKey
-                                , T defaultValue = default
+                                , T defaultValue = default!
                             )
         {
             T r = defaultValue;
@@ -50,28 +50,7 @@
             }
             return r;
         }
-        public static bool Get<T>
-                        (
-                            this IConfigurationSection @this
-                            , string sectionKey
-                            , out T sectionValue
-                        )
-        {
-            var @return = false;
-            var t = typeof(T);
-            if (t == typeof(bool))
-            {
 
-
-            }
-            else if (t == typeof(string))
-            { 
-            
-            }
-
-
-            return @return;
-        }
 
         public static bool TryGet<T>
                         (
@@ -89,13 +68,14 @@
             if (r)
             {
                 r = false;
-                sectionValue = configuration
-                                        .Get<T>();
+                    sectionValue = default!;
+                //sectionValue = configuration
+                //                        .Get<T>();
                 r = true;
             }
             else
             {
-                sectionValue = default;
+                sectionValue = default!;
             }
             return r;
         }
