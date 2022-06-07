@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Microshaoft.WebApiUtilities.NET._6.x</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Web.Cors\**" />
+    <EmbeddedResource Remove="Web.Cors\**" />
+    <None Remove="Web.Cors\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Web.Cors\WildCardCorsService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    
+    <PackageReference Include="Microsoft.AspNetCore.ConcurrencyLimiter" Version="6.0.5" />
+    
+    <PackageReference Include="System.Composition" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Microshaoft.Json.NET._6.x</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Json\DynamicJson\DynamicJson.00.cs" />
+    <Compile Remove="Json\DynamicJson\DynamicJson.01.cs" />
+    <Compile Remove="Json\KeyValueNode.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Json\DynamicJson\" />
+  </ItemGroup>
+
+</Project>

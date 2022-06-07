@@ -1,0 +1,57 @@
+﻿namespace Microshaoft
+{
+    using System;
+    using System.Collections.Concurrent;
+    using System.Linq;
+    using System.Reflection;
+    using System.Xml.Serialization;
+    /// <summary>
+    /// 类型序列化器缓存
+    /// </summary>
+    public static class XmlSerializersCache
+    {
+        private static ConcurrentDictionary<string, XmlSerializer> _data =
+                            new ConcurrentDictionary<string, XmlSerializer>();
+        public static XmlSerializer GetXmlSerializer(Type type)
+        {
+            XmlSerializer serializer;
+            string? fullName = type.FullName;
+            if (!Data.TryGetValue(fullName!, out serializer!))
+            {
+                serializer = new XmlSerializer(type);
+                Data.TryAdd(fullName!, serializer);
+            }
+            return serializer; // serializer;
+        }
+        public static XmlSerializer GetXmlSerializer(string typeFullName)
+        {
+            var type = Type.GetType(typeFullName);
+            return GetXmlSerializer(type!);
+        }
+        public static ConcurrentDictionary<string, XmlSerializer> Data
+        {
+            get { return _data; }
+        }
+        public static void Load(Func<Type, Assembly, bool> predicateFunc)
+        {
+            var types = AssemblyHelper
+                            .GetAssembliesTypes
+                                (
+                                    (x, y) =>
+                                    {
+                                        return predicateFunc(x, y);
+                                    }
+                                );
+            foreach (var type in types)
+            {
+                var fullName = type.FullName;
+                _data
+                    .TryAdd
+                        (
+                            fullName!
+                            , new XmlSerializer(type)
+                        );
+            }
+        }
+    }
+}
