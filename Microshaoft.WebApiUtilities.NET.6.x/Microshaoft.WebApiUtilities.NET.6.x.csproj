@@ -40,4 +40,8 @@
     <Folder Include="MEF.Composition\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="WebReverseProxyKit\ProxyKit.csproj" />
+  </ItemGroup>
+
 </Project>
