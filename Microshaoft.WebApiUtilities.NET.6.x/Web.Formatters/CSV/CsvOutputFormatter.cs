@@ -62,7 +62,7 @@ namespace Microshaoft.Web
             //                                );
         }
 
-        protected override bool CanWriteType(Type type)
+        protected override bool CanWriteType(Type? type)
         {
             if (type == null)
             {
