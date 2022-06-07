@@ -9,6 +9,7 @@
                     : AbstractStoreProceduresExecutor
                             <MySqlConnection, MySqlCommand, MySqlParameter>
     {
+
         public MySqlStoreProceduresExecutor
         (
             ConcurrentDictionary<string, ExecutingInfo>
