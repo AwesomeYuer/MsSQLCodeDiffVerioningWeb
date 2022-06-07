@@ -46,7 +46,7 @@ namespace Microshaoft.Web
                                 , string            // error Message
                             )
                     >
-                        OnCaughtExceptionHandleProcess;
+                        OnCaughtExceptionHandleProcess = null!;
 
         public async Task Invoke(HttpContext context)
         {
@@ -89,10 +89,10 @@ namespace Microshaoft.Web
                             , traceID
                         )
                         =
-                            (ValueTuple<DateTime, long, Guid>)v;
+                            (ValueTuple<DateTime, long, Guid>) v!;
 
                     }
-                    var requestUrl = httpRequestFeature.RawTarget;
+                    var requestUrl = httpRequestFeature!.RawTarget;
                     (
                         errorDetails
                         , errorStatusCode

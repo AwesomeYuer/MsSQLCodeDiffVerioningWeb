@@ -85,13 +85,13 @@ namespace Microshaoft.Web
         public RequestResponseGuardMiddleware
                 (
                     RequestDelegate next
-                    , TInjector1 injector1 = default
-                    , TInjector2 injector2 = default
-                    , TInjector3 injector3 = default
-                    , TInjector4 injector4 = default
+                    , TInjector1 injector1 = default!
+                    , TInjector2 injector2 = default!
+                    , TInjector3 injector3 = default!
+                    , TInjector4 injector4 = default!
                     , Action
                         <RequestResponseGuardMiddleware<TInjector1, TInjector2, TInjector3, TInjector4>>
-                            onInitializeCallbackProcesses = default
+                            onInitializeCallbackProcesses = default!
                     , Func
                         <
                             RequestResponseGuardMiddleware<TInjector1, TInjector2, TInjector3, TInjector4>
@@ -99,7 +99,7 @@ namespace Microshaoft.Web
                             , Exception
                             , bool
                         >
-                            onCaughtExceptionProcessFunc = default
+                            onCaughtExceptionProcessFunc = default!
                 )
         {
             _next = next;
@@ -115,20 +115,20 @@ namespace Microshaoft.Web
 
         public
             Func<HttpContext, string, TInjector1, TInjector2, TInjector3, TInjector4, bool>
-                                        OnFilterProcessFunc;
+                                        OnFilterProcessFunc = null!;
         public
             Func<HttpContext, string, TInjector1, TInjector2, TInjector3, TInjector4, Task<bool>>
-                                        OnInvokingProcessAsync;
+                                        OnInvokingProcessAsync = null!;
         public
             Action<HttpContext, string, TInjector1, TInjector2, TInjector3, TInjector4>
-                                        OnResponseStartingProcess;
+                                        OnResponseStartingProcess = null!;
 
         public
             Action<HttpContext, string, TInjector1, TInjector2, TInjector3, TInjector4>
-                                        OnAfterInvokedNextProcess;
+                                        OnAfterInvokedNextProcess = null!;
         public
             Action<HttpContext, string, TInjector1, TInjector2, TInjector3, TInjector4>
-                                        OnResponseCompletedProcess;
+                                        OnResponseCompletedProcess = null!;
 
         //public
         //    Action<HttpContext, string, TInjector1, TInjector2, TInjector3, TInjector4>
@@ -136,7 +136,7 @@ namespace Microshaoft.Web
 
         public
             Func<HttpContext, string, TInjector1, TInjector2, TInjector3, TInjector4, bool>
-                                        OnPredicateResponseBodyWorkingStreamProcessFunc;
+                                        OnPredicateResponseBodyWorkingStreamProcessFunc = null!;
 
         public readonly
             Func
@@ -146,7 +146,7 @@ namespace Microshaoft.Web
                     , Exception
                     , bool
                 >
-                OnCaughtExceptionProcessFunc;
+                OnCaughtExceptionProcessFunc = null!;
 
         //必须是如下方法(竟然不用接口约束产生编译期错误),否则运行时错误
         public async Task Invoke(HttpContext context)
@@ -390,7 +390,7 @@ namespace Microshaoft.Web
                         var request = httpContext.Request;                
                         //xLogger.LogInformation($"event: {@event} @ {middlewareTypeName}");
                         var httpRequestFeature = httpContext.Features.Get<IHttpRequestFeature>();
-                        var url = httpRequestFeature.RawTarget;
+                        var url = httpRequestFeature!.RawTarget;
                         httpRequestFeature = null;
                         var r = url.Contains("/api/", StringComparison.OrdinalIgnoreCase);
                         if (!r)
@@ -477,7 +477,7 @@ namespace Microshaoft.Web
                                                 .Request;
                         var r = !request
                                         .Path
-                                        .Value
+                                        .Value!
                                         .Contains
                                             (
                                                 "export"
@@ -507,7 +507,7 @@ namespace Microshaoft.Web
                             var httpRequestFeature = httpContext
                                     .Features
                                     .Get<IHttpRequestFeature>();
-                            var url = httpRequestFeature.RawTarget;
+                            var url = httpRequestFeature!.RawTarget;
                             httpRequestFeature = null;
                             var result = false;
                             if
@@ -608,7 +608,7 @@ namespace Microshaoft.Web
                                     , Guid traceID
                                 )
                                     =
-                                        (ValueTuple<DateTime, long, Guid>) removed;
+                                        (ValueTuple<DateTime, long, Guid>) removed!;
                                 removed = null;
                                 requestBeginTime = beginTime;
                                 requestTraceID = traceID;
@@ -641,7 +641,7 @@ namespace Microshaoft.Web
                             } 
                             #endregion
 
-                            var needRequestResponseLogging = true;
+                            bool needRequestResponseLogging = true;
                             if
                                 (
                                     httpContext
@@ -653,7 +653,7 @@ namespace Microshaoft.Web
                                                 )
                                 )
                             {
-                                needRequestResponseLogging = (bool) b;
+                                needRequestResponseLogging = (bool) b!;
                             }
                             if (needRequestResponseLogging)
                             {
@@ -671,7 +671,7 @@ namespace Microshaoft.Web
                                                     var httpRequestFeature = httpContext
                                                                                     .Features
                                                                                     .Get<IHttpRequestFeature>();
-                                                    var requestUrl = httpRequestFeature.RawTarget;
+                                                    var requestUrl = httpRequestFeature!.RawTarget;
                                                     var request = httpContext.Request;
                                                     var requestPath = request.Path;
                                                     var requestPathBase = request.PathBase.Value;
@@ -689,7 +689,7 @@ namespace Microshaoft.Web
                                                                         )
                                                         )
                                                     {
-                                                        requestBody = (string) removedRequestBody;
+                                                        requestBody = (string) removedRequestBody!;
                                                     }
                                                     else
                                                     {
@@ -767,11 +767,11 @@ namespace Microshaoft.Web
                                                                             );
                                                     var clientIP = httpContext
                                                                         .Connection
-                                                                        .RemoteIpAddress
+                                                                        .RemoteIpAddress!
                                                                         .ToString();
                                                     var userID = httpContext
                                                                         .User
-                                                                        .Identity
+                                                                        .Identity!
                                                                         .Name ?? "AnonymousUser";
                                                     string deviceID = nameof(deviceID);
                                                     deviceID = httpContext
@@ -798,20 +798,20 @@ namespace Microshaoft.Web
                                                                     (
                                                                         (
                                                                                 (
-                                                                                    requestUrl
-                                                                                    , requestPath
-                                                                                    , requestPathBase
-                                                                                    , requestActionRoutPath
-                                                                                    , requestTraceID
+                                                                                    requestUrl!
+                                                                                    , requestPath!
+                                                                                    , requestPathBase!
+                                                                                    , requestActionRoutPath!
+                                                                                    , requestTraceID!
                                                                                 )
                                                                             ,
                                                                                 (
-                                                                                    requestHeaders
-                                                                                    , requestBody
-                                                                                    , request.Method
-                                                                                    , requestBeginTime
-                                                                                    , request.ContentLength
-                                                                                    , request.ContentType
+                                                                                    requestHeaders!
+                                                                                    , requestBody!
+                                                                                    , request.Method!
+                                                                                    , requestBeginTime!
+                                                                                    , request.ContentLength!
+                                                                                    , request.ContentType!
                                                                                 )
                                                                             ,
                                                                                 (
@@ -902,7 +902,7 @@ namespace Microshaoft.Web
                             {
                                 if (removed is JToken parameters)
                                 {
-                                    parameters = null;
+                                    parameters = null!;
                                 }
                                 removed = null;
                             }
@@ -922,7 +922,7 @@ namespace Microshaoft.Web
 
                     , Action
                         <RequestResponseGuardMiddleware<TInjector1, TInjector2, TInjector3, TInjector4>>
-                            onInitializeCallbackProcesses = default
+                            onInitializeCallbackProcesses = default!
                 )
         {
             return

@@ -28,7 +28,7 @@ namespace Microshaoft.Web
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context, IActionDescriptorCollectionProvider provider = null)
+        public async Task Invoke(HttpContext context, IActionDescriptorCollectionProvider provider = null!)
         {
             if (context.Request.Path == "/route-debugger")
             {

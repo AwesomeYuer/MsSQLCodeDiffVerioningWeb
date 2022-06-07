@@ -16,8 +16,8 @@ namespace Microshaoft.Web
     public class RequestResponseExceptionGuardMiddleware<TInjector>
     //竟然没有接口?
     {
-        private readonly RequestDelegate _next;
-        private readonly TInjector _injector;
+        private readonly RequestDelegate _next = null!;
+        private readonly TInjector _injector = default!;
 
         private const string defaultErrorResponseContentType = "application/json";
         private const string defaultErrorMessage = nameof(HttpStatusCode.InternalServerError);
@@ -45,7 +45,7 @@ namespace Microshaoft.Web
 
                             )
                     >
-                        OnCaughtExceptionProcessFunc;
+                        OnCaughtExceptionProcessFunc = null!;
 
         public
             Action
@@ -58,7 +58,7 @@ namespace Microshaoft.Web
                     , ILogger
                     , TInjector
                 >
-                    OnFinallyProcessAction;
+                    OnFinallyProcessAction = null!;
 
         private RequestResponseExceptionGuardMiddleware
                     (
@@ -69,7 +69,7 @@ namespace Microshaoft.Web
                                 RequestResponseExceptionGuardMiddleware
                                     <TInjector>
                             >
-                                onInitializeCallbackProcesses = null
+                                onInitializeCallbackProcesses = null!
                     )
         {
             _next = next;
@@ -77,9 +77,9 @@ namespace Microshaoft.Web
                                     .Invoke(this);
         }
 
-        public readonly IConfiguration Configuration;
-        public readonly ILoggerFactory LoggerFactory;
-        public readonly ILogger Logger;
+        public readonly IConfiguration Configuration = null!;
+        public readonly ILoggerFactory LoggerFactory = null!;
+        public readonly ILogger Logger = null!;
 
         public RequestResponseExceptionGuardMiddleware
             (
@@ -92,7 +92,7 @@ namespace Microshaoft.Web
                     <
                         RequestResponseExceptionGuardMiddleware<TInjector>
                     >
-                        onInitializeCallbackProcesses = default
+                        onInitializeCallbackProcesses = default!
             ) : this(next, onInitializeCallbackProcesses)
         {
             _injector = injector;
@@ -105,7 +105,7 @@ namespace Microshaoft.Web
         public async Task Invoke(HttpContext context)
         {
             var caughtException = false;
-            Exception exception = null;
+            Exception exception = null!;
             
             bool reThrow = false;
             bool errorDetails = false;
@@ -150,10 +150,10 @@ namespace Microshaoft.Web
                             , traceID
                         )
                         =
-                            (ValueTuple<DateTime, long, Guid?>) v;
+                            (ValueTuple<DateTime, long, Guid?>) v!;
                         
                     }
-                    var requestUrl = httpRequestFeature.RawTarget;
+                    var requestUrl = httpRequestFeature!.RawTarget;
                     (
                         reThrow
                         , errorDetails
@@ -226,7 +226,7 @@ namespace Microshaoft.Web
                         target
                 , Action
                     <RequestResponseExceptionGuardMiddleware<TInjector>>
-                        onInitializeCallbackProcesses = default
+                        onInitializeCallbackProcesses = default!
             )
         {
             return
