@@ -5,15 +5,25 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microshaoft.Common.Utilities.Net.6.x", "Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj", "{0B888E67-BE90-4977-9E1F-6FC0E6E7621E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcurrentAsyncQueue.NET.6.x", "ConcurrentAsyncQueue.NET.6.x\ConcurrentAsyncQueue.NET.6.x.csproj", "{49938730-4AD6-457D-957C-EAD355ABE31C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microshaoft.Json.NET.6.x", "Microshaoft.Json.NET.6.x\Microshaoft.Json.NET.6.x.csproj", "{6D6852D7-6A2B-4CEC-ADC9-8F34ED884170}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microshaoft.StoreProceduresExecutors.NET.6.x", "Microshaoft.StoreProceduresExecutors.NET.6.x\Microshaoft.StoreProceduresExecutors.NET.6.x.csproj", "{C1B50DD9-64AB-4520-BE14-39AA1545A5FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00", "00", "{C95C2997-5BDC-416D-A8C1-43D9A8816B50}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Microshaoft.Common.Utilities", "00.Microshaoft.Common.Utilities", "{C95C2997-5BDC-416D-A8C1-43D9A8816B50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microshaoft.WebApiUtilities.NET.6.x", "Microshaoft.WebApiUtilities.NET.6.x\Microshaoft.WebApiUtilities.NET.6.x.csproj", "{75EA146B-7C6A-422B-955E-DE8F836846F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10.Microshaoft.Utilities", "10.Microshaoft.Utilities", "{484B7499-6589-468A-9E49-32383C89F05D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "20.Plugins.StoreProcedureExecutor", "20.Plugins.StoreProcedureExecutor", "{6CA30516-47D9-4B1F-BD8F-0374D9714624}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSQL.StoreProcedureExecutor.Plugin.NET.6.x", "Plugins.StoreProcedureExecutor\MsSQL.StoreProcedureExecutor.Plugin.NET.6.x\MsSQL.StoreProcedureExecutor.Plugin.NET.6.x.csproj", "{3D732C04-0111-4B54-A462-8D515925C3DC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MySQL.StoreProcedureExecutor.Plugin.NET.6.x", "Plugins.StoreProcedureExecutor\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\MySQL.StoreProcedureExecutor.Plugin.NET.6.x.csproj", "{4A87DDA4-97FF-4873-B184-F73200287B8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "21.Plugins.RequestJTokenValidators", "21.Plugins.RequestJTokenValidators", "{F29D6A8E-DD43-4AAD-B215-F9A7C8DB59CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JTokenValidatorSamplePlugin.NET.6.x", "Plugins.RequestJTokenValidators\JTokenValidatorSamplePlugin.NET.6.x\JTokenValidatorSamplePlugin.NET.6.x.csproj", "{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +35,6 @@ Global
 		{0B888E67-BE90-4977-9E1F-6FC0E6E7621E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B888E67-BE90-4977-9E1F-6FC0E6E7621E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B888E67-BE90-4977-9E1F-6FC0E6E7621E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49938730-4AD6-457D-957C-EAD355ABE31C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49938730-4AD6-457D-957C-EAD355ABE31C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49938730-4AD6-457D-957C-EAD355ABE31C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49938730-4AD6-457D-957C-EAD355ABE31C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D6852D7-6A2B-4CEC-ADC9-8F34ED884170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D6852D7-6A2B-4CEC-ADC9-8F34ED884170}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D6852D7-6A2B-4CEC-ADC9-8F34ED884170}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,12 +47,30 @@ Global
 		{75EA146B-7C6A-422B-955E-DE8F836846F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75EA146B-7C6A-422B-955E-DE8F836846F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75EA146B-7C6A-422B-955E-DE8F836846F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D732C04-0111-4B54-A462-8D515925C3DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D732C04-0111-4B54-A462-8D515925C3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D732C04-0111-4B54-A462-8D515925C3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D732C04-0111-4B54-A462-8D515925C3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A87DDA4-97FF-4873-B184-F73200287B8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A87DDA4-97FF-4873-B184-F73200287B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A87DDA4-97FF-4873-B184-F73200287B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A87DDA4-97FF-4873-B184-F73200287B8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0B888E67-BE90-4977-9E1F-6FC0E6E7621E} = {C95C2997-5BDC-416D-A8C1-43D9A8816B50}
+		{6D6852D7-6A2B-4CEC-ADC9-8F34ED884170} = {484B7499-6589-468A-9E49-32383C89F05D}
+		{C1B50DD9-64AB-4520-BE14-39AA1545A5FA} = {484B7499-6589-468A-9E49-32383C89F05D}
+		{75EA146B-7C6A-422B-955E-DE8F836846F4} = {484B7499-6589-468A-9E49-32383C89F05D}
+		{3D732C04-0111-4B54-A462-8D515925C3DC} = {6CA30516-47D9-4B1F-BD8F-0374D9714624}
+		{4A87DDA4-97FF-4873-B184-F73200287B8E} = {6CA30516-47D9-4B1F-BD8F-0374D9714624}
+		{DFFFF90C-1F2A-41FD-98F8-A1C83D18D519} = {F29D6A8E-DD43-4AAD-B215-F9A7C8DB59CC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0669E030-A1FE-4EF0-994F-FC8C85086896}
