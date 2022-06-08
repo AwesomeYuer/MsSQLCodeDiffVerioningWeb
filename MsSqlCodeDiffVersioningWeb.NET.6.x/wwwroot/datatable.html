@@ -177,7 +177,7 @@
                             });
                             binded1 = true;
                         }
-                        if (d.DataBaseStatistics.Messages.length > 0) {
+                        if (d.DataBaseStatistics && d.DataBaseStatistics.Messages.length > 0) {
                             $("#outputMessages").DataTable({
                                 destroy: true,
                                 retrieve: true,

@@ -548,123 +548,77 @@
                                     IncludeExcelDelimiterHeader = false,
                                     UseSingleLineHeaderInCsv = true
                                 };
+
+                                var exportCsvFormatterConfiguration = Configuration
+                                            .GetSection
+                                                (
+                                                    "ExportCsvFormatter"
+                                                );
+
                                 if
                                     (
-                                        Configuration
-                                                    .TryGetSection
-                                                        (
-                                                            "ExportCsvFormatter"
-                                                            , out var exportCsvFormatterConfiguration
-                                                        )
+                                        exportCsvFormatterConfiguration != null
                                     )
                                 {
-                                    IConfigurationSection section;
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.CsvColumnsDelimiter)
-                                                            , out section
-                                                        )
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                .CsvColumnsDelimiter = section.Value;
-                                    }
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.DateFormat)
-                                                            , out section
-                                                        )
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                .DateFormat = section.Value;
-                                    }
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.DateTimeFormat)
-                                                            , out section
-                                                        )
+                                    csvFormatterOptions
+                                            .CsvColumnsDelimiter = exportCsvFormatterConfiguration
+                                                                    .GetValue
+                                                                        (
+                                                                            nameof(csvFormatterOptions.CsvColumnsDelimiter)
+                                                                            , ","
+                                                                        );
+                                    csvFormatterOptions
+                                                .DateFormat =
+                                                            exportCsvFormatterConfiguration
+                                                                    .GetValue
+                                                                            (
+                                                                                nameof(csvFormatterOptions.DateFormat)
+                                                                                , "yyyy-MM-dd"
+                                                                            );
+                                    csvFormatterOptions
+                                            .DateTimeFormat = exportCsvFormatterConfiguration
+                                                                    .GetValue
+                                                                            (
+                                                                                nameof(csvFormatterOptions.DateTimeFormat)
+                                                                                , "yyyy-MM-ddTHH:mm:ss.fffff"
+                                                                            );
 
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                .DateTimeFormat = section.Value;
-                                    }
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.DigitsTextSuffix)
-                                                            , out section
-                                                        )
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                .DigitsTextSuffix = section.Value;
-                                    }
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.MinExclusiveLengthDigitsTextSuffix)
-                                                            , out section
-                                                        )
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                .MinExclusiveLengthDigitsTextSuffix = section.Get<int>();
-                                    }
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.Encoding)
-                                                            , out section
-                                                        )
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                .Encoding = Encoding.GetEncoding(section.Value);
-                                    }
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.IncludeExcelDelimiterHeader)
-                                                            , out section
-                                                        )
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                .IncludeExcelDelimiterHeader = section.Get<bool>();
-                                    }
-                                    if
-                                        (
-                                            exportCsvFormatterConfiguration
-                                                    .TryGetSection
-                                                        (
-                                                            nameof(csvFormatterOptions.UseSingleLineHeaderInCsv)
-                                                            , out section
-                                                        )
-                                        )
-                                    {
-                                        csvFormatterOptions
-                                                 .UseSingleLineHeaderInCsv = section.Get<bool>();
-                                    }
+                                    csvFormatterOptions
+                                            .DigitsTextSuffix = exportCsvFormatterConfiguration
+                                                                    .GetValue
+                                                                            (
+                                                                                nameof(csvFormatterOptions.DigitsTextSuffix)
+                                                                                , "\t"
+                                                                            );
+                                    var encodingName = Encoding.UTF8.EncodingName;
+                                    encodingName = exportCsvFormatterConfiguration
+                                                                    .GetValue
+                                                                            (
+                                                                                nameof(csvFormatterOptions.Encoding)
+                                                                                , encodingName
+                                                                            );
+
+                                    csvFormatterOptions
+                                                .Encoding = Encoding.GetEncoding(encodingName);
+
+
+                                    csvFormatterOptions
+                                            .IncludeExcelDelimiterHeader = exportCsvFormatterConfiguration
+                                                                    .GetValue
+                                                                            (
+                                                                                nameof(csvFormatterOptions.IncludeExcelDelimiterHeader)
+                                                                                , false
+                                                                            );
+                                    csvFormatterOptions
+                                            .UseSingleLineHeaderInCsv =
+                                                        exportCsvFormatterConfiguration
+                                                                    .GetValue
+                                                                            (
+                                                                                nameof(csvFormatterOptions.UseSingleLineHeaderInCsv)
+                                                                                , true
+                                                                            );
                                 }
+                            
                                 //options.InputFormatters.Add(new CsvInputFormatter(csvFormatterOptions));
                                 options
                                     .OutputFormatters

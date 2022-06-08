@@ -144,6 +144,7 @@
                                                                 <IHttpRequestValidateable<JToken>>
                                                                     (
                                                                         x
+                                                                        //"JTokenValidatorSamplePlugin.NET.6.x.dll"
                                                                         , "*Validator*Plugin*.dll"
                                                                     );
                                             }

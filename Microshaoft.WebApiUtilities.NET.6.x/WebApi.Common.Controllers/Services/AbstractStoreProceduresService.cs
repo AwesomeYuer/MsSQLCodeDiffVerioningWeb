@@ -163,7 +163,8 @@ namespace Microshaoft.Web
                                                     <IStoreProcedureExecutable>
                                                         (
                                                             x
-                                                            , "*SPE*Plugin*.dll"
+                                                            //, "*SPE*Plugin*.dll"
+                                                            , "*StoreProcedureExecutor*Plugin*.dll"
                                                         );
                                 }
                             );

@@ -3,6 +3,7 @@
     using Microshaoft;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
+    //using Microsoft.Extensions.Configuration.Binder;
     using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Primitives;
     using Newtonsoft.Json.Linq;
@@ -338,11 +339,15 @@
                                                         .GetExecutingAssembly()
                                                         .Location
                                                 );
-            var result = configuration
-                                .GetOrDefault<string[]>
-                                     (sectionName)
-                                //.GetSection(sectionName)
-                                //.AsEnumerable()
+
+            var result1 = configuration
+                                .GetSection(sectionName)
+                                .GetChildren()
+                                .Select(x => x.Value)
+                                .ToArray();
+
+
+            var result = result1
                                 .Select
                                     (
                                         (x) =>
@@ -372,7 +377,7 @@
                                     (
                                         (x) =>
                                         {
-                                            return
+                                            var r =
                                                 (
                                                     !x
                                                         .IsNullOrEmptyOrWhiteSpace()
@@ -380,6 +385,7 @@
                                                     Directory
                                                         .Exists(x)
                                                 );
+                                            return r;
                                         }
                                     );
             return result;
