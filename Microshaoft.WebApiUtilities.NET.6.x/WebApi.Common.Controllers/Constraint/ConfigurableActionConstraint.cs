@@ -91,7 +91,7 @@ namespace Microshaoft
                     var isAsyncExecutingInConfiguration =
                             _routeAttribute
                                         .Configuration
-                                        .GetOrDefault
+                                        .GetOrDefaultValue
                                             (
                                                 $"Routes:{actionRoutePath}:{httpMethod}:{accessingConfigurationKey}:isAsyncExecuting"
                                                 , false

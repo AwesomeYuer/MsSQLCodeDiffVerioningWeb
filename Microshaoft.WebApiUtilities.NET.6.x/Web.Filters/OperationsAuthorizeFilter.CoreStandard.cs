@@ -134,7 +134,7 @@ namespace Microshaoft.Web
                         if (needCheckOperations)
                         {
                             string[] operations = masterConfiguration
-                                                        .GetOrDefault<string[]>
+                                                        .GetOrDefaultValue<string[]>
                                                             (
                                                                 nameof(operations)
                                                             );

@@ -158,7 +158,7 @@ namespace Microshaoft.Web
                 if
                     (
                         configuration
-                                .TryGet<string>
+                                .TryGetVaue<string>
                                     (
                                         "SecretKey"
                                         , out var secretKeyInConfiguration
@@ -262,7 +262,7 @@ namespace Microshaoft.Web
                     if (ok)
                     {
                         string[] jwtAudiences = configuration
-                                                        .GetOrDefault
+                                                        .GetOrDefaultValue
                                                             (
                                                                 "Audiences"
                                                                 , new string[] { }

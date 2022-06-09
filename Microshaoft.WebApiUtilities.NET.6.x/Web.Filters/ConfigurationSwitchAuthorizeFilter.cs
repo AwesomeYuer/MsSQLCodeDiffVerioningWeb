@@ -73,7 +73,7 @@ namespace Microshaoft.Web
                                                                     typeof(IConfiguration)
                                                                 )!;
                             _allows = _configuration
-                                            .GetOrDefault($"AuthorizedAccessPaths", new string[] { })
+                                            .GetOrDefaultValue($"AuthorizedAccessPaths", new string[] { })
                                             .Select
                                                 (
                                                     (x) =>

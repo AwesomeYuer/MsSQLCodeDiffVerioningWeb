@@ -315,7 +315,7 @@
                                 );
             var configuration = configurationBuilder.Build();
             var r = configuration
-                            .GetOrDefault<string>("userSecretsID");
+                            .GetOrDefaultValue<string>("userSecretsID");
             return
                 r;
         }

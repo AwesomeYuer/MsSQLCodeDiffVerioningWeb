@@ -839,7 +839,7 @@ namespace Microshaoft.Web
                 if
                     (
                         actionConfiguration
-                                    .TryGet(nameof(enableStatistics), out bool b)
+                                    .TryGetVaue(nameof(enableStatistics), out bool b)
 
                     )
                 {
@@ -850,7 +850,7 @@ namespace Microshaoft.Web
                     if
                         (
                             accessingConfiguration
-                                        .TryGet(nameof(enableStatistics), out b)
+                                        .TryGetVaue(nameof(enableStatistics), out b)
                         )
                     {
                         enableStatistics = b;
@@ -860,7 +860,7 @@ namespace Microshaoft.Web
             if
                 (
                     accessingConfiguration
-                                    .TryGet(nameof(commandTimeoutInSeconds), out int i)
+                                    .TryGetVaue(nameof(commandTimeoutInSeconds), out int i)
                 )
             {
                 commandTimeoutInSeconds = i;
@@ -870,7 +870,7 @@ namespace Microshaoft.Web
                 if
                     (
                         actionConfiguration
-                                   .TryGet(nameof(commandTimeoutInSeconds), out i)
+                                   .TryGetVaue(nameof(commandTimeoutInSeconds), out i)
                     )
                 {
                     commandTimeoutInSeconds = i;
@@ -880,7 +880,7 @@ namespace Microshaoft.Web
                     if
                         (
                             connectionConfiguration
-                                            .TryGet(nameof(commandTimeoutInSeconds), out i)
+                                            .TryGetVaue(nameof(commandTimeoutInSeconds), out i)
                         )
                     {
                         commandTimeoutInSeconds = i;

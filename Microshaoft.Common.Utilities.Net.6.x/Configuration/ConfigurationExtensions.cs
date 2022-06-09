@@ -1,8 +1,6 @@
 ﻿namespace Microshaoft
 {
     using Microsoft.Extensions.Configuration;
-    using System.Diagnostics;
-
     public static class ConfigurationExtensions
     {
         public static bool TryGetSection
@@ -32,7 +30,7 @@
             return r;
         }
         // only for Array Value
-        public static T GetOrDefault<T>
+        public static T GetOrDefaultValue<T>
                             (
                                 this IConfiguration @this
                                 , string sectionKey
@@ -40,7 +38,7 @@
                             )
         {
             T r = defaultValue;
-            var b = TryGet
+            var b = TryGetVaue
                         (
                             @this
                             , sectionKey
@@ -54,7 +52,7 @@
         }
 
 
-        public static bool TryGet<T>
+        public static bool TryGetVaue<T>
                         (
                             this IConfiguration @this
                             , string sectionKey
@@ -79,71 +77,6 @@
                 sectionValue = default!;
             }
             return r;
-        }
-
-        //2022-06-08 .NET 6.0
-        public static T Get<T>
-                (
-                    this IConfigurationSection @this
-                )
-        {
-            T @return = default!;
-            Type t = typeof(T);
-
-            //@this
-
-
-            if (@this.Value != null)
-            {
-                //if (typeof(T) != typeof(Array))
-                string sectionValueText = @this.Value;
-                if (t.IsArray)
-                {
-                    var elementType = t.GetElementType();
-                    if (typeof(string).IsAssignableFrom(elementType))
-                    {
-                        @return = (T)Convert.ChangeType(sectionValueText, t);
-
-                    }
-                    else if (typeof(int).IsAssignableFrom(elementType))
-                    { 
-                    
-                    
-                    }
-
-
-                    
-                    Console.ReadLine();
-                
-                }
-                else if (t == typeof(string))
-                {
-                    @return = (T)Convert.ChangeType(sectionValueText, t);
-                }
-                else if (t == typeof(int))
-                {
-                    if (int.TryParse(sectionValueText, out int @out))
-                    {
-                        @return = (T)Convert.ChangeType(@out, t);
-                    }
-                }
-                else if (typeof(T) == typeof(DateTime))
-                {
-                    if (DateTime.TryParse(sectionValueText, out DateTime @out))
-                    {
-                        @return = (T)Convert.ChangeType(@out, t);
-                    }
-                }
-                else if (typeof(T) == typeof(DateOnly))
-                {
-                    if (DateOnly.TryParse(sectionValueText, out DateOnly @out))
-                    {
-                        @return = (T)Convert.ChangeType(@out, t);
-                    }
-                }
-            }
-            return @return;
-
         }
 
     }

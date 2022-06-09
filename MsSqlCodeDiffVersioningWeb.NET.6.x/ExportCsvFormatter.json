@@ -6,6 +6,7 @@
     "IncludeExcelDelimiterHeader": false,
     "MinExclusiveLengthDigitsTextSuffix": 7,
     "DigitsTextSuffix": "\t",
-    "DateFormat": "yyyy-MM-ddzzz"
+    "DateFormat": "yyyy-MM-ddzzz",
+    "Encoding": "UTF-8"
   }
 }
