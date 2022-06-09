@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP
-namespace Microshaoft
+﻿namespace Microshaoft
 {
     using Microshaoft.WebApi.Controllers;
     using Microsoft.AspNetCore.Mvc;
@@ -158,4 +157,3 @@ namespace Microshaoft
         }
     }
 }
-#endif
