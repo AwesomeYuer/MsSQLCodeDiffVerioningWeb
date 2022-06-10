@@ -859,6 +859,8 @@ namespace Microshaoft.Web
             }
             if
                 (
+                    accessingConfiguration != null
+                    &&
                     accessingConfiguration
                                     .TryGetVaue(nameof(commandTimeoutInSeconds), out int i)
                 )
@@ -869,6 +871,8 @@ namespace Microshaoft.Web
             {
                 if
                     (
+                        actionConfiguration != null
+                        &&
                         actionConfiguration
                                    .TryGetVaue(nameof(commandTimeoutInSeconds), out i)
                     )
@@ -879,6 +883,8 @@ namespace Microshaoft.Web
                 {
                     if
                         (
+                            connectionConfiguration != null     
+                            &&
                             connectionConfiguration
                                             .TryGetVaue(nameof(commandTimeoutInSeconds), out i)
                         )
