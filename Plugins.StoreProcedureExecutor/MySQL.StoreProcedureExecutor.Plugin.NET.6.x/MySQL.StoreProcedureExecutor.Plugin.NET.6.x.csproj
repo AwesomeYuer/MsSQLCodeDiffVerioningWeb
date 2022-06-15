@@ -5,6 +5,7 @@
     <RootNamespace>MySQL.StoreProcedureExecutor.Plugin.NET._6.x</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <ItemGroup>

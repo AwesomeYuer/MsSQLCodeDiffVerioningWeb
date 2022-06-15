@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP
-namespace Microshaoft.WebApi.Controllers
+﻿namespace Microshaoft.WebApi.Controllers
 {
     using Microshaoft;
     using Microshaoft.Web;
@@ -988,4 +987,3 @@ namespace Microshaoft.WebApi.Controllers
         }
     }
 }
-#endif

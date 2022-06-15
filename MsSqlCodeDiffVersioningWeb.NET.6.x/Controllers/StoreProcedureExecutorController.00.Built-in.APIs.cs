@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP || NETSTANDARD2_X
+﻿
 namespace Microshaoft.WebApi.Controllers
 {
     using Microshaoft.Web;
@@ -9,9 +9,9 @@ namespace Microshaoft.WebApi.Controllers
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json.Linq;
     using System.Threading.Tasks;
-#if NETCOREAPP3_X
+
     using Microshaoft.AspNetCore.ConcurrencyLimiters;
-#endif
+
 
     //[Route("api/[controller]")]
     //[ApiController]
@@ -261,4 +261,3 @@ namespace Microshaoft.WebApi.Controllers
         }
     }
 }
-#endif
