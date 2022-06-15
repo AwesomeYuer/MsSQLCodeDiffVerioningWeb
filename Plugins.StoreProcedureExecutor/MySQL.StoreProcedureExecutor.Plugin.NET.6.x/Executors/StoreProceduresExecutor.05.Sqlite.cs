@@ -1,5 +1,4 @@
-﻿#if !NETFRAMEWORK4_5_X && !XAMARIN
-namespace Microshaoft
+﻿namespace Microshaoft
 {
     using Microsoft.Data.Sqlite;
     using Newtonsoft.Json.Linq;
@@ -85,7 +84,7 @@ namespace Microshaoft
                         , JToken jValue
                     )
         {
-            object r = null;
+            object r = null!;
             var jValueText = jValue.ToString();
             if
                 (
@@ -130,4 +129,3 @@ namespace Microshaoft
         }
     }
 }
-#endif

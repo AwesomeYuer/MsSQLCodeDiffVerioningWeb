@@ -9,22 +9,30 @@
 
   <ItemGroup>
     <Compile Remove="DataReader\DataReaderHelper.02.cs" />
+    <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.02.mysql.cs" />
+    <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.03.npgsql.cs" />
+    <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.04.oracle.cs" />
     <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.05.db2.cs" />
+    <Compile Remove="Sql\MySql\StoreProceduresExecutor.02.MySql.cs" />
+    <Compile Remove="Sql\MySql\StoreProceduresExecutor.03.NpgSql.cs" />
+    <Compile Remove="Sql\MySql\StoreProceduresExecutor.04.Oracle.cs" />
     <Compile Remove="Sql\MySql\StoreProceduresExecutor.05.Sqlite.cs" />
     <Compile Remove="Sql\MySql\StoreProceduresExecutor.06.DB2.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySql.Data" Version="8.0.29" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Npgsql" Version="6.0.4" />
-    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="3.21.61" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
     <ProjectReference Include="..\Microshaoft.Json.NET.6.x\Microshaoft.Json.NET.6.x.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SqlDbParameter\MySql\" />
+    <Folder Include="Sql\MySql\" />
   </ItemGroup>
 
 </Project>

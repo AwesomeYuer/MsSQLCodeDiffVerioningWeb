@@ -9,7 +9,6 @@
                     : AbstractStoreProceduresExecutor
                             <MySqlConnection, MySqlCommand, MySqlParameter>
     {
-
         public MySqlStoreProceduresExecutor
         (
             ConcurrentDictionary<string, ExecutingInfo>
@@ -48,7 +47,7 @@
                                , string connectionString
                            )
         {
-            var originalDbTypeName = (string) reader["DATA_TYPE"];
+            var originalDbTypeName = (string)reader["DATA_TYPE"];
             var dbTypeName = originalDbTypeName;
             //bit
             //tinyint
@@ -98,7 +97,7 @@
             {
                 dbTypeName = "Int64";
             }
-            
+
             var r = Enum
                         .TryParse
                             (
@@ -129,7 +128,7 @@
                                         (
                                             (short)
                                                 (
-                                                    (long) o
+                                                    (long)o
                                                 )
                                         )
                                     //& 255
@@ -139,13 +138,13 @@
                 o = reader["NUMERIC_PRECISION"];
                 if (o != DBNull.Value)
                 {
-                    parameter.Precision = ((byte)((uint) o));
+                    parameter.Precision = ((byte)((uint)o));
                 }
             }
             return
                 parameter;
         }
-        
+
         protected override MySqlParameter
                     OnExecutingSetDbParameterTypeProcess
                         (
@@ -154,7 +153,7 @@
                         )
         {
             cloneParameter
-                    .MySqlDbType = definitionParameter.MySqlDbType;
+                    .MySqlDbType = definitionParameter.MySqlDbType; 
             return
                 cloneParameter;
         }
