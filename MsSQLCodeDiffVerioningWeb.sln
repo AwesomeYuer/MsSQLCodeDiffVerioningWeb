@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microshaoft.Json.NET.6.x", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microshaoft.StoreProceduresExecutors.NET.6.x", "Microshaoft.StoreProceduresExecutors.NET.6.x\Microshaoft.StoreProceduresExecutors.NET.6.x.csproj", "{C1B50DD9-64AB-4520-BE14-39AA1545A5FA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Microshaoft.Common.Utilities", "00.Microshaoft.Common.Utilities", "{C95C2997-5BDC-416D-A8C1-43D9A8816B50}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05.Microshaoft.Common.Utilities", "05.Microshaoft.Common.Utilities", "{C95C2997-5BDC-416D-A8C1-43D9A8816B50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microshaoft.WebApiUtilities.NET.6.x", "Microshaoft.WebApiUtilities.NET.6.x\Microshaoft.WebApiUtilities.NET.6.x.csproj", "{75EA146B-7C6A-422B-955E-DE8F836846F4}"
 EndProject
@@ -38,6 +38,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10.MsSqlCodeDiffVersioning", "10.MsSqlCodeDiffVersioning", "{E3A62127-E4C7-407D-92FF-345700FA60A5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50.Swagger", "50.Swagger", "{FD82A25A-90B0-4D20-B7CF-C47FD1E6C8B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Solution Items", "{7D226DD2-1926-44FB-8382-76ACC447CBC7}"
+	ProjectSection(SolutionItems) = preProject
+		copyrundebug6x.sh = copyrundebug6x.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

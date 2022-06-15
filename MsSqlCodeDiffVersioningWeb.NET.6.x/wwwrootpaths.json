@@ -1,6 +1,7 @@
 {
   "wwwroot": [
-    "..\\..\\..\\wwwroot" //Windows
+    "..\\..\\..\\wwwroot", //Windows
+    "../../../wwwroot" //Windows
     //"../../../../MsSqlCodeDiffVersioning.Shared/wwwroot", //Linux
     //"/usr/local/wwwroot" //docker
 
