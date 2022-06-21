@@ -38,6 +38,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Solution Items", "{7D226DD2-1926-44FB-8382-76ACC447CBC7}"
 	ProjectSection(SolutionItems) = preProject
 		copyrundebug6x.sh = copyrundebug6x.sh
+		VSCode.Rest.Client.Test\RestClientTest.http = VSCode.Rest.Client.Test\RestClientTest.http
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSQL.StoreProcedureExecutor.Plugin.NET.6.x", "Plugins.StoreProcedureExecutors\MsSQL.StoreProcedureExecutor.Plugin.NET.6.x\MsSQL.StoreProcedureExecutor.Plugin.NET.6.x.csproj", "{435194AA-FA85-4022-8252-ACC7E87DCC93}"
