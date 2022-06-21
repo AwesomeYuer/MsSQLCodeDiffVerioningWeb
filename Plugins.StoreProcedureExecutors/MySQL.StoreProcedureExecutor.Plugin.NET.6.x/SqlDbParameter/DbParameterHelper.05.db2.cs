@@ -1,5 +1,4 @@
-﻿#if IBM_Data_DB2_Core
-namespace Microshaoft
+﻿namespace Microshaoft
 {
     using Newtonsoft.Json.Linq;
     using System;
@@ -230,4 +229,3 @@ namespace Microshaoft
         }
     }
 }
-#endif

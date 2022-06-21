@@ -1194,8 +1194,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
@@ -1207,6 +1207,7 @@
     <ProjectReference Include="..\Microshaoft.StoreProceduresExecutors.NET.6.x\Microshaoft.StoreProceduresExecutors.NET.6.x.csproj" />
     <ProjectReference Include="..\Microshaoft.WebApiUtilities.NET.6.x\Microshaoft.WebApiUtilities.NET.6.x.csproj" />
     <ProjectReference Include="..\Plugins.RequestJTokenValidators\JTokenValidatorSamplePlugin.NET.6.x\JTokenValidatorSamplePlugin.NET.6.x.csproj" />
+    <ProjectReference Include="..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\MySQL.StoreProcedureExecutor.Plugin.NET.6.x.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1215,7 +1216,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)'=='Windows_NT'">
-    <Exec Command="xcopy ..\Plugins.StoreProcedureExecutor\MsSQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*Plugin* $(TargetDir)Plugins\ /Y&#xD;&#xA;REM xcopy ..\Plugins.StoreProcedureExecutor\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*Plugin* $(TargetDir)Plugins\ /Y&#xD;&#xA;xcopy ..\Plugins.RequestJTokenValidators\JTokenValidatorSamplePlugin.NET.6.x\bin\$(Configuration)\net6.0\*Plugin* $(TargetDir)Plugins\ /Y&#xD;&#xA;&#xD;&#xA;REM xcopy ..\Plugins.StoreProcedureExecutor\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*mysql.data* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutor\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*npgsql* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutor\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*sqlite* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutor\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*oracle* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutor\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*db2* $(TargetDir)Plugins\ /Y&#xD;&#xA;" />
+    <Exec Command="xcopy ..\Plugins.StoreProcedureExecutors\MsSQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*Plugin* $(TargetDir)Plugins\ /Y&#xD;&#xA;xcopy ..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*Plugin* $(TargetDir)Plugins\ /Y&#xD;&#xA;xcopy ..\Plugins.RequestJTokenValidators\JTokenValidatorSamplePlugin.NET.6.x\bin\$(Configuration)\net6.0\*Plugin* $(TargetDir)Plugins\ /Y&#xD;&#xA;&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*.* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*mysql.data* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*npgsql* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*sqlite* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*oracle* $(TargetDir)Plugins\ /Y&#xD;&#xA;rem xcopy ..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\bin\$(Configuration)\net6.0\*db2* $(TargetDir)Plugins\ /Y&#xD;&#xA;" />
   </Target>
 
 </Project>

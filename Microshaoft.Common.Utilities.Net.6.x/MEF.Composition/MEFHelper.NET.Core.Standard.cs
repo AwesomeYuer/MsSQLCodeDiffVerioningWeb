@@ -1,4 +1,3 @@
-#if NETCOREAPP
 namespace Microshaoft
 {
     using System.Collections.Generic;
@@ -18,7 +17,14 @@ namespace Microshaoft
                             , SearchOption searchOption = SearchOption.TopDirectoryOnly
                         )
         {
-            return WithAssembliesByPath(@this, path, searchPattern, searchOption);
+            return
+                WithAssembliesByPath
+                            (
+                                @this
+                                , path
+                                , searchPattern
+                                , searchOption
+                            );
         }
         public static ContainerConfiguration WithAssembliesByPath
             (
@@ -92,10 +98,10 @@ namespace Microshaoft
                                 )
                             .ToList();
             var configuration = new ContainerConfiguration()
-                                        .WithAssemblies
-                                            (
-                                                assemblies
-                                            );
+                                                    .WithAssemblies
+                                                        (
+                                                            assemblies
+                                                        );
             using (var container = configuration.CreateContainer())
             {
                 result = container.GetExports<T>();
@@ -104,4 +110,3 @@ namespace Microshaoft
         }
     }
 }
-#endif
