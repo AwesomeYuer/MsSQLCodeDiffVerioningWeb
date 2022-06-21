@@ -203,6 +203,40 @@
                 @value!;
         }
 
+
+        // ===============================================================================================================
+        // Big Data Export CSV
+        [HttpDelete]
+        [HttpGet]
+        [HttpHead]
+        [HttpOptions]
+        [HttpPatch]
+        [HttpPost]
+        [HttpPut]
+        [
+             Route
+                 (
+                     "bigdataexport/{* }"
+                 )
+        ]
+        [ServiceFilter(typeof(OperationsAuthorizeFilter))]
+        [
+            RequestJTokenParametersProcessFilter
+                    (
+                        AccessingConfigurationKey = "DefaultAccessing"
+                    )
+        ]
+        public virtual async Task
+                             ProcessActionRequestAsync
+                                 (
+            
+                                 )
+        {
+            await
+                ProcessActionRequestAsync(null!);
+
+        }
+
         // ===============================================================================================================
         // Big Data Export CSV
         [HttpDelete]
@@ -229,7 +263,7 @@
                              ProcessActionRequestAsync
                                  (
                                     [ModelBinder(typeof(JTokenModelBinder))]
-                                        JToken parameters = null!
+                                        JToken parameters// = null!
                                  )
         {
             var actionRoutePath = Request.GetActionRoutePath();

@@ -58,14 +58,24 @@
                                     )
         {
             var r = (actionConstraintContext.Candidates.Count == 1);
+            var httpContext = actionConstraintContext.RouteContext.HttpContext;
+            var request = httpContext.Request;
+            var currentCandidateAction = actionConstraintContext
+                                                        .CurrentCandidate
+                                                        .Action;
+            var currentControllerActionDescriptor = ((ControllerActionDescriptor)currentCandidateAction);
             if (!r)
             {
-                var httpContext = actionConstraintContext.RouteContext.HttpContext;
-                var request = httpContext.Request;
-                var currentCandidateAction = actionConstraintContext
-                                                .CurrentCandidate
-                                                .Action;
-                var currentControllerActionDescriptor = ((ControllerActionDescriptor) currentCandidateAction);
+                var l = currentControllerActionDescriptor
+                                                    .MethodInfo
+                                                    .GetParameters()
+                                                    .Length;
+                var queryStringHasValue = request.QueryString.HasValue;
+                r = (queryStringHasValue && l > 0) || (!queryStringHasValue && l <= 0);
+            }
+            if (r)
+            {
+                r = false;
                 var currentControllerType = currentControllerActionDescriptor.ControllerTypeInfo.AsType();
                 var routeContext = actionConstraintContext.RouteContext;
                 var actionRoutePath = routeContext.RouteData.Values[" "]!.ToString();
@@ -104,7 +114,7 @@
                 }
             }
             return
-                r;
+                    r;
         }
 
         private readonly

@@ -1,0 +1,30 @@
+
+
+POST http://localhost:5000/api/StoreProcedureExecutor/result/mssql/usp_executesql HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0Aselect+'%22111%22'+as+F%2C+*%0Afrom%0Asys.objects%0A%0Aselect+'%22222%22'+as+F%2C+*%0Afrom%0Asys.objects&rowcount=100
+
+###
+
+POST http://localhost:5000/api/StoreProcedureExecutor/bigdataexport/mssql/usp_executesql HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0Aselect+'%22111%22'+as+F%2C+*%0Afrom%0Asys.objects%0A%0Aselect+'%22222%22'+as+F%2C+*%0Afrom%0Asys.objects&rowcount=100
+
+
+###
+
+GET http://localhost:5000/api/StoreProcedureExecutor/result/mssql/usp_executesql HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0Aselect+'%22111%22'+as+F%2C+*%0Afrom%0Asys.objects%0A%0Aselect+'%22222%22'+as+F%2C+*%0Afrom%0Asys.objects&rowcount=100
+
+###
+
+GET  http://localhost:5000/api/StoreProcedureExecutor/result/mssql/aaa/bbb/objEcts?searchobjectname1=ll HTTP/1.1
+
+###
+
+GET  http://localhost:5000/api/StoreProcedureExecutor/bigdataexport/mssql/aaa/bbb/objEcts HTTP/1.1
+

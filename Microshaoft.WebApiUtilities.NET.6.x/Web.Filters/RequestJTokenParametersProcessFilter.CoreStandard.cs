@@ -57,7 +57,15 @@ namespace Microshaoft.Web
                 )
             {
                 var httpMethod = $"http{request.Method}";
-                JObject parameters = (JObject) context.ActionArguments["parameters"]!;
+                JObject parameters = null!;
+
+                if (context.ActionArguments.TryGetValue("parameters", out var @parameters1))
+                {
+
+                    parameters = (JObject) @parameters1!;
+
+                }
+
 
                 if
                     (

@@ -354,6 +354,59 @@
                     "result/{* }"
                 )
         ]
+
+        [
+            Route
+                (
+                    "export/{* }"
+                )
+        ]
+        [
+            Route
+                (
+                    "sync/{* }"
+                )
+        ]
+        [ServiceFilter(typeof(OperationsAuthorizeFilter))]
+        [
+            RequestJTokenParametersProcessFilter
+                (
+                    AccessingConfigurationKey = "DefaultAccessing"
+                )
+        ]
+        [OptionalProduces("text/csv", RequestPathKey = "/export/")]
+        public virtual ActionResult<JToken>
+                            ProcessActionRequestResult
+                                (
+                                    
+                                )
+        {
+            return
+                ProcessActionRequestResult(null!);
+        }
+
+
+
+
+        [HttpDelete]
+        [HttpGet]
+        [HttpHead]
+        [HttpOptions]
+        [HttpPatch]
+        [HttpPost]
+        [HttpPut]
+        [
+            Route
+                (
+                    "echo/{* }"
+                )
+        ]
+        [
+            Route
+                (
+                    "result/{* }"
+                )
+        ]
  
         [
             Route
@@ -379,7 +432,7 @@
                             ProcessActionRequestResult
                                 (
                                     [ModelBinder(typeof(JTokenModelBinder))]
-                                        JToken parameters = null!
+                                        JToken parameters// = null!
                                 )
         {
             bool allowEchoRequestInfo = _configuration
@@ -434,6 +487,57 @@
                     );
         }
 
+
+        [HttpDelete]
+        [HttpGet]
+        [HttpHead]
+        [HttpOptions]
+        [HttpPatch]
+        [HttpPost]
+        [HttpPut]
+        //#if !NETCOREAPP3_X
+        [
+            Route
+                (
+                    "result/{* }"
+                )
+        ]
+                [
+            Route
+                (
+                    "export/{* }"
+                )
+        ]
+                //#endif
+                [
+            Route
+                (
+                    "async/{* }"
+                )
+        ]
+
+        [ServiceFilter(typeof(OperationsAuthorizeFilter))]
+        [
+            RequestJTokenParametersProcessFilter
+                    (
+                        AccessingConfigurationKey = "DefaultAccessing"
+                    )
+        ]
+        [OptionalProduces("text/csv", RequestPathKey = "/export/")]
+        public virtual async Task<ActionResult<JToken>>
+                    ProcessActionRequestResultAsync
+                        (
+                            
+                        )
+        {
+            return
+                await
+                    ProcessActionRequestResultAsync(null!);
+        }
+
+
+
+
         [HttpDelete]
         [HttpGet]
         [HttpHead]
@@ -474,7 +578,7 @@
                             ProcessActionRequestResultAsync
                                 (
                                     [ModelBinder(typeof(JTokenModelBinder))]
-                                        JToken parameters = null!
+                                        JToken parameters// = null!
                                 )
         {
             bool allowEchoRequestInfo = _configuration
