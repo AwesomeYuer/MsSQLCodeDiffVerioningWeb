@@ -63,15 +63,23 @@
             var currentCandidateAction = actionConstraintContext
                                                         .CurrentCandidate
                                                         .Action;
-            var currentControllerActionDescriptor = ((ControllerActionDescriptor)currentCandidateAction);
+            var currentControllerActionDescriptor = ((ControllerActionDescriptor) currentCandidateAction);
             if (!r)
             {
                 var l = currentControllerActionDescriptor
                                                     .MethodInfo
                                                     .GetParameters()
                                                     .Length;
-                var queryStringHasValue = request.QueryString.HasValue;
-                r = (queryStringHasValue && l > 0) || (!queryStringHasValue && l <= 0);
+                var hasValue = false;
+                if (request.Method == "GET")
+                {
+                    hasValue= request.QueryString.HasValue;
+                }
+                else
+                {
+                    hasValue = (request.HasFormContentType);
+                }
+                r = (hasValue && l > 0) || (!hasValue && l <= 0);
             }
             if (r)
             {
