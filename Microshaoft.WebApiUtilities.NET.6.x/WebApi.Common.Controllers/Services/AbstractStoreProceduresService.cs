@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP 
-namespace Microshaoft.Web
+﻿namespace Microshaoft.Web
 {
     using Microshaoft;
     using Microsoft.Extensions.Configuration;
@@ -1116,4 +1115,4 @@ namespace Microshaoft.Web
         }
     }
 }
-#endif
+

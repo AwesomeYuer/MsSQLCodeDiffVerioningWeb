@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP
-namespace Microshaoft.WebApi.Controllers
+﻿namespace Microshaoft.WebApi.Controllers
 {
     using Microshaoft;
     using Microshaoft.Web;
@@ -383,7 +382,7 @@ namespace Microshaoft.WebApi.Controllers
                                         .Method
                                 //, 102
                             );
-#elif NETCOREAPP3_X
+#else
             var entries = _service
                                 .ProcessReaderAsAsyncEnumerable
                                     (
@@ -596,4 +595,4 @@ namespace Microshaoft.WebApi.Controllers
         }
     }
 }
-#endif
+

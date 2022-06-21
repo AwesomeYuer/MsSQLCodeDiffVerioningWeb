@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP3_X
-namespace Microshaoft.Web
+﻿namespace Microshaoft.Web
 {
     using Newtonsoft.Json.Linq;
     using System.Collections.Generic;
@@ -23,7 +22,7 @@ namespace Microshaoft.Web
                     ProcessReaderAsAsyncEnumerable
                 (
                     string actionRoutePath
-                    , JToken parameters = null
+                    , JToken parameters = null!
                     , string httpMethod = "Get"
                     //, bool enableStatistics = false
                     , int commandTimeoutInSeconds = 101
@@ -95,7 +94,7 @@ namespace Microshaoft.Web
                                 string connectionString
                                 , string dataBaseType
                                 , string storeProcedureName
-                                , JToken parameters = null
+                                , JToken parameters = null!
                                 , bool enableStatistics = false
                                 , int commandTimeoutInSeconds = 90
                             )
@@ -108,7 +107,7 @@ namespace Microshaoft.Web
                                             );
             if (success)
             {
-                var entries = executor
+                var entries = executor!
                                     .ExecuteReaderAsAsyncEnumerable
                                         (
                                             connectionString
@@ -128,4 +127,4 @@ namespace Microshaoft.Web
         
     }
 }
-#endif
+

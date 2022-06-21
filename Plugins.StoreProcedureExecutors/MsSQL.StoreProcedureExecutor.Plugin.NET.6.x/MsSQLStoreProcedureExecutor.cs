@@ -1,4 +1,4 @@
-﻿namespace Microshaoft.CompositionPlugins
+﻿ namespace Microshaoft.CompositionPlugins
 {
     using Microshaoft;
     using System.Collections.Concurrent;
@@ -12,6 +12,7 @@
                         //: IStoreProcedureExecutable
                         //    , IParametersDefinitionCacheAutoRefreshable
     {
+
         public AbstractStoreProceduresExecutor
                     <SqlConnection, SqlCommand, SqlParameter>
                         _executor = null!;

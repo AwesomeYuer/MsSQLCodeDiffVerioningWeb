@@ -40,7 +40,7 @@
               "AllowOverride": true
             }
           ],
-          "outputColumns111": [
+          "outputColumns": [
             [
               {
                 "ColumnName": "F",
@@ -107,7 +107,7 @@
               "AllowOverride": true
             }
           ],
-          "Outputs111111": {
+          "Outputs11111": {
             "$": "Outputs.ResultSets[0].Rows"
           }
         }
