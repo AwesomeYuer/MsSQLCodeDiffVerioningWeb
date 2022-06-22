@@ -7,10 +7,6 @@
     using System.Xml.Serialization;
     using System.Runtime.Serialization;
     using System.Runtime.Serialization.Json;
-    using System.Runtime.Serialization.Formatters.Binary;
-#if NETFRAMEWORK4_X
-    using System.Runtime.Serialization.Formatters.Soap;
-#endif
     public static class SerializerHelper
     {
         public static T XmlSerializerXmlToObject<T>(string Xml)
@@ -34,8 +30,8 @@
                                     )
         {
             serializer.Serialize(writer, Object);
-            using MemoryStream stream = writer.BaseStream as MemoryStream;
-            byte[] bytes = stream.ToArray();
+            using MemoryStream stream = (writer.BaseStream as MemoryStream)!;
+            byte[] bytes = stream!.ToArray();
             Encoding e = EncodingHelper.IdentifyEncoding
                                             (
                                                 bytes
@@ -119,7 +115,7 @@
             byte[] buffer = Encoding.UTF8.GetBytes(Xml);
             using MemoryStream ms = new MemoryStream(buffer);
             //ms.Position = 0;
-            T Object = (T)serializer.ReadObject(ms);
+            T Object = ((T) serializer.ReadObject(ms)!);
             ms.Close();
             //ms.Dispose();
             //ms = null;
@@ -131,69 +127,11 @@
             byte[] buffer = Encoding.UTF8.GetBytes(Xml);
             using MemoryStream ms = new MemoryStream(buffer);
             //ms.Position = 0;
-            T Object = (T)serializer.ReadObject(ms);
+            T Object = (T) serializer.ReadObject(ms)!;
             ms.Close();
             //ms.Dispose();
             return Object;
         }
-#if NETFRAMEWORK4_X
-        public static string FormatterObjectToSoap<T>
-                             (
-                                 T Object
-                             )
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                SoapFormatter formatter = new SoapFormatter();
-                formatter.Serialize(stream, Object);
-                string soap = Encoding.UTF8.GetString(stream.GetBuffer());
-                return soap;
-            }
-        }
-#endif
-
-
-#if NETFRAMEWORK4_X
-        public static T FormatterSoapToObject<T>
-                                    (
-                                        string soap
-                                    )
-        {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                SoapFormatter formater = new SoapFormatter();
-                byte[] data = Encoding.UTF8.GetBytes(soap);
-                stream.Write(data, 0, data.Length);
-                stream.Position = 0;
-                T Object = (T)formater.Deserialize(stream);
-                return Object;
-            }
-        }
-#endif
-        public static byte[] FormatterObjectToBinary<T>
-                                    (
-                                        T Object
-                                    )
-        {
-            using MemoryStream stream = new MemoryStream();
-            BinaryFormatter formater = new BinaryFormatter();
-            formater.Serialize(stream, Object);
-            byte[] buffer = stream.ToArray();
-            return buffer;
-        }
-        public static T FormatterBinaryToObject<T>
-                                    (
-                                        byte[] data
-                                    )
-        {
-            using MemoryStream stream = new MemoryStream();
-            BinaryFormatter formater = new BinaryFormatter();
-            stream.Write(data, 0, data.Length);
-            stream.Position = 0;
-            T Object = (T)formater.Deserialize(stream);
-            return Object;
-        }
-
         public static string DataContractSerializerObjectToJson<T>(T Object)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
@@ -218,7 +156,7 @@
         public static T DataContractSerializerJsonToObject<T>(string json, DataContractJsonSerializer serializer)
         {
             using MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(json));
-            T Object = (T)serializer.ReadObject(ms);
+            T Object = (T) serializer.ReadObject(ms)!;
             ms.Close();
             //ms.Dispose();
             return Object;

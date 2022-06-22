@@ -20,7 +20,6 @@
     <Compile Remove="00.Utilities\FtpWebRequestResponseHelper.cs" />
     <Compile Remove="00.Utilities\KeyedPriorityQueue.cs" />
     <Compile Remove="00.Utilities\RemotingHelper.cs" />
-    <Compile Remove="00.Utilities\SerializerHelper.cs" />
     <Compile Remove="Assembly\AssemblyResolver.cs" />
     <Compile Remove="Caches\MruCache.cs" />
     <Compile Remove="Collections\CollectionHelper.cs" />
