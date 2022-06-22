@@ -117,11 +117,10 @@ namespace Microshaoft
             switch (type)
             {
                 case JsonType.boolean:
-                    return (bool)element;
+                    return (bool) element;
                 case JsonType.number:
                     var s = element.Value;
-                    var b = false;
-                    b = int.TryParse(s, out var i);
+                    bool b = int.TryParse(s, out var i);
                     if (b)
                     {
                         return i;
@@ -137,9 +136,9 @@ namespace Microshaoft
                     //    return f;
                     //}
                     //b = decimal.TryParse()
-                    return (double)element;
+                    return (double) element;
                 case JsonType.@string:
-                    return (string)element;
+                    return (string) element;
                 case JsonType.@object:
                 case JsonType.array:
                     return new DynamicJson(element, type);
@@ -151,7 +150,10 @@ namespace Microshaoft
 
         private static JsonType GetJsonType(object target)
         {
-            if (target == null) return JsonType.@null;
+            if (target == null)
+            {
+                return JsonType.@null;
+            }
 
             switch (Type.GetTypeCode(target.GetType()))
             {
@@ -209,8 +211,22 @@ namespace Microshaoft
 
         private static IEnumerable<XStreamingElement> CreateXArray<T>(T target) where T : IEnumerable
         {
-            return target.Cast<object>()
-                .Select(o => new XStreamingElement("item", CreateTypeAttr(GetJsonType(o)), CreateJsonNode(o)));
+            return
+                target
+                    .Cast<object>()
+                    .Select
+                        (
+                            (x) =>
+                            {
+                                return
+                                    new XStreamingElement
+                                            (
+                                                "item"
+                                                , CreateTypeAttr(GetJsonType(x))
+                                                , CreateJsonNode(x)
+                                            );
+                            }
+                        );
         }
 
         private static IEnumerable<XStreamingElement> CreateXObject(object target)
@@ -310,12 +326,12 @@ namespace Microshaoft
 
         private dynamic DeserializeValue(XElement element, Type elementType)
         {
-            var value = ToValue(element);
-            if (value is DynamicJson)
+            var @value = ToValue(element);
+            if (@value is DynamicJson)
             {
-                value = ((DynamicJson)value).Deserialize(elementType);
+                @value = ((DynamicJson) @value).Deserialize(elementType);
             }
-            return Convert.ChangeType(value, elementType);
+            return Convert.ChangeType(@value, elementType);
         }
 
         private object DeserializeObject(Type targetType)
