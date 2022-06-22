@@ -21,9 +21,6 @@
     <Compile Remove="00.Utilities\KeyedPriorityQueue.cs" />
     <Compile Remove="00.Utilities\RemotingHelper.cs" />
     <Compile Remove="Assembly\AssemblyResolver.cs" />
-    <Compile Remove="Caches\MruCache.cs" />
-    <Compile Remove="Collections\CollectionHelper.cs" />
-    <Compile Remove="Collections\DictionaryHelper.cs" />
     <Compile Remove="Collections\EmptyReadOnlyDictionary.cs" />
     <Compile Remove="ConcurrentDictionary\ConcurrentDictionaryHelper.cs" />
     <Compile Remove="Configuration\ConfigurationAppSettingsHelper.cs" />

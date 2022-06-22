@@ -71,7 +71,7 @@ namespace System.Runtime
                     int countToPurge = this.highWatermark - this.lowWatermark;
                     for (int i = 0; i < countToPurge; i++)
                     {
-                        TKey keyRemove = this.mruList.Last.Value;
+                        TKey keyRemove = this.mruList.Last!.Value;
                         this.mruList.RemoveLast();
                         TValue item = this.items[keyRemove].value;
                         this.items.Remove(keyRemove);

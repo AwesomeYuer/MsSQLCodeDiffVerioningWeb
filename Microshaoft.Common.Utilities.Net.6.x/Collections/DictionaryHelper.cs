@@ -71,7 +71,7 @@ namespace Microshaoft
             Contract.Assert(@this != null);
 
             object valueObj;
-            if (@this.TryGetValue(key, out valueObj))
+            if (@this.TryGetValue(key, out valueObj!))
             {
                 if (valueObj is T)
                 {
@@ -80,7 +80,7 @@ namespace Microshaoft
                 }
             }
 
-            value = default(T);
+            value = default(T)!;
             return false;
         }
 
@@ -90,7 +90,7 @@ namespace Microshaoft
             Contract.Assert(prefix != null);
 
             TValue exactMatchValue;
-            if (@this.TryGetValue(prefix, out exactMatchValue))
+            if (@this.TryGetValue(prefix, out exactMatchValue!))
             {
                 yield return new KeyValuePair<string, TValue>(prefix, exactMatchValue);
             }

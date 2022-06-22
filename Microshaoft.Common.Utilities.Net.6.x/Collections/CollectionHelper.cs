@@ -36,7 +36,7 @@ namespace Microshaoft
         {
             Contract.Assert(@this != null);
 
-            T[] array = @this as T[];
+            T[] array = (@this as T[])!;
             if (array == null)
             {
                 array = @this.ToArray();
@@ -52,13 +52,13 @@ namespace Microshaoft
         {
             Contract.Assert(@this != null);
 
-            Collection<T> collection = @this as Collection<T>;
+            Collection<T> collection = (@this as Collection<T>)!;
             if (collection != null)
             {
                 return collection;
             }
             // Check for IList so that collection can wrap it instead of copying
-            IList<T> list = @this as IList<T>;
+            IList<T> list = (@this as IList<T>)!;
             if (list == null)
             {
                 list = new List<T>(@this);
@@ -73,7 +73,7 @@ namespace Microshaoft
         {
             Contract.Assert(@this != null);
 
-            IList<T> list = @this as IList<T>;
+            IList<T> list = (@this as IList<T>)!;
             if (list != null)
             {
                 return list;
@@ -89,12 +89,12 @@ namespace Microshaoft
         {
             Contract.Assert(@this != null);
 
-            List<T> list = @this as List<T>;
+            List<T> list = (@this as List<T>)!;
             if (list != null)
             {
                 return list;
             }
-            ListWrapperCollection<T> listWrapper = @this as ListWrapperCollection<T>;
+            ListWrapperCollection<T> listWrapper = (@this as ListWrapperCollection<T>)!;
             if (listWrapper != null)
             {
                 return listWrapper.ItemsList;
@@ -124,7 +124,7 @@ namespace Microshaoft
             switch (@this.Count)
             {
                 case 0:
-                    return default(T);
+                    return default(T)!;
 
                 case 1:
                     T value = @this[0];
@@ -132,7 +132,7 @@ namespace Microshaoft
 
                 default:
                     errorAction(errorArg1);
-                    return default(T);
+                    return default(T)!;
             }
         }
 
@@ -152,10 +152,10 @@ namespace Microshaoft
             Contract.Assert(@this != null);
             Contract.Assert(errorAction != null);
 
-            TMatch result = null;
+            TMatch result = null!;
             for (int i = 0; i < @this.Count; i++)
             {
-                TMatch typedValue = @this[i] as TMatch;
+                TMatch typedValue = (@this[i] as TMatch)!;
                 if (typedValue != null)
                 {
                     if (result == null)
@@ -165,7 +165,7 @@ namespace Microshaoft
                     else
                     {
                         errorAction(errorArg1);
-                        return null;
+                        return null!;
                     }
                 }
             }
@@ -205,6 +205,7 @@ namespace Microshaoft
         /// Convert the array to a Dictionary using the keySelector to extract keys from values and the specified comparer. Optimized for array input.
         /// </summary>
         public static Dictionary<TKey, TValue> ToDictionaryFast<TKey, TValue>(this TValue[] @this, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
+            where TKey : notnull
         {
             Contract.Assert(@this != null);
             Contract.Assert(keySelector != null);
@@ -222,11 +223,12 @@ namespace Microshaoft
         /// Convert the list to a Dictionary using the keySelector to extract keys from values and the specified comparer. Optimized for IList of T input with fast path for array.
         /// </summary>
         public static Dictionary<TKey, TValue> ToDictionaryFast<TKey, TValue>(this IList<TValue> @this, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
+            where TKey : notnull
         {
             Contract.Assert(@this != null);
             Contract.Assert(keySelector != null);
 
-            TValue[] array = @this as TValue[];
+            TValue[] array = (@this as TValue[])!;
             if (array != null)
             {
                 return ToDictionaryFast(array, keySelector, comparer);
@@ -238,16 +240,17 @@ namespace Microshaoft
         /// Convert the enumerable to a Dictionary using the keySelector to extract keys from values and the specified comparer. Fast paths for array and IList of T.
         /// </summary>
         public static Dictionary<TKey, TValue> ToDictionaryFast<TKey, TValue>(this IEnumerable<TValue> @this, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
+                where TKey : notnull
         {
             Contract.Assert(@this != null);
             Contract.Assert(keySelector != null);
 
-            TValue[] array = @this as TValue[];
+            TValue[] array = (@this as TValue[])!;
             if (array != null)
             {
                 return ToDictionaryFast(array, keySelector, comparer);
             }
-            IList<TValue> list = @this as IList<TValue>;
+            IList<TValue> list = (@this as IList<TValue>)!;
             if (list != null)
             {
                 return ToDictionaryFastNoCheck(list, keySelector, comparer);
@@ -264,6 +267,7 @@ namespace Microshaoft
         /// Convert the list to a Dictionary using the keySelector to extract keys from values and the specified comparer. Optimized for IList of T input. No checking for other types.
         /// </summary>
         private static Dictionary<TKey, TValue> ToDictionaryFastNoCheck<TKey, TValue>(IList<TValue> @this, Func<TValue, TKey> keySelector, IEqualityComparer<TKey> comparer)
+            where TKey : notnull
         {
             Contract.Assert(@this != null);
             Contract.Assert(keySelector != null);
