@@ -9,26 +9,26 @@ namespace Microshaoft.WebApi
 
     public static class JTokenWebHelper
     {
-        public static bool IsJsonRequest(this HttpRequest target)
+        public static bool IsJsonRequest(this HttpRequest @this)
         {
-            return target.ContentType == "application/json";
+            return @this.ContentType == "application/json";
         }
-        public static JToken ToJToken(this IQueryCollection target)
+        public static JToken ToJToken(this IQueryCollection @this)
         {
             return
                  ToJToken
                     (
                         (IEnumerable<KeyValuePair<string, StringValues>>)
-                            target
+                            @this
                     );
         }
-        public static JToken ToJToken(this IFormCollection target)
+        public static JToken ToJToken(this IFormCollection @this)
         {
             return
                  ToJToken
                     (
                         (IEnumerable<KeyValuePair<string, StringValues>>)
-                            target
+                            @this
                     );
         }
         public static JToken ToJToken
@@ -36,12 +36,12 @@ namespace Microshaoft.WebApi
                                     this
                                         IEnumerable
                                             <KeyValuePair<string, StringValues>>
-                                                target
+                                                @this
                                 )
         {
             IEnumerable<JProperty>
                 jProperties
-                    = target
+                    = @this
                         .Select
                             (
                                 (x) =>
