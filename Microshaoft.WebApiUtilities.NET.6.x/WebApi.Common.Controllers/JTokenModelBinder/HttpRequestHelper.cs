@@ -31,14 +31,17 @@ namespace Microshaoft.Web
                             new
                             {
                                 statusCode
-                                , resultCode
-                                , message
+                                ,
+                                resultCode
+                                ,
+                                message
                             }
                         )
-                    {
-                        StatusCode = statusCode
-                        , ContentType = "application/json"
-                    };
+                {
+                    StatusCode = statusCode
+                        ,
+                    ContentType = "application/json"
+                };
         }
 
         public static void SetJsonResult
@@ -80,7 +83,7 @@ namespace Microshaoft.Web
                                     , string message = null!
                                 )
         {
-            
+
             var statusCode = 404;
             if (resultCode == null || !resultCode.HasValue)
             {
@@ -212,7 +215,9 @@ namespace Microshaoft.Web
             JToken jToken = null!;
             void requestFormBodyProcess()
             {
-                if 
+                using var streamReader = new StreamReader(target.Body);
+                var json = streamReader.ReadToEnd();
+                if
                     (
                         !target.IsJsonRequest()
                         &&
@@ -226,11 +231,9 @@ namespace Microshaoft.Web
                 }
                 else
                 {
-                    using var streamReader = new StreamReader(target.Body);
-                    var json = streamReader.ReadToEnd();
                     if (!json.IsNullOrEmptyOrWhiteSpace())
                     {
-                        jToken = JToken.Parse(json);
+                        json.IsJson(out jToken, true);
                     }
                 }
             }
@@ -324,7 +327,7 @@ namespace Microshaoft.Web
             return r;
         }
 
-        public static async 
+        public static async
             Task<JToken> GetFormJTokenAsync
                                 (
                                     this ModelBindingContext target
@@ -340,7 +343,7 @@ namespace Microshaoft.Web
             await
                 formCollectionModelBinder
                             .BindModelAsync(target);
-            if 
+            if
                 (
                     target
                         .Result
