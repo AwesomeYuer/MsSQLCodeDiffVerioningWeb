@@ -55,11 +55,11 @@ namespace Microshaoft
         }
 
 
-        public void Add(object o)
+        public void Add(object target)
         {
             if (IsArray)
             {
-                var type = GetJsonType(o);
+                var type = GetJsonType(target);
                 xml
                     .Add
                         (
@@ -67,7 +67,7 @@ namespace Microshaoft
                                 (
                                     "item"
                                     , CreateTypeAttr(type)
-                                    , CreateJsonNode(o)
+                                    , CreateJsonNode(target)
                                 )
                         );
             }

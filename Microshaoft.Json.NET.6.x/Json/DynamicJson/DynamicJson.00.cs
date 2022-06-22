@@ -145,15 +145,15 @@ namespace Microshaoft
                     return new DynamicJson(element, type);
                 case JsonType.@null:
                 default:
-                    return null;
+                    return null!;
             }
         }
 
-        private static JsonType GetJsonType(object obj)
+        private static JsonType GetJsonType(object target)
         {
-            if (obj == null) return JsonType.@null;
+            if (target == null) return JsonType.@null;
 
-            switch (Type.GetTypeCode(obj.GetType()))
+            switch (Type.GetTypeCode(target.GetType()))
             {
                 case TypeCode.Boolean:
                     return JsonType.boolean;
@@ -174,7 +174,7 @@ namespace Microshaoft
                 case TypeCode.Byte:
                     return JsonType.number;
                 case TypeCode.Object:
-                    return (obj is IEnumerable) ? JsonType.array : JsonType.@object;
+                    return (target is IEnumerable) ? JsonType.array : JsonType.@object;
                 case TypeCode.DBNull:
                 case TypeCode.Empty:
                 default:
@@ -187,37 +187,37 @@ namespace Microshaoft
             return new XAttribute("type", type.ToString());
         }
 
-        private static object CreateJsonNode(object obj)
+        private static object CreateJsonNode(object target)
         {
-            var type = GetJsonType(obj);
+            var type = GetJsonType(target);
             switch (type)
             {
                 case JsonType.@string:
                 case JsonType.number:
-                    return obj;
+                    return target;
                 case JsonType.boolean:
-                    return obj.ToString().ToLower();
+                    return target.ToString()!.ToLower();
                 case JsonType.@object:
-                    return CreateXObject(obj);
+                    return CreateXObject(target);
                 case JsonType.array:
-                    return CreateXArray((obj as IEnumerable)!);
+                    return CreateXArray((target as IEnumerable)!);
                 case JsonType.@null:
                 default:
                     return null!;
             }
         }
 
-        private static IEnumerable<XStreamingElement> CreateXArray<T>(T obj) where T : IEnumerable
+        private static IEnumerable<XStreamingElement> CreateXArray<T>(T target) where T : IEnumerable
         {
-            return obj.Cast<object>()
+            return target.Cast<object>()
                 .Select(o => new XStreamingElement("item", CreateTypeAttr(GetJsonType(o)), CreateJsonNode(o)));
         }
 
-        private static IEnumerable<XStreamingElement> CreateXObject(object obj)
+        private static IEnumerable<XStreamingElement> CreateXObject(object target)
         {
-            return obj!.GetType()
+            return target!.GetType()
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                .Select(pi => new { Name = pi.Name, Value = pi.GetValue(obj, null) })
+                .Select(pi => new { Name = pi.Name, Value = pi.GetValue(target, null) })
                 .Select(a => new XStreamingElement(a.Name, CreateTypeAttr(GetJsonType(a.Value!)), CreateJsonNode(a!.Value!)));
         }
 
@@ -372,21 +372,21 @@ namespace Microshaoft
         }
 
         // Delete
-        public override bool TryInvoke(InvokeBinder binder, object[]? args, out object result)
+        public override bool TryInvoke(InvokeBinder binder, object?[]? args, out object result)
         {
             result =
                     (IsArray)
                     ?
-                    Delete((int)args[0])
+                    Delete((int) args![0]!)
                     :
-                    Delete((string)args[0]);
+                    Delete((string) args![0]!);
             return true;
         }
 
         // IsDefined, if has args then TryGetMember
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object?[]? args, out object result)
         {
-            if (args.Length > 0)
+            if (args!.Length > 0)
             {
                 result = null!;
                 return false;
@@ -455,58 +455,58 @@ namespace Microshaoft
                 TryGet(xml.Element(binder.Name)!, out result);
         }
 
-        private bool TrySet(string name, object value)
+        private bool TrySet(string name, object @value)
         {
-            var type = GetJsonType(value);
+            var type = GetJsonType(@value);
             var element = xml.Element(name);
             if (element == null)
             {
-                xml.Add(new XElement(name, CreateTypeAttr(type), CreateJsonNode(value)));
+                xml.Add(new XElement(name, CreateTypeAttr(type), CreateJsonNode(@value)));
             }
             else
             {
                 element!.Attribute("type")!.Value = type.ToString();
-                element.ReplaceNodes(CreateJsonNode(value));
+                element.ReplaceNodes(CreateJsonNode(@value));
             }
 
             return true;
         }
 
-        private bool TrySet(int index, object value)
+        private bool TrySet(int index, object @value)
         {
-            var type = GetJsonType(value);
+            var type = GetJsonType(@value);
             var e = xml.Elements().ElementAtOrDefault(index);
             if (e == null)
             {
-                xml.Add(new XElement("item", CreateTypeAttr(type), CreateJsonNode(value)));
+                xml.Add(new XElement("item", CreateTypeAttr(type), CreateJsonNode(@value)));
             }
             else
             {
                 e!.Attribute("type")!.Value = type.ToString();
-                e.ReplaceNodes(CreateJsonNode(value));
+                e.ReplaceNodes(CreateJsonNode(@value));
             }
 
             return true;
         }
 
-        public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
+        public override bool TrySetIndex(SetIndexBinder binder, object?[]? indexes, object? @value)
         {
             return
                 (IsArray)
                 ?
-                TrySet((int)indexes[0], value)
+                TrySet((int) indexes![0]!, @value!)
                 :
-                TrySet((string)indexes[0], value);
+                TrySet((string) indexes![0]!, @value!);
         }
 
-        public override bool TrySetMember(SetMemberBinder binder, object value)
+        public override bool TrySetMember(SetMemberBinder binder, object? @value)
         {
             return
                 (IsArray)
                 ?
-                TrySet(int.Parse(binder.Name), value)
+                TrySet(int.Parse(binder.Name), @value!)
                 :
-                TrySet(binder.Name, value);
+                TrySet(binder.Name, @value!);
         }
 
         public override IEnumerable<string> GetDynamicMemberNames()
