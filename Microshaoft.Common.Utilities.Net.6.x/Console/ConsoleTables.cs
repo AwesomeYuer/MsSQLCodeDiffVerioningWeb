@@ -38,7 +38,7 @@ namespace Microshaoft.ConsoleTables
         public IList<object[]> Rows { get; protected set; }
 
         public ConsoleTableOptions Options { get; protected set; }
-        public Type[] ColumnTypes { get; private set; }
+        public Type[] ColumnTypes { get; private set; } = null!;
 
         public static HashSet<Type> NumericTypes = new HashSet<Type>
         {
@@ -262,7 +262,7 @@ namespace Microshaoft.ConsoleTables
                 .Select((t, i) => Rows.Select(x => x[i])
                     .Union(new[] { Columns[i] })
                     .Where(x => x != null)
-                    .Select(x => x.ToString().Length).Max())
+                    .Select(x => x.ToString()!.Length).Max())
                 .ToList();
             return columnLengths;
         }
@@ -302,8 +302,8 @@ namespace Microshaoft.ConsoleTables
         {
             return
                 typeof(T)
-                    .GetProperty(column)
-                    .GetValue(target, null);
+                    .GetProperty(column)!
+                    .GetValue(target, null)!;
         }
 
         private static IEnumerable<Type> GetColumnsType<T>()

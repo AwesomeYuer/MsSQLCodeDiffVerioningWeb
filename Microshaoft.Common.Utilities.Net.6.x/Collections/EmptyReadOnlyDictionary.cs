@@ -8,6 +8,7 @@ namespace Microshaoft
     using System.Collections.ObjectModel;
 
     public class EmptyReadOnlyDictionary<TKey, TValue>
+        where TKey : notnull
     {
         private static readonly ReadOnlyDictionary<TKey, TValue> _value = new ReadOnlyDictionary<TKey, TValue>(new Dictionary<TKey, TValue>());
 
