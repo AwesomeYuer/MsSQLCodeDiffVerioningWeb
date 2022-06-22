@@ -34,11 +34,30 @@ GET  http://localhost:5000/api/StoreProcedureExecutor/bigdataexport/mssql/aaa/bb
 
 ###
 
-GET  http://localhost:5000/api/StoreProcedureExecutor/echo3 HTTP/1.1
+GET  http://localhost:5000/api/StoreProcedureExecutor/echo3?{a:1} HTTP/1.1
 
 
 ###
 
-GET  http://localhost:5000/api/admin/echo HTTP/1.1
+GET  http://localhost:5000/api/admin/echo?{} HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWFhIiwiYWEiOiJBQUFBIiwibmJmIjoxNTgxMDU3MjMwLCJleHAiOjE1ODEwNjA4MzAsImlhdCI6MTU4MTA1NzIzMCwiaXNzIjoiSXNzdWVyMSIsImF1ZCI6IkF1ZGllbmNlMSJ9.PBXgD2ZS1pwRgD3nyOumvcjMt0_u6-Ph0xyev_I3Wyo
 
+###
+
+GET  https://localhost:7095/api/admin/echo?a=111&b=2 HTTP/1.1
+
+
+###
+
+POST  https://localhost:7095/api/admin/echo?a=111&b=2 HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0Aselect+'%22111%22'+as+F%2C+*%0Afrom%0Asys.objects%0A%0Aselect+'%22222%22'+as+F%2C+*%0Afrom%0Asys.objects&rowcount=100
+
+
+###
+
+POST  https://localhost:7095/api/admin/echo?a=111&b=2 HTTP/1.1
+content-type: application/json
+
+sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0Aselect+'%22111%22'+as+F%2C+*%0Afrom%0Asys.objects%0A%0Aselect+'%22222%22'+as+F%2C+*%0Afrom%0Asys.objects&rowcount=100
