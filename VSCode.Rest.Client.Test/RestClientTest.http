@@ -1,7 +1,10 @@
 
+###
 
 POST http://localhost:5000/api/StoreProcedureExecutor/result/mssql/usp_executesql HTTP/1.1
 content-type: application/x-www-form-urlencoded
+
+sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0Aselect+'%22111%22'+as+F%2C+*%0Afrom%0Asys.objects%0A%0Aselect+'%22222%22'+as+F%2C+*%0Afrom%0Asys.objects&rowcount=100
 
 ###
 
@@ -20,9 +23,22 @@ sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0A
 
 ###
 
-GET  http://localhost:5000/api/StoreProcedureExecutor/result/mssql/aaa/bbb/objEcts?searchobjectname1=ll HTTP/1.1
+GET  http://localhost:5000/api/StoreProcedureExecutor/result/mssql/aaa/bbb/objEcts?searchobjectname=ll HTTP/1.1
 
 ###
 
-GET  http://localhost:5000/api/StoreProcedureExecutor/bigdataexport/mssql/aaa/bbb/objEcts HTTP/1.1
+
+###
+
+GET  http://localhost:5000/api/StoreProcedureExecutor/bigdataexport/mssql/aaa/bbb/objEcts?searchobjectname=s HTTP/1.1
+
+###
+
+GET  http://localhost:5000/api/StoreProcedureExecutor/echo3 HTTP/1.1
+
+
+###
+
+GET  http://localhost:5000/api/admin/echo HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImFhYWFhIiwiYWEiOiJBQUFBIiwibmJmIjoxNTgxMDU3MjMwLCJleHAiOjE1ODEwNjA4MzAsImlhdCI6MTU4MTA1NzIzMCwiaXNzIjoiSXNzdWVyMSIsImF1ZCI6IkF1ZGllbmNlMSJ9.PBXgD2ZS1pwRgD3nyOumvcjMt0_u6-Ph0xyev_I3Wyo
 

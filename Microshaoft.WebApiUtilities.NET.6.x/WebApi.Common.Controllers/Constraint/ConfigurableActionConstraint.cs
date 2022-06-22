@@ -70,7 +70,7 @@
                                                     .MethodInfo
                                                     .GetParameters()
                                                     .Length;
-                var hasValue = false;
+                bool hasValue;
                 if (request.Method == "GET")
                 {
                     hasValue= request.QueryString.HasValue;
@@ -86,7 +86,25 @@
                 r = false;
                 var currentControllerType = currentControllerActionDescriptor.ControllerTypeInfo.AsType();
                 var routeContext = actionConstraintContext.RouteContext;
-                var actionRoutePath = routeContext.RouteData.Values[" "]!.ToString();
+
+                var actionRoutePath = string.Empty;
+                if 
+                    (
+                        routeContext
+                                .RouteData
+                                .Values
+                                .TryGetValue
+                                        (
+                                            " "
+                                            , out var @value
+                                        )
+                    )
+                {
+                    if (@value != null)
+                    {
+                        actionRoutePath = @value.ToString();
+                    }
+                }
                 if
                     (
                         typeof(TControllerType)
