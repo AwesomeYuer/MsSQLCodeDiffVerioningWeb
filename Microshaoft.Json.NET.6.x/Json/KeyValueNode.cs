@@ -89,7 +89,7 @@ namespace Test
                         .CreateFromJToken
                             (
                                 (JToken)album
-                                , null
+                                , null!
                             );
             Console.WriteLine
                 (
@@ -141,51 +141,51 @@ namespace Microshaoft
         {
             protected set;
             get;
-        }
+        } = null!;
 
         public KeyObjectValueNode AsKeyObjectValueNode
         {
             protected set;
             get;
-        }
+        } = null!;
         public KeyValuePairNode AsKeyValuePairNode
         {
             protected set;
             get;
-        }
+        } = null!;
 
         public ObjectValueNode AsObjectValueNode
         {
             protected set;
             get;
-        }
+        } = null!;
 
         public KeyValueNode Parent
         {
             set;
             get;
-        }
+        } = null!;
         public KeyValueNode Instance
         {
             set;
             get;
-        }
+        } = null!;
         public IEnumerable<KeyValueNode> Children
         {
             get;
             internal set;
-        }
+        } = null!;
 
         public JToken NodeJToken
         {
             get;
             set;
-        }
+        } = null!;
 
         protected bool TryGetJValue(JToken jToken, out JValue jValue)
         {
             var r = false;
-            jValue = null;
+            jValue = null!;
             if
                 (
                     NodeJToken is JProperty jProperty
@@ -343,7 +343,7 @@ namespace Microshaoft
             set;
             get;
 
-        }
+        } = null!;
         public KeyValueNode this[int index]
         {
             get
@@ -387,7 +387,7 @@ namespace Microshaoft
                             = new ObjectValueNode
                                         (
                                             jToken
-                                            , ((JValue) jToken).Value
+                                            , ((JValue) jToken).Value!
                                             , parentJsonNode
                                         );
                 if (parentJsonNode is KeyArrayValueNode)
@@ -409,7 +409,7 @@ namespace Microshaoft
                                         ,
                                             (
                                                 (JValue)jProperty.Value
-                                            ).Value
+                                            ).Value!
                                         , parentJsonNode
                                     );
                     if (parentJsonNode != null)
@@ -521,7 +521,7 @@ namespace Microshaoft
                 var jsonArrayNode = new KeyArrayValueNode
                                                         (
                                                             jToken
-                                                            , null
+                                                            , null!
                                                             , parentJsonNode
                                                         );
                 jsonArrayNode
@@ -552,7 +552,7 @@ namespace Microshaoft
                 KeyObjectValueNode jsonObjectNode = new KeyObjectValueNode
                                                                 (
                                                                     jToken
-                                                                    , null
+                                                                    , null!
                                                                     , parentJsonNode
                                                                 );
                 jsonObjectNode
@@ -607,7 +607,7 @@ namespace Microshaoft
         }
         public override string ToString()
         {
-            return Value != null ? Value.ToString() : "<null>";
+            return Value != null ? Value.ToString()! : "<null>";
         }
 
     }
