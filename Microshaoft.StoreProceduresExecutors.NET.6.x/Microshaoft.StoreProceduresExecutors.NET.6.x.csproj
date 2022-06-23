@@ -9,10 +9,6 @@
 
   <ItemGroup>
     <Compile Remove="DataReader\DataReaderHelper.02.cs" />
-    <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.02.mysql.cs" />
-    <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.03.npgsql.cs" />
-    <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.04.oracle.cs" />
-    <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.05.db2.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,10 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
     <ProjectReference Include="..\Microshaoft.Json.NET.6.x\Microshaoft.Json.NET.6.x.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SqlDbParameter\MySql\" />
   </ItemGroup>
 
 </Project>
