@@ -1,5 +1,4 @@
-﻿#if !NETCOREAPP2_X
-namespace Microshaoft
+﻿namespace Microshaoft
 {
     using Newtonsoft.Json.Linq;
     using System.Collections.Generic;
@@ -26,4 +25,3 @@ namespace Microshaoft
                         );
     }
 }
-#endif

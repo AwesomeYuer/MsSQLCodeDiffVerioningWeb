@@ -1,5 +1,4 @@
-﻿#if !NETCOREAPP2_X
-namespace Microshaoft.CompositionPlugins
+﻿namespace Microshaoft.CompositionPlugins
 {
     using Microshaoft;
     using Newtonsoft.Json.Linq;
@@ -82,4 +81,3 @@ namespace Microshaoft.CompositionPlugins
         }
     }
 }
-#endif
