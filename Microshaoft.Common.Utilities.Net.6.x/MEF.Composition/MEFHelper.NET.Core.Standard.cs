@@ -82,7 +82,7 @@ namespace Microshaoft
                     )
         {
             IEnumerable<T> result = null!;
-            var assemblies = 
+            var assemblies =
                         Directory
                             .GetFiles
                                 (
@@ -95,8 +95,8 @@ namespace Microshaoft
                                     AssemblyLoadContext
                                         .Default
                                         .LoadFromAssemblyPath
-                                )
-                            .ToList();
+                                );
+                            //.ToList();
             var configuration = new ContainerConfiguration()
                                                     .WithAssemblies
                                                         (
