@@ -254,14 +254,14 @@
                             dataReader
                                 .NextResultAsync()
                     );
-#if NETCOREAPP3_X
+//#if NETCOREAPP3_X
                 await
                     dataReader
                             .CloseAsync();
-#else
-                dataReader
-                        .Close();
-#endif
+//#else
+//                dataReader
+//                        .Close();
+//#endif
             }
             finally
             {

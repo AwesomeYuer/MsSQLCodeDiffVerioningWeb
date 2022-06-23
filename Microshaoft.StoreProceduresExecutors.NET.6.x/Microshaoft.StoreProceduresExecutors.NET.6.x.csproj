@@ -13,11 +13,6 @@
     <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.03.npgsql.cs" />
     <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.04.oracle.cs" />
     <Compile Remove="SqlDbParameter\MySql\DbParameterHelper.05.db2.cs" />
-    <Compile Remove="Sql\MySql\StoreProceduresExecutor.02.MySql.cs" />
-    <Compile Remove="Sql\MySql\StoreProceduresExecutor.03.NpgSql.cs" />
-    <Compile Remove="Sql\MySql\StoreProceduresExecutor.04.Oracle.cs" />
-    <Compile Remove="Sql\MySql\StoreProceduresExecutor.05.Sqlite.cs" />
-    <Compile Remove="Sql\MySql\StoreProceduresExecutor.06.DB2.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="SqlDbParameter\MySql\" />
-    <Folder Include="Sql\MySql\" />
   </ItemGroup>
 
 </Project>

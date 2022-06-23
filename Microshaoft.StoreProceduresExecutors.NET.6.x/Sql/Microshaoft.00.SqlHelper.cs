@@ -12,20 +12,20 @@
                             GetJValue
                                 <TDbParameter>
                                     (
-                                        this DbParameter target
+                                        this DbParameter @this
                                         , Func<TDbParameter, JValue>
                                                 onDbParameterToJValueProcessFunc
                                     )
                             where
                                 TDbParameter : DbParameter
         {
-            var dbParameter = (TDbParameter) target;
+            var dbParameter = (TDbParameter) @this;
             return
                 onDbParameterToJValueProcessFunc(dbParameter);
         }
         public static TDbParameter ShallowClone<TDbParameter>
                         (
-                            this DbParameter target
+                            this DbParameter @this
                             , Func<TDbParameter, TDbParameter, TDbParameter>
                                     onSetTypeProcessFunc
                             , bool includeValue = false
@@ -35,16 +35,16 @@
         {
             var clone = new TDbParameter
             {
-                ParameterName = target.ParameterName
-                , Size = target.Size
-                , Direction = target.Direction
-                , Scale = target.Scale
-                , Precision = target.Precision
+                ParameterName = @this.ParameterName
+                , Size = @this.Size
+                , Direction = @this.Direction
+                , Scale = @this.Scale
+                , Precision = @this.Precision
             };
             if (includeValue)
             {
                 //Shallow copy
-                var targetValue = target.Value;
+                var targetValue = @this.Value;
                 if
                     (
                         targetValue != DBNull.Value
@@ -65,7 +65,7 @@
             }
             clone = onSetTypeProcessFunc
                             (
-                                (TDbParameter) target
+                                (TDbParameter) @this
                                 , clone
                             );
             return clone;

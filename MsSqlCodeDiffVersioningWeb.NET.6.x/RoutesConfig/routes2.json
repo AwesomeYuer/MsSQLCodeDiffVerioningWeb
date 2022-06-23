@@ -241,6 +241,7 @@
           "allow": true,
           "EnableStatistics": true,
           "commandtimeoutInSeconds": 103,
+          "isAsyncExecuting": true,
           "Outputs111": {
             "aaa.bbb.ddd": "Outputs.ResultSets[0].Rows",
             "bbb": "Outputs.Parameters",
