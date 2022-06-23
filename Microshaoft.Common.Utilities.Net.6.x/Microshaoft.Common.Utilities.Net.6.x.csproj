@@ -18,9 +18,7 @@
     <Compile Remove="00.Utilities\CodeTimerPerformance.cs" />
     <Compile Remove="00.Utilities\CryptographyHelper.cs" />
     <Compile Remove="00.Utilities\FtpWebRequestResponseHelper.cs" />
-    <Compile Remove="00.Utilities\KeyedPriorityQueue.cs" />
     <Compile Remove="00.Utilities\RemotingHelper.cs" />
-    <Compile Remove="Assembly\AssemblyResolver.cs" />
     <Compile Remove="Configuration\ConfigurationAppSettingsHelper.cs" />
   </ItemGroup>
 
@@ -29,11 +27,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Connections.Abstractions" Version="6.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Composition" Version="6.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.19.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.20.0" />
     <PackageReference Include="System.IO.Pipelines" Version="6.0.3" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.18" />
   </ItemGroup>

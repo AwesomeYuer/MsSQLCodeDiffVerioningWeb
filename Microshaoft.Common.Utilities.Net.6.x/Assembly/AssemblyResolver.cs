@@ -30,7 +30,7 @@ namespace Microshaoft
                 new PackageCompilationAssemblyResolver()
             });
 
-            this.loadContext = AssemblyLoadContext.GetLoadContext(this.Assembly);
+            this.loadContext = AssemblyLoadContext.GetLoadContext(this.Assembly)!;
             this.loadContext.Resolving += OnResolving;
         }
 
@@ -49,7 +49,7 @@ namespace Microshaoft
             }
 
             RuntimeLibrary library =
-                this.dependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch);
+                this.dependencyContext.RuntimeLibraries.FirstOrDefault(NamesMatch)!;
             if (library != null)
             {
                 var wrapper = new CompilationLibrary(
@@ -69,7 +69,7 @@ namespace Microshaoft
                 }
             }
 
-            return null;
+            return null!;
         }
     }
 }
