@@ -271,10 +271,10 @@
         }
       }
     },
-    "npgsql": {
+    "pgsql": {
       "HttPGet": {
         "connectionID": "c4",
-        "storeProcedureName": "getfoo1",
+        "storeProcedureName": "zsp_test2",
         "EnableStatistics": true,
         "commandtimeoutInSeconds": 103,
         "defaultAccessing": {

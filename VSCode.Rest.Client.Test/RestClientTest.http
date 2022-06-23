@@ -7,6 +7,20 @@ content-type: application/x-www-form-urlencoded
 sql=set+statistics+io+on%0Aset+statistics+time+on%0Aset+statistics+profile+on%0Aselect+'%22111%22'+as+F%2C+*%0Afrom%0Asys.objects%0A%0Aselect+'%22222%22'+as+F%2C+*%0Afrom%0Asys.objects&rowcount=100
 
 ###
+# MySQL
+GET  http://localhost:5000/api/StoreProcedureExecutor/result/mysql?param1=100 HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+
+
+###
+# pgSQL
+
+GET  http://localhost:5000/api/StoreProcedureExecutor/result/pgsql HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+
+###
 
 POST http://localhost:5000/api/StoreProcedureExecutor/bigdataexport/mssql/usp_executesql HTTP/1.1
 content-type: application/x-www-form-urlencoded

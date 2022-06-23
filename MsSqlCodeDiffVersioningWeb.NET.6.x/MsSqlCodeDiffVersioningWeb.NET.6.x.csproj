@@ -1204,7 +1204,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
     <ProjectReference Include="..\Microshaoft.Json.NET.6.x\Microshaoft.Json.NET.6.x.csproj" />
-    <ProjectReference Include="..\Microshaoft.StoreProceduresExecutors.NET.6.x\Microshaoft.StoreProceduresExecutors.NET.6.x.csproj" />
     <ProjectReference Include="..\Microshaoft.WebApiUtilities.NET.6.x\Microshaoft.WebApiUtilities.NET.6.x.csproj" />
     <ProjectReference Include="..\Plugins.RequestJTokenValidators\JTokenValidatorSamplePlugin.NET.6.x\JTokenValidatorSamplePlugin.NET.6.x.csproj" />
     <ProjectReference Include="..\Plugins.StoreProcedureExecutors\MySQL.StoreProcedureExecutor.Plugin.NET.6.x\MySQL.StoreProcedureExecutor.Plugin.NET.6.x.csproj" />
