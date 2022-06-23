@@ -9,7 +9,7 @@ namespace Microshaoft
     {
         public static object SetGetValueAsObject
                                     (
-                                        this DB2Parameter target
+                                        this DB2Parameter @this
                                         , JToken jValue 
                                     )
         {
@@ -32,30 +32,30 @@ namespace Microshaoft
                 var jValueText = jValue.ToString();
                 if
                     (
-                        target.DB2Type == DB2Type.LongVarChar
+                        @this.DB2Type == DB2Type.LongVarChar
                         ||
-                        target.DB2Type == DB2Type.VarChar
+                        @this.DB2Type == DB2Type.VarChar
                         ||
-                        target.DB2Type == DB2Type.NVarChar
+                        @this.DB2Type == DB2Type.NVarChar
                         ||
-                        target.DB2Type == DB2Type.Char
+                        @this.DB2Type == DB2Type.Char
                         ||
-                        target.DB2Type == DB2Type.NChar
+                        @this.DB2Type == DB2Type.NChar
                     )
                 {
                     @return = jValueText;
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.Date
+                        @this.DB2Type == DB2Type.Date
                         ||
-                        target.DB2Type == DB2Type.DateTime
+                        @this.DB2Type == DB2Type.DateTime
                         ||
-                        target.DB2Type == DB2Type.Time
+                        @this.DB2Type == DB2Type.Time
                         ||
-                        target.DB2Type == DB2Type.Timestamp
+                        @this.DB2Type == DB2Type.Timestamp
                         ||
-                        target.DB2Type == DB2Type.TimeStampWithTimeZone
+                        @this.DB2Type == DB2Type.TimeStampWithTimeZone
                     )
                 {
                     if
@@ -73,7 +73,7 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.Boolean
+                        @this.DB2Type == DB2Type.Boolean
                     )
                 {
                     if
@@ -91,7 +91,7 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.Decimal
+                        @this.DB2Type == DB2Type.Decimal
                     )
                 {
                     if
@@ -109,11 +109,11 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.Double
+                        @this.DB2Type == DB2Type.Double
                         ||
-                        target.DB2Type == DB2Type.Real
+                        @this.DB2Type == DB2Type.Real
                         ||
-                        target.DB2Type == DB2Type.Real370
+                        @this.DB2Type == DB2Type.Real370
                     )
                 {
                     if
@@ -131,11 +131,11 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.Float
+                        @this.DB2Type == DB2Type.Float
                         ||
-                        target.DB2Type == DB2Type.SmallFloat
+                        @this.DB2Type == DB2Type.SmallFloat
                         ||
-                        target.DB2Type == DB2Type.DecimalFloat
+                        @this.DB2Type == DB2Type.DecimalFloat
                     )
                 {
                     if
@@ -153,7 +153,7 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.Byte
+                        @this.DB2Type == DB2Type.Byte
                     )
                 {
                     if
@@ -171,7 +171,7 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.BigInt
+                        @this.DB2Type == DB2Type.BigInt
                     )
                 {
                     if
@@ -189,7 +189,7 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.Integer
+                        @this.DB2Type == DB2Type.Integer
                     )
                 {
                     if
@@ -207,9 +207,9 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.DB2Type == DB2Type.SmallInt
+                        @this.DB2Type == DB2Type.SmallInt
                         ||
-                        target.DB2Type == DB2Type.Int8
+                        @this.DB2Type == DB2Type.Int8
                     )
                 {
                     if

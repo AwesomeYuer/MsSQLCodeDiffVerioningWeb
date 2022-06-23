@@ -7,7 +7,7 @@
     {
         public static object SetGetValueAsObject
                                     (
-                                        this OracleParameter target
+                                        this OracleParameter @this
                                         , JToken jValue 
                                     )
         {
@@ -30,26 +30,26 @@
                 var jValueText = jValue.ToString();
                 if
                     (
-                        target.OracleDbType == OracleDbType.Varchar2
+                        @this.OracleDbType == OracleDbType.Varchar2
                         ||
-                        target.OracleDbType == OracleDbType.NVarchar2
+                        @this.OracleDbType == OracleDbType.NVarchar2
                         ||
-                        target.OracleDbType == OracleDbType.Char
+                        @this.OracleDbType == OracleDbType.Char
                         ||
-                        target.OracleDbType == OracleDbType.NChar
+                        @this.OracleDbType == OracleDbType.NChar
                     )
                 {
                     @return = jValueText;
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Date
+                        @this.OracleDbType == OracleDbType.Date
                         ||
-                        target.OracleDbType == OracleDbType.TimeStamp
+                        @this.OracleDbType == OracleDbType.TimeStamp
                         ||
-                        target.OracleDbType == OracleDbType.TimeStampLTZ
+                        @this.OracleDbType == OracleDbType.TimeStampLTZ
                         ||
-                        target.OracleDbType == OracleDbType.TimeStampTZ
+                        @this.OracleDbType == OracleDbType.TimeStampTZ
                     )
                 {
                     if
@@ -67,7 +67,7 @@
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Boolean
+                        @this.OracleDbType == OracleDbType.Boolean
                     )
                 {
                     if
@@ -85,7 +85,7 @@
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Decimal
+                        @this.OracleDbType == OracleDbType.Decimal
                     )
                 {
                     if
@@ -103,7 +103,7 @@
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Double
+                        @this.OracleDbType == OracleDbType.Double
                     )
                 {
                     var b = double
@@ -119,7 +119,7 @@
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Raw
+                        @this.OracleDbType == OracleDbType.Raw
                     )
                 {
                     if
@@ -137,9 +137,9 @@
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Long
+                        @this.OracleDbType == OracleDbType.Long
                         ||
-                        target.OracleDbType == OracleDbType.Int64
+                        @this.OracleDbType == OracleDbType.Int64
                     )
                 {
                     if
@@ -157,7 +157,7 @@
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Int32
+                        @this.OracleDbType == OracleDbType.Int32
                     )
                 {
                     if
@@ -175,7 +175,7 @@
                 }
                 else if
                     (
-                        target.OracleDbType == OracleDbType.Int16
+                        @this.OracleDbType == OracleDbType.Int16
                     )
                 {
                     if

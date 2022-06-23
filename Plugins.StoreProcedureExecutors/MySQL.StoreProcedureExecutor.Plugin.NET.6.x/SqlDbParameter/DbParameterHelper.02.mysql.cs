@@ -7,7 +7,7 @@
     {
         public static object SetGetValueAsObject
                                     (
-                                        this MySqlParameter target
+                                        this MySqlParameter @this
                                         , JToken jValue
                                     )
         {
@@ -30,22 +30,22 @@
                 var jValueText = jValue.ToString();
                 if
                     (
-                        target.MySqlDbType == MySqlDbType.VarChar
+                        @this.MySqlDbType == MySqlDbType.VarChar
                         ||
-                        target.MySqlDbType == MySqlDbType.Text
+                        @this.MySqlDbType == MySqlDbType.Text
                         ||
-                        target.MySqlDbType == MySqlDbType.VarString
+                        @this.MySqlDbType == MySqlDbType.VarString
                     )
                 {
                     @return = jValueText;
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.DateTime
+                        @this.MySqlDbType == MySqlDbType.DateTime
                         ||
-                        target.MySqlDbType == MySqlDbType.Date
+                        @this.MySqlDbType == MySqlDbType.Date
                         ||
-                        target.MySqlDbType == MySqlDbType.DateTime
+                        @this.MySqlDbType == MySqlDbType.DateTime
                     )
                 {
                     if 
@@ -63,7 +63,7 @@
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.Bit
+                        @this.MySqlDbType == MySqlDbType.Bit
                     )
                 {
                     if
@@ -81,7 +81,7 @@
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.Decimal
+                        @this.MySqlDbType == MySqlDbType.Decimal
                     )
                 {
                     if
@@ -99,7 +99,7 @@
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.Float
+                        @this.MySqlDbType == MySqlDbType.Float
                     )
                 {
                     if
@@ -117,7 +117,7 @@
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.Guid
+                        @this.MySqlDbType == MySqlDbType.Guid
                     )
                 {
                     if
@@ -135,7 +135,7 @@
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.UInt16
+                        @this.MySqlDbType == MySqlDbType.UInt16
                     )
                 {
                     if
@@ -153,9 +153,9 @@
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.UInt24
+                        @this.MySqlDbType == MySqlDbType.UInt24
                         ||
-                        target.MySqlDbType == MySqlDbType.UInt32
+                        @this.MySqlDbType == MySqlDbType.UInt32
                     )
                 {
                     if
@@ -173,7 +173,7 @@
                 }
                 else if
                     (
-                        target.MySqlDbType == MySqlDbType.UInt64
+                        @this.MySqlDbType == MySqlDbType.UInt64
                     )
                 {
                     if
@@ -191,7 +191,7 @@
                 }
                 else if
                    (
-                       target.MySqlDbType == MySqlDbType.Int16
+                       @this.MySqlDbType == MySqlDbType.Int16
                    )
                 {
                     if
@@ -209,9 +209,9 @@
                 }
                 else if
                    (
-                        target.MySqlDbType == MySqlDbType.Int24
+                        @this.MySqlDbType == MySqlDbType.Int24
                         ||
-                        target.MySqlDbType == MySqlDbType.Int32
+                        @this.MySqlDbType == MySqlDbType.Int32
                    )
                 {
                     if
@@ -229,7 +229,7 @@
                 }
                 else if
                    (
-                        target.MySqlDbType == MySqlDbType.Int64
+                        @this.MySqlDbType == MySqlDbType.Int64
                    )
                 {
                     if

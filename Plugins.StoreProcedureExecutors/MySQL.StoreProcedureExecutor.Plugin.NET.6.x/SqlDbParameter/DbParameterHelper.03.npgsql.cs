@@ -1,5 +1,4 @@
-﻿#if !XAMARIN
-namespace Microshaoft
+﻿namespace Microshaoft
 {
     using Newtonsoft.Json.Linq;
     using Npgsql;
@@ -9,7 +8,7 @@ namespace Microshaoft
     {
         public static object SetGetValueAsObject
                                     (
-                                        this NpgsqlParameter target
+                                        this NpgsqlParameter @this
                                         , JToken jValue
                                     )
         {
@@ -32,20 +31,20 @@ namespace Microshaoft
                 var jValueText = jValue.ToString();
                 if
                 (
-                    target.NpgsqlDbType == NpgsqlDbType.Varchar
+                    @this.NpgsqlDbType == NpgsqlDbType.Varchar
                     ||
-                    target.NpgsqlDbType == NpgsqlDbType.Text
+                    @this.NpgsqlDbType == NpgsqlDbType.Text
                     ||
-                    target.NpgsqlDbType == NpgsqlDbType.Char
+                    @this.NpgsqlDbType == NpgsqlDbType.Char
                 )
                 {
                     @return = jValueText;
                 }
                 else if
                     (
-                        target.NpgsqlDbType == NpgsqlDbType.Date
+                        @this.NpgsqlDbType == NpgsqlDbType.Date
                         ||
-                        target.NpgsqlDbType == NpgsqlDbType.Time
+                        @this.NpgsqlDbType == NpgsqlDbType.Time
                     )
                 {
                     if
@@ -63,7 +62,7 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.NpgsqlDbType == NpgsqlDbType.Bit
+                        @this.NpgsqlDbType == NpgsqlDbType.Bit
                     )
                 {
                     if
@@ -81,9 +80,9 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.NpgsqlDbType == NpgsqlDbType.Double
+                        @this.NpgsqlDbType == NpgsqlDbType.Double
                         ||
-                        target.NpgsqlDbType == NpgsqlDbType.Real
+                        @this.NpgsqlDbType == NpgsqlDbType.Real
                     )
                 {
                     if
@@ -101,7 +100,7 @@ namespace Microshaoft
                 }
                 else if
                     (
-                        target.NpgsqlDbType == NpgsqlDbType.Uuid
+                        @this.NpgsqlDbType == NpgsqlDbType.Uuid
                     )
                 {
                     if
@@ -119,7 +118,7 @@ namespace Microshaoft
                 }
                 else if
                    (
-                        target.NpgsqlDbType == NpgsqlDbType.Integer
+                        @this.NpgsqlDbType == NpgsqlDbType.Integer
                    )
                 {
                     if
@@ -137,7 +136,7 @@ namespace Microshaoft
                 }
                 else if
                    (
-                        target.NpgsqlDbType == NpgsqlDbType.Bigint
+                        @this.NpgsqlDbType == NpgsqlDbType.Bigint
                    )
                 {
                     if
@@ -155,7 +154,7 @@ namespace Microshaoft
                 }
                 else if
                    (
-                        target.NpgsqlDbType == NpgsqlDbType.Numeric
+                        @this.NpgsqlDbType == NpgsqlDbType.Numeric
                    )
                 {
                     var b = decimal
@@ -174,4 +173,3 @@ namespace Microshaoft
         }
     }
 }
-#endif
