@@ -586,6 +586,7 @@ namespace ConsoleApp57
             var vt1 = (name: "asdsa", age: 13, Birthday: DateTime.Now);
             var vt2 = (name1: "asdsa", age1: 13, Birthday1: DateTime.Now);
             DataTable dataTable = x.GenerateEmptyDataTable(nameof(x.F1), nameof(x.F2), "F222");
+            DataTable dataTable2 = vt1.GenerateEmptyDataTable(nameof(vt1.name), nameof(vt1.age), nameof(vt1.Birthday));
             //var dataTable = 
             dataTable.Rows.Add(x.F1, x.F2, x.F3);
             dataTable.Rows.Add(vt1);
