@@ -60,8 +60,8 @@ namespace Microshaoft
                                             .Default
                                             .LoadFromAssemblyPath(x);
                                 }
-                            )
-                        .ToList();
+                            );
+                        //.ToList();
 
             @this = @this
                         .WithAssemblies
