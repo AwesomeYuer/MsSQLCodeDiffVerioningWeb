@@ -109,19 +109,19 @@
                                             , false
                                         );
 
-                var isAsyncExecuting = currentControllerActionDescriptor
+                var isAsyncMethod = currentControllerActionDescriptor
                                                                         .MethodInfo
                                                                         .IsAsync();
                 if (typeof(TControllerType).IsAssignableFrom(currentControllerType))
                 {
-                    if (httpMethod == "HttpGET")
+                    if (request.Method == "GET")
                     {
                         var hasQueryString = request.QueryString.HasValue;
                         if
                             (
                                 hasQueryString
                                 && methodParamsLength > 0
-                                && isAsyncExecutingInConfiguration == isAsyncExecuting
+                                && isAsyncExecutingInConfiguration == isAsyncMethod
                             )
                         {
                             if
@@ -139,6 +139,15 @@
                             }
 
                         }
+                        else if
+                            (
+                                !hasQueryString
+                                && methodParamsLength == 0
+                                && isAsyncExecutingInConfiguration == isAsyncMethod
+                            )
+                        {
+                            r = true;
+                        }
                     }
                     else
                     {
@@ -147,7 +156,7 @@
                             (
                                 hasBody
                                 && methodParamsLength > 0
-                                && isAsyncExecutingInConfiguration == isAsyncExecuting
+                                && isAsyncExecutingInConfiguration == isAsyncMethod
                             )
                         {
                             if
@@ -163,6 +172,15 @@
                             {
                                 r = true;
                             }
+                        }
+                        else if
+                            (
+                                !hasBody
+                                && methodParamsLength == 0
+                                && isAsyncExecutingInConfiguration == isAsyncMethod
+                            )
+                        {
+                            r = true;
                         }
                     }
 
