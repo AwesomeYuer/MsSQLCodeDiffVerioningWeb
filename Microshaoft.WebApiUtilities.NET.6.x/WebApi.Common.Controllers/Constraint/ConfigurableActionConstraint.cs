@@ -1,19 +1,20 @@
 ﻿namespace Microshaoft
 {
     using Microshaoft.WebApi.Controllers;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using System;
 
     public class ConfigurableActionConstraint<TRouteAttribute>
-                                : 
+                                :
                                     IActionConstraint
                                     , IActionConstraintMetadata
                                     , IServiceProvider
                     where
                         TRouteAttribute
-                                : RouteAttribute , IConfigurable
+                                : RouteAttribute, IConfigurable
     {
         private readonly TRouteAttribute _routeAttribute;
         public ConfigurableActionConstraint
@@ -57,38 +58,24 @@
                                         , TRouteAttribute routeAttribute
                                     )
         {
-            var r = (actionConstraintContext.Candidates.Count == 1);
-            var httpContext = actionConstraintContext.RouteContext.HttpContext;
-            var request = httpContext.Request;
-            var currentCandidateAction = actionConstraintContext
-                                                        .CurrentCandidate
-                                                        .Action;
-            var currentControllerActionDescriptor = ((ControllerActionDescriptor) currentCandidateAction);
-            if (!r)
+            var r = false;
+            if (actionConstraintContext.Candidates.Count > 1)
             {
-                var l = currentControllerActionDescriptor
+                var httpContext = actionConstraintContext.RouteContext.HttpContext;
+                var request = httpContext.Request;
+                var currentCandidateAction = actionConstraintContext
+                                                            .CurrentCandidate
+                                                            .Action;
+                var currentControllerActionDescriptor = ((ControllerActionDescriptor)currentCandidateAction);
+                var methodParamsLength = currentControllerActionDescriptor
                                                     .MethodInfo
                                                     .GetParameters()
                                                     .Length;
-                bool hasValue;
-                if (request.Method == "GET")
-                {
-                    hasValue= request.QueryString.HasValue;
-                }
-                else
-                {
-                    hasValue = (request.HasFormContentType);
-                }
-                r = (hasValue && l > 0) || (!hasValue && l <= 0);
-            }
-            if (r)
-            {
-                r = false;
                 var currentControllerType = currentControllerActionDescriptor.ControllerTypeInfo.AsType();
                 var routeContext = actionConstraintContext.RouteContext;
 
                 var actionRoutePath = string.Empty;
-                if 
+                if
                     (
                         routeContext
                                 .RouteData
@@ -102,42 +89,88 @@
                 {
                     if (@value != null)
                     {
-                        actionRoutePath = @value.ToString();
+                        actionRoutePath = @value.ToString()!.ToLower();
                     }
                 }
-                if
-                    (
-                        typeof(TControllerType)
-                                .IsAssignableFrom(currentControllerType)
-                        &&
-                        !actionRoutePath!
-                                .IsNullOrEmptyOrWhiteSpace()
-                    )
+                var urlPath = request.Path.ToString().ToLower();
+
+                var httpMethod = $"Http{request.Method}";
+                var accessingConfigurationKey = "DefaultAccessing";
+                if (request.Path.ToString().Contains("/export/", StringComparison.OrdinalIgnoreCase))
                 {
-                    var isAsyncExecuting = currentControllerActionDescriptor
+                    accessingConfigurationKey = "exporting";
+                }
+                var isAsyncExecutingInConfiguration =
+                        _routeAttribute
+                                    .Configuration
+                                    .GetOrDefaultValue
+                                        (
+                                            $"Routes:{actionRoutePath}:{httpMethod}:{accessingConfigurationKey}:isAsyncExecuting"
+                                            , false
+                                        );
+
+                var isAsyncExecuting = currentControllerActionDescriptor
                                                                         .MethodInfo
                                                                         .IsAsync();
-                    var httpMethod = $"Http{request.Method}";
-                    var accessingConfigurationKey = "DefaultAccessing";
-                    if (request.Path.ToString().Contains("/export/", StringComparison.OrdinalIgnoreCase))
+                if (typeof(TControllerType).IsAssignableFrom(currentControllerType))
+                {
+                    if (httpMethod == "HttpGET")
                     {
-                        accessingConfigurationKey = "exporting";
+                        var hasQueryString = request.QueryString.HasValue;
+                        if
+                            (
+                                hasQueryString
+                                && methodParamsLength > 0
+                                && isAsyncExecutingInConfiguration == isAsyncExecuting
+                            )
+                        {
+                            if
+                                (
+                                    !actionRoutePath!.IsNullOrEmptyOrWhiteSpace()
+                                    &&
+                                    urlPath.EndsWith(actionRoutePath)
+                                )
+                            {
+                                r = true;
+                            }
+                            else if (actionRoutePath!.IsNullOrEmptyOrWhiteSpace())
+                            {
+                                r = true;
+                            }
+
+                        }
                     }
-                    var isAsyncExecutingInConfiguration =
-                            _routeAttribute
-                                        .Configuration
-                                        .GetOrDefaultValue
-                                            (
-                                                $"Routes:{actionRoutePath}:{httpMethod}:{accessingConfigurationKey}:isAsyncExecuting"
-                                                , false
-                                            );
-                    r =
-                        (
-                            isAsyncExecutingInConfiguration
-                            ==
-                            isAsyncExecuting
-                        );
+                    else
+                    {
+                        var hasBody = (request.HasFormContentType || request.HasJsonContentType());
+                        if
+                            (
+                                hasBody
+                                && methodParamsLength > 0
+                                && isAsyncExecutingInConfiguration == isAsyncExecuting
+                            )
+                        {
+                            if
+                                (
+                                    !actionRoutePath!.IsNullOrEmptyOrWhiteSpace()
+                                    &&
+                                    urlPath.EndsWith(actionRoutePath)
+                                )
+                            {
+                                r = true;
+                            }
+                            else if (actionRoutePath!.IsNullOrEmptyOrWhiteSpace())
+                            {
+                                r = true;
+                            }
+                        }
+                    }
+
                 }
+            }
+            else
+            {
+                r = true;
             }
             return
                     r;
