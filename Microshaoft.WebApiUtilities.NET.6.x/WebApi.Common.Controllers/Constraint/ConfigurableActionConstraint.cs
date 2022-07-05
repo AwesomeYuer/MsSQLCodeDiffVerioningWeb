@@ -110,8 +110,8 @@
                                         );
 
                 var isAsyncMethod = currentControllerActionDescriptor
-                                                                        .MethodInfo
-                                                                        .IsAsync();
+                                                                .MethodInfo
+                                                                .IsAsync();
                 if (typeof(TControllerType).IsAssignableFrom(currentControllerType))
                 {
                     if (request.Method == "GET")
