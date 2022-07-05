@@ -92,7 +92,7 @@
                         actionRoutePath = @value.ToString()!.ToLower();
                     }
                 }
-                var urlPath = request.Path.ToString().ToLower();
+                var urlPath = request.Path.ToString();
 
                 var httpMethod = $"Http{request.Method}";
                 var accessingConfigurationKey = "DefaultAccessing";
@@ -128,7 +128,7 @@
                                 (
                                     !actionRoutePath!.IsNullOrEmptyOrWhiteSpace()
                                     &&
-                                    urlPath.EndsWith(actionRoutePath)
+                                    urlPath.EndsWith(actionRoutePath, StringComparison.OrdinalIgnoreCase)
                                 )
                             {
                                 r = true;
