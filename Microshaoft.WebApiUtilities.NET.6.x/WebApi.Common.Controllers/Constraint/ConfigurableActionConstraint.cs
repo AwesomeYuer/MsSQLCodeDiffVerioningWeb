@@ -206,12 +206,13 @@
             if (r)
             {
                 Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-                Console.WriteLine($"{nameof(currentControllerActionDescriptor.DisplayName)}:{currentControllerActionDescriptor.DisplayName}");
-                Console.WriteLine($"ParametersCount:{currentControllerActionDescriptor.Parameters.Count}");
-                Console.WriteLine($"{nameof(currentMethodInfo.ReturnType)}:{currentMethodInfo!.ReturnType!.Name}");
-                Console.WriteLine($"{nameof(currentMethodInfo)}:{currentMethodInfo!.Name}");
-                Console.WriteLine($"IsAsync:{currentMethodInfo!.IsAsync()}");
-                Console.WriteLine($"ParametersLength:{currentMethodInfo.GetParameters().Length}");
+                Console.WriteLine("OnAcceptAsyncOrSyncCandidateActionSelectorProcessFunc");
+                Console.WriteLine($"{nameof(currentControllerActionDescriptor.DisplayName)}\t\t\t:{currentControllerActionDescriptor.DisplayName}");
+                Console.WriteLine($"ParametersCount\t\t\t:{currentControllerActionDescriptor.Parameters.Count}");
+                Console.WriteLine($"{nameof(currentMethodInfo.ReturnType)}\t\t\t:{currentMethodInfo!.ReturnType!.Name}");
+                Console.WriteLine($"{nameof(currentMethodInfo)}\t\t:{currentMethodInfo!.Name}");
+                Console.WriteLine($"IsAsync\t\t\t\t:{currentMethodInfo!.IsAsync()}");
+                Console.WriteLine($"ParametersLength\t\t:{currentMethodInfo.GetParameters().Length}");
                 Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }
             return
