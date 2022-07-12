@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using System;
-    
+    using System.Reflection;
     public class ConfigurableActionConstraint<TRouteAttribute>
                                 :
                                     IActionConstraint
@@ -59,6 +59,9 @@
                                     )
         {
             var r = false;
+            MethodInfo currentMethodInfo = null!;
+            ControllerActionDescriptor currentControllerActionDescriptor = null!;
+            Type currentControllerType = null!;
             if (actionConstraintContext.Candidates.Count > 1)
             {
                 var httpContext = actionConstraintContext.RouteContext.HttpContext;
@@ -66,12 +69,12 @@
                 var currentCandidateAction = actionConstraintContext
                                                             .CurrentCandidate
                                                             .Action;
-                var currentControllerActionDescriptor = ((ControllerActionDescriptor)currentCandidateAction);
+                currentControllerActionDescriptor = ((ControllerActionDescriptor)currentCandidateAction);
                 var methodParamsLength = currentControllerActionDescriptor
                                                     .MethodInfo
                                                     .GetParameters()
                                                     .Length;
-                var currentControllerType = currentControllerActionDescriptor.ControllerTypeInfo.AsType();
+                currentControllerType = currentControllerActionDescriptor.ControllerTypeInfo.AsType();
                 var routeContext = actionConstraintContext.RouteContext;
 
                 var actionRoutePath = string.Empty;
@@ -94,6 +97,7 @@
                 }
                 var urlPath = request.Path.ToString();
                 //=====================================================================================
+                #region isAsyncExecutingOnDemand
                 var httpMethod = $"Http{request.Method}";
                 var accessingConfigurationKey = "DefaultAccessing";
                 if (request.Path.ToString().Contains("/export/", StringComparison.OrdinalIgnoreCase))
@@ -107,11 +111,12 @@
                                         (
                                             $"Routes:{actionRoutePath}:{httpMethod}:{accessingConfigurationKey}:isAsyncExecuting"
                                             , false
-                                        );
-                //======================================================================================
-                var isAsyncMethod = currentControllerActionDescriptor
-                                                                .MethodInfo
-                                                                .IsAsync();
+                                        ); 
+                #endregion
+                //=====================================================================================
+
+                currentMethodInfo = currentControllerActionDescriptor.MethodInfo;
+                var isAsyncMethod = currentMethodInfo.IsAsync();
                 if (typeof(TControllerType).IsAssignableFrom(currentControllerType))
                 {
                     if (request.Method == "GET")
@@ -197,6 +202,17 @@
             else
             {
                 r = true;
+            }
+            if (r)
+            {
+                Console.WriteLine("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                Console.WriteLine($"{nameof(currentControllerActionDescriptor.DisplayName)}:{currentControllerActionDescriptor.DisplayName}");
+                Console.WriteLine($"ParametersCount:{currentControllerActionDescriptor.Parameters.Count}");
+                Console.WriteLine($"{nameof(currentMethodInfo.ReturnType)}:{currentMethodInfo!.ReturnType!.Name}");
+                Console.WriteLine($"{nameof(currentMethodInfo)}:{currentMethodInfo!.Name}");
+                Console.WriteLine($"IsAsync:{currentMethodInfo!.IsAsync()}");
+                Console.WriteLine($"ParametersLength:{currentMethodInfo.GetParameters().Length}");
+                Console.WriteLine(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             }
             return
                     r;
