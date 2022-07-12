@@ -17,7 +17,7 @@
 
     public static partial class HttpRequestHelper
     {
-        public static JsonResult EchoRequestJsonResult
+        public static JsonResult EchoJTokenRequestJsonResult
                         (
                            this HttpRequest @this
                             , JToken requestJTokenParameters
