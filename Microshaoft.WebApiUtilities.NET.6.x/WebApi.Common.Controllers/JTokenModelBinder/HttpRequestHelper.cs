@@ -1,5 +1,4 @@
-﻿#if NETCOREAPP
-namespace Microshaoft.Web
+﻿namespace Microshaoft.Web
 {
     using System;
     using System.IO;
@@ -18,6 +17,87 @@ namespace Microshaoft.Web
 
     public static partial class HttpRequestHelper
     {
+        public static JsonResult EchoRequestJsonResult
+                        (
+                           this HttpRequest @this
+                            , JToken requestJTokenParameters
+                        )
+        {
+            return
+                new JsonResult
+                (
+                    new
+                    {
+                        WebApiRequestJTokenParameters = requestJTokenParameters
+                        ,
+                        Request = new
+                        {
+                            @this.ContentLength
+                                ,
+                            @this.ContentType
+                                ,
+                            @this.Cookies
+                                ,
+                            @this.HasFormContentType
+                                ,
+                            @this.Headers
+                                ,
+                            @this.Host
+                                ,
+                            @this.IsHttps
+                                ,
+                            @this.Method
+                                ,
+                            @this.Path
+                                ,
+                            @this.PathBase
+                                ,
+                            @this.Protocol
+                                ,
+                            @this.Query
+                                ,
+                            @this.QueryString
+                                ,
+                            @this.RouteValues
+                                ,
+                            @this.Scheme
+                        }
+                        ,
+                        HttpContext = new
+                        {
+                            Connection = new
+                            {
+                                RemoteIpAddress = @this
+                                                        .HttpContext
+                                                        .Connection
+                                                        .RemoteIpAddress!
+                                                        .ToString()
+                            }
+                                //, HttpContext.Items
+                                ,
+                            User = new
+                            {
+                                Claims = @this
+                                            .HttpContext
+                                            .User
+                                            .Claims
+                                            .ToArray()
+                                    ,
+                                Identity = new
+                                {
+                                    @this
+                                        .HttpContext
+                                        .User
+                                        .Identity!
+                                        .Name
+                                }
+                            }
+                        }
+                    }
+                );
+        }
+
+
         public static JsonResult NewJsonResult
                                 (
                                     int statusCode
@@ -46,13 +126,13 @@ namespace Microshaoft.Web
 
         public static void SetJsonResult
                                 (
-                                    this ActionExecutingContext target
+                                    this ActionExecutingContext @this
                                     , int statusCode
                                     , int resultCode
                                     , string message
                                 )
         {
-            target
+            @this
                 .Result = NewJsonResult
                             (
                                 statusCode
@@ -62,13 +142,13 @@ namespace Microshaoft.Web
         }
         public static void SetJsonResult
                         (
-                            this ActionExecutedContext target
+                            this ActionExecutedContext @this
                             , int statusCode
                             , int resultCode
                             , string message
                         )
         {
-            target
+            @this
                 .Result = NewJsonResult
                             (
                                 statusCode
@@ -78,7 +158,7 @@ namespace Microshaoft.Web
         }
         public static void SetNotFoundJsonResult
                                 (
-                                    this ActionExecutedContext target
+                                    this ActionExecutedContext @this
                                     , int? resultCode = null
                                     , string message = null!
                                 )
@@ -91,10 +171,10 @@ namespace Microshaoft.Web
             }
             if (message.IsNullOrEmptyOrWhiteSpace())
             {
-                var request = target.HttpContext.Request;
+                var request = @this.HttpContext.Request;
                 message = $"{request.Path.Value} not found!";
             }
-            target
+            @this
                 .Result = NewJsonResult
                             (
                                 statusCode
@@ -104,7 +184,7 @@ namespace Microshaoft.Web
         }
         public static void SetNotFoundJsonResult
                         (
-                            this ActionExecutingContext target
+                            this ActionExecutingContext @this
                             , int? resultCode = null
                             , string message = null!
                         )
@@ -116,10 +196,10 @@ namespace Microshaoft.Web
             }
             if (message.IsNullOrEmptyOrWhiteSpace())
             {
-                var request = target.HttpContext.Request;
+                var request = @this.HttpContext.Request;
                 message = $"{request.Path.Value} not found!";
             }
-            target
+            @this
                 .Result = NewJsonResult
                             (
                                 statusCode
@@ -130,19 +210,19 @@ namespace Microshaoft.Web
 
         public static string GetActionRoutePath
                     (
-                        this HttpRequest target
+                        this HttpRequest @this
                         , string key = " "
                     )
         {
             return
-                target
+                @this
                     .RouteValues[key]!
                     .ToString()!;
         }
 
         public static string GetActionRoutePathOrDefault
             (
-                this HttpRequest target
+                this HttpRequest @this
                 , string defaultValue = default!
                 , string key = " "
             )
@@ -152,7 +232,7 @@ namespace Microshaoft.Web
                 (
                     TryGetActionRoutePath
                         (
-                            target
+                            @this
                             , out var @value
                             , key
                         )
@@ -169,7 +249,7 @@ namespace Microshaoft.Web
         }
         public static bool TryGetActionRoutePath
             (
-                this HttpRequest target
+                this HttpRequest @this
                 , out string @value
                 , string key = " "
             )
@@ -178,7 +258,7 @@ namespace Microshaoft.Web
             var r = false;
             if
                 (
-                    target
+                    @this
                         .RouteValues
                         .TryGetValue
                             (
@@ -204,7 +284,7 @@ namespace Microshaoft.Web
 
         public static bool TryParseJTokenParameters
                     (
-                        this HttpRequest target
+                        this HttpRequest @this
                         , out JToken parameters
                         , out string secretJwtToken
                         , Func<Task<JToken>> onFormProcessFuncAsync = null!
@@ -215,13 +295,14 @@ namespace Microshaoft.Web
             JToken jToken = null!;
             void requestFormBodyProcess()
             {
-                using var streamReader = new StreamReader(target.Body);
-                var json = streamReader.ReadToEnd();
+                var hasContentLength = @this.ContentLength > 0;
                 if
                     (
-                        !target.IsJsonRequest()
+                        !@this.IsJsonRequest()
                         &&
-                        target.HasFormContentType
+                        @this.HasFormContentType
+                        &&
+                        hasContentLength
                     )
                 {
                     if (onFormProcessFuncAsync != null)
@@ -229,8 +310,10 @@ namespace Microshaoft.Web
                         jToken = onFormProcessFuncAsync().Result;
                     }
                 }
-                else
+                else if (hasContentLength)
                 {
+                    using var streamReader = new StreamReader(@this.Body);
+                    var json = streamReader.ReadToEnd();
                     if (!json.IsNullOrEmptyOrWhiteSpace())
                     {
                         json.IsJson(out jToken, true);
@@ -239,7 +322,7 @@ namespace Microshaoft.Web
             }
             void requestQueryStringHeaderProcess()
             {
-                var queryString = target.QueryString.Value;
+                var queryString = @this.QueryString.Value;
                 if (queryString!.IsNullOrEmptyOrWhiteSpace())
                 {
                     return;
@@ -272,9 +355,9 @@ namespace Microshaoft.Web
                 }
                 if (!isJson)
                 {
-                    jToken = target.Query.ToJToken();
+                    jToken = @this.Query.ToJToken();
 
-                    //Console.WriteLine("target.Query.ToJToken()");
+                    //Console.WriteLine("@this.Query.ToJToken()");
                 }
             }
             // 取 jwtToken 优先级顺序：Header → QueryString → Body
@@ -299,7 +382,7 @@ namespace Microshaoft.Web
             }
             if (needExtractJwtToken)
             {
-                target
+                @this
                     .Headers
                     .TryGetValue
                             (
@@ -309,9 +392,9 @@ namespace Microshaoft.Web
             }
             if
                 (
-                    string.Compare(target.Method, "get", true) != 0
+                    string.Compare(@this.Method, "get", true) != 0
                     &&
-                    string.Compare(target.Method, "head", true) != 0
+                    string.Compare(@this.Method, "head", true) != 0
                 )
             {
                 requestFormBodyProcess();
@@ -330,7 +413,7 @@ namespace Microshaoft.Web
         public static async
             Task<JToken> GetFormJTokenAsync
                                 (
-                                    this ModelBindingContext target
+                                    this ModelBindingContext @this
                                 )
         {
             JToken r = null!;
@@ -342,10 +425,10 @@ namespace Microshaoft.Web
                                         );
             await
                 formCollectionModelBinder
-                            .BindModelAsync(target);
+                            .BindModelAsync(@this);
             if
                 (
-                    target
+                    @this
                         .Result
                         .IsModelSet
                 )
@@ -354,7 +437,7 @@ namespace Microshaoft.Web
                                 .ToJToken
                                     (
                                         (IFormCollection)
-                                            target
+                                            @this
                                                 .Result
                                                 .Model!
                                     );
@@ -363,4 +446,3 @@ namespace Microshaoft.Web
         }
     }
 }
-#endif

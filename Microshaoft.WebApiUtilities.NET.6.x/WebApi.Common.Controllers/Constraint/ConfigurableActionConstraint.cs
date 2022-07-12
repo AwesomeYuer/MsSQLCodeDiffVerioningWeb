@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using Microsoft.AspNetCore.Mvc.Controllers;
     using System;
-
+    
     public class ConfigurableActionConstraint<TRouteAttribute>
                                 :
                                     IActionConstraint
@@ -93,14 +93,14 @@
                     }
                 }
                 var urlPath = request.Path.ToString();
-
+                //=====================================================================================
                 var httpMethod = $"Http{request.Method}";
                 var accessingConfigurationKey = "DefaultAccessing";
                 if (request.Path.ToString().Contains("/export/", StringComparison.OrdinalIgnoreCase))
                 {
                     accessingConfigurationKey = "exporting";
                 }
-                var isAsyncExecutingInConfiguration =
+                var isAsyncExecutingOnDemand =
                         _routeAttribute
                                     .Configuration
                                     .GetOrDefaultValue
@@ -108,7 +108,7 @@
                                             $"Routes:{actionRoutePath}:{httpMethod}:{accessingConfigurationKey}:isAsyncExecuting"
                                             , false
                                         );
-
+                //======================================================================================
                 var isAsyncMethod = currentControllerActionDescriptor
                                                                 .MethodInfo
                                                                 .IsAsync();
@@ -121,7 +121,7 @@
                             (
                                 hasQueryString
                                 && methodParamsLength > 0
-                                && isAsyncExecutingInConfiguration == isAsyncMethod
+                                && isAsyncExecutingOnDemand == isAsyncMethod
                             )
                         {
                             if
@@ -143,7 +143,7 @@
                             (
                                 !hasQueryString
                                 && methodParamsLength == 0
-                                && isAsyncExecutingInConfiguration == isAsyncMethod
+                                && isAsyncExecutingOnDemand == isAsyncMethod
                             )
                         {
                             r = true;
@@ -151,12 +151,19 @@
                     }
                     else
                     {
-                        var hasBody = (request.HasFormContentType || request.HasJsonContentType());
+                        var hasContentType =
+                                            (
+                                                request.HasFormContentType
+                                                ||
+                                                request.HasJsonContentType()
+                                            );
+                        var hasContentLength = request.ContentLength > 0;
                         if
                             (
-                                hasBody
+                                hasContentType
+                                && hasContentLength
                                 && methodParamsLength > 0
-                                && isAsyncExecutingInConfiguration == isAsyncMethod
+                                && isAsyncExecutingOnDemand == isAsyncMethod
                             )
                         {
                             if
@@ -175,9 +182,10 @@
                         }
                         else if
                             (
-                                !hasBody
+                                hasContentType
+                                && !hasContentLength
                                 && methodParamsLength == 0
-                                && isAsyncExecutingInConfiguration == isAsyncMethod
+                                && isAsyncExecutingOnDemand == isAsyncMethod
                             )
                         {
                             r = true;
