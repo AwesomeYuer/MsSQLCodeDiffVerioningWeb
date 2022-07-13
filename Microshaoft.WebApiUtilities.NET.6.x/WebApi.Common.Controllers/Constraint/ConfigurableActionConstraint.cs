@@ -61,7 +61,6 @@
             var r = false;
             MethodInfo currentMethodInfo = null!;
             ControllerActionDescriptor currentControllerActionDescriptor = null!;
-            Type currentControllerType = null!;
             if (actionConstraintContext.Candidates.Count > 1)
             {
                 var httpContext = actionConstraintContext.RouteContext.HttpContext;
@@ -74,7 +73,7 @@
                                                     .MethodInfo
                                                     .GetParameters()
                                                     .Length;
-                currentControllerType = currentControllerActionDescriptor.ControllerTypeInfo.AsType();
+                Type currentControllerType = currentControllerActionDescriptor.ControllerTypeInfo.AsType();
                 var routeContext = actionConstraintContext.RouteContext;
 
                 var actionRoutePath = string.Empty;
