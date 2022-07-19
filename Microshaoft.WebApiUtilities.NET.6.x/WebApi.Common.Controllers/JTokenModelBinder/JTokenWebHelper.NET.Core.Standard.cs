@@ -47,7 +47,7 @@ namespace Microshaoft.WebApi
                                 (x) =>
                                 {
                                     JToken jToken = null!;
-                                    if (x.Value.Count() > 1)
+                                    if (x.Value.Count > 1)
                                     {
                                         jToken = new JArray(x.Value);
                                     }
