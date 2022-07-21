@@ -8,6 +8,7 @@
     <meta name="Description" content="EditPlus®,Microshaoft">
     <title>Document</title>
     <script src="libs/splitjs/split.js"></script>
+    <script src="libs/monaco-editor/min/vs/loader.js"></script>
     <style>
 
         html,
@@ -41,22 +42,21 @@
             background-position: 50%;
         }
 
-        .gutter.gutter-horizontal {
-            cursor: col-resize;
-            background-image: url('../grips/vertical.png');
-        }
+            .gutter.gutter-horizontal {
+                cursor: col-resize;
+                background-image: url('../grips/vertical.png');
+            }
 
-        .gutter.gutter-vertical {
-            cursor: row-resize;
-            background-image: url('../grips/horizontal.png');
-        }
+            .gutter.gutter-vertical {
+                cursor: row-resize;
+                background-image: url('../grips/horizontal.png');
+            }
 
-        .split.split-horizontal,
-        .gutter.gutter-horizontal {
-            height: 100%;
-            float: left;
-        }
-
+            .split.split-horizontal,
+            .gutter.gutter-horizontal {
+                height: 100%;
+                float: left;
+            }
     </style>
 </head>
 <body>
@@ -78,11 +78,11 @@
             </select>
 
         </div>
-            <select id="right" class="split content split-horizontal" multiple="multiple">
-                <option value="option1">Option 1</option>
-                <option value="option2">Option2</option>
-                <option value="Option3">Option3</option>
-            </select>
+        <select id="right" class="split content split-horizontal" multiple="multiple">
+            <option value="option1">Option 1</option>
+            <option value="option2">Option2</option>
+            <option value="Option3">Option3</option>
+        </select>
 
     </div>
     <div id="down" class="split content">
@@ -90,6 +90,10 @@
 
 
     <script>
+
+
+
+
         // https://jsfiddle.net/fmy1c7p2/15/
         Split(['#up', '#down'], {
             gutterSize: 10,
@@ -103,6 +107,28 @@
             cursor: 'col-resize',
         });
 
+    </script>
+    <script>
+        require.config({ paths: { 'vs': 'libs/monaco-editor/min/vs' } });
+        var editor;
+        require(['vs/editor/editor.main'], function () {
+            editor = monaco.editor.create(document.getElementById('down'), {
+                value: [
+                    'set statistics io on',
+                    'set statistics time on',
+                    'set statistics profile on',
+                    'select \'"111"\' as F, *',
+                    'from',
+                    'sys.objects',
+                    '',
+                    'select \'"222"\' as F, *',
+                    'from',
+                    'sys.objects',
+                ].join('\n'),
+                language: 'sql',
+                automaticLayout: true
+            });
+        });
     </script>
 
 </body>

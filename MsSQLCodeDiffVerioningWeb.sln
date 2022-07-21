@@ -37,7 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50.Swagger", "50.Swagger", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Solution Items", "{7D226DD2-1926-44FB-8382-76ACC447CBC7}"
 	ProjectSection(SolutionItems) = preProject
-		copyrundebug6x.sh = copyrundebug6x.sh
+		azure-pipelines.yml = azure-pipelines.yml
+		ci-cd-all-in-one.sh = ci-cd-all-in-one.sh
 		VSCode.Rest.Client.Test\RestClientTest.http = VSCode.Rest.Client.Test\RestClientTest.http
 	EndProjectSection
 EndProject
