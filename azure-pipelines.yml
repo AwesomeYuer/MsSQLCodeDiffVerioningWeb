@@ -15,3 +15,5 @@ variables:
 steps:
 - script: sh ci-cd-all-in-one.sh $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+- script: sh steps-echo-test.sh $(buildConfiguration)
+  displayName: 'echo $(buildConfiguration)'
