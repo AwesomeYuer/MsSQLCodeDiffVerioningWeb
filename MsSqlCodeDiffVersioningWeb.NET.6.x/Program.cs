@@ -195,13 +195,13 @@
                                                 )
                                     )
                                 {
-                                    configurationBuilder
-                                                .AddJsonFile
-                                                    (
-                                                        path: "hostings.json"
-                                                        , optional: true
-                                                        , reloadOnChange: true
-                                                    );
+                                    //configurationBuilder
+                                    //            .AddJsonFile
+                                    //                (
+                                    //                    path: "hostings.json"
+                                    //                    , optional: true
+                                    //                    , reloadOnChange: true
+                                    //                );
                                 }
                                 var files = EnumerableHelper
                                                         .Range
