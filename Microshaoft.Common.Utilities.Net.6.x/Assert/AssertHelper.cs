@@ -1,5 +1,5 @@
-﻿# define Non_MSTEST_UnitTest
-# if MSTEST_UnitTest
+﻿#define NonMsTestUnitTests
+#if MsTestUnitTests
 namespace ChinaCPPMigTransLayer.MSTest.UnitTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
