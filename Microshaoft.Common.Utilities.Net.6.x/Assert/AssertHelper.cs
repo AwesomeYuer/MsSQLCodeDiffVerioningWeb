@@ -1,52 +1,56 @@
-﻿//namespace Microshaoft
+﻿//namespace ChinaCPPMigTransLayer.MSTest.UnitTests
 //{
 //    public static class AssertHelper
 //    {
 //        public static void Throws<TExpectedException>
-//                                        (Action action)
+//                                        (
+//                                            Action action
+//                                            , string expectedMessage = null!
+//                                        )
 //                                                where TExpectedException : Exception
 //        {
+//            void process(Exception exception)
+//            {
+//                if (!string.IsNullOrEmpty(expectedMessage))
+//                {
+//                    Assert
+//                        .AreEqual
+//                            (
+//                                expectedMessage
+//                                , exception.Message
+//                                , $"Expected exception with a message of '{expectedMessage}' but exception with message of '{exception.Message}' was thrown instead."
+//                            );
+//                }
+//            }
 //            try
 //            {
 //                action();
 //            }
-//            catch (Exception ex)
+//            catch (TExpectedException expectedException)
 //            {
 //                Assert
 //                    .IsTrue
 //                        (
-//                            ex.GetType() == typeof(TExpectedException)
-//                            , $"Expected exception of type {typeof(TExpectedException)} but type of {ex.GetType()} was thrown instead.");
+//                            expectedException.GetType() == typeof(TExpectedException)
+//                        );
+//                process(expectedException);
 //                return;
 //            }
-//            Assert.Fail($"Expected exception of type {typeof(TExpectedException)} but no exception was thrown.");
-//        }
-//        public static void Throws<TExpectedException>
-//                                        (Action action, string expectedMessage)
-//                                                where TExpectedException : Exception
-//        {
-//            try
-//            {
-//                action();
-//            }
-//            catch (Exception ex)
+//            catch (Exception exception)
 //            {
 //                Assert
-//                    .IsTrue
+//                    .Fail
 //                        (
-//                            ex.GetType() == typeof(TExpectedException)
-//                            , $"Expected exception of type {typeof(TExpectedException)} but type of {ex.GetType()} was thrown instead."
+//                            $"Expected exception of type {typeof(TExpectedException)} but type of {exception.GetType()} was thrown instead."
 //                        );
-//                Assert
-//                    .AreEqual
-//                        (
-//                            expectedMessage
-//                            , ex.Message
-//                            , $"Expected exception with a message of '{expectedMessage}' but exception with message of '{ex.Message}' was thrown instead."
-//                        );
+//                process(exception);
 //                return;
 //            }
-//            Assert.Fail($"Expected exception of type{typeof(TExpectedException)} but no exception was thrown.");
+//            Assert
+//                .Fail
+//                    (
+//                        $"Expected exception of type {typeof(TExpectedException)} but no exception was thrown."
+//                    );
 //        }
 //    }
 //}
