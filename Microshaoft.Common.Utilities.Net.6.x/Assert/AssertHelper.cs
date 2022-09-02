@@ -5,7 +5,11 @@ namespace ChinaCPPMigTransLayer.MSTest.UnitTests
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     public static class AssertHelper
     {
-        private static void processExpectedExceptionMessage(Exception exception, string expectedExceptionMessage = null!)
+        private static void processExpectedExceptionMessage
+                                        (
+                                            Exception exception
+                                            , string expectedExceptionMessage = null!
+                                        )
         {
             if (!string.IsNullOrEmpty(expectedExceptionMessage))
             {
@@ -37,7 +41,11 @@ namespace ChinaCPPMigTransLayer.MSTest.UnitTests
                         (
                             expectedException.GetType() == typeof(TExpectedException)
                         );
-                processExpectedExceptionMessage(expectedException, expectedExceptionMessage);
+                processExpectedExceptionMessage
+                                        (
+                                            expectedException
+                                            , expectedExceptionMessage
+                                        );
                 return;
             }
             catch (Exception exception)
@@ -47,7 +55,11 @@ namespace ChinaCPPMigTransLayer.MSTest.UnitTests
                         (
                             $@"Expected exception of type ""{typeof(TExpectedException)}"" but type of ""{exception.GetType()}"" was thrown instead."
                         );
-                processExpectedExceptionMessage(exception, expectedExceptionMessage);
+                processExpectedExceptionMessage
+                                        (
+                                            exception
+                                            , expectedExceptionMessage
+                                        );
                 return;
             }
             Assert
@@ -77,7 +89,11 @@ namespace ChinaCPPMigTransLayer.MSTest.UnitTests
                             exception.GetType() == expectedExceptionType
                             , $@"Expected exception of type ""{expectedExceptionType}"" but type of ""{exception.GetType()}"" was thrown instead."
                         );
-                processExpectedExceptionMessage(exception, expectedExceptionMessage);
+                processExpectedExceptionMessage
+                                        (
+                                            exception
+                                            , expectedExceptionMessage
+                                        );
                 return;
             }
             Assert
