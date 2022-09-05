@@ -8,10 +8,10 @@ echo $1 $2
 # mkdir -p MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/RoutesConfig/
 # cp -rf MsSqlCodeDiffVersioningWeb.NET.6.x/RoutesConfig/* MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/RoutesConfig/
 
-mkdir -p %2MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
-cp $2Plugins.StoreProcedureExecutors/MsSQL.StoreProcedureExecutor.Plugin.NET.6.x/bin/$1/net6.0/*Plugin* MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
-cp $2Plugins.StoreProcedureExecutors/MySQL.StoreProcedureExecutor.Plugin.NET.6.x/bin/$1/net6.0/*Plugin* MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
-cp $2Plugins.RequestJTokenValidators/JTokenValidatorSamplePlugin.NET.6.x/bin/$1/net6.0/*Plugin* MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
+mkdir -p %2/MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
+cp $2/Plugins.StoreProcedureExecutors/MsSQL.StoreProcedureExecutor.Plugin.NET.6.x/bin/$1/net6.0/*Plugin* MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
+cp $2/Plugins.StoreProcedureExecutors/MySQL.StoreProcedureExecutor.Plugin.NET.6.x/bin/$1/net6.0/*Plugin* MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
+cp $2/Plugins.RequestJTokenValidators/JTokenValidatorSamplePlugin.NET.6.x/bin/$1/net6.0/*Plugin* MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
 
 
 ls %2MsSqlCodeDiffVersioningWeb.NET.6.x/bin/$1/net6.0/Plugins/
