@@ -36,8 +36,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Solution Items", "{7D226DD2-1926-44FB-8382-76ACC447CBC7}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
-		ci-cd-all-in-one.sh = ci-cd-all-in-one.sh
 		LICENSE.txt = LICENSE.txt
+		ci.sh = ci.sh
 		README.md = README.md
 		VSCode.Rest.Client.Test\RestClientTest.http = VSCode.Rest.Client.Test\RestClientTest.http
 		steps-echo-test.sh = steps-echo-test.sh
