@@ -27,7 +27,7 @@
     
     <PackageReference Include="Microsoft.AspNetCore.ConcurrencyLimiter" Version="6.0.6" />
     
-    <PackageReference Include="System.Composition" Version="6.0.0" />
+    <PackageReference Include="System.Composition" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
