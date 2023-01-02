@@ -1210,7 +1210,7 @@
     <TypeScriptCompile Include="wwwroot\libs\monaco-editor\monaco.d.ts" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(OS)!='Windows_NT'">
     <Exec Command="echo Non-Windows_NT begin&#xD;&#xA;pwd&#xD;&#xA;mkdir -p $(TargetDir)Plugins/&#xD;&#xA;pwd&#xD;&#xA;cp -rf ../Plugins.StoreProcedureExecutors/MsSQL.StoreProcedureExecutor.Plugin.NET.6.x/bin/$(Configuration)/net6.0/*Plugin* $(TargetDir)Plugins/&#xD;&#xA;cp -rf ../Plugins.StoreProcedureExecutors/MySQL.StoreProcedureExecutor.Plugin.NET.6.x/bin/$(Configuration)/net6.0/*Plugin* $(TargetDir)Plugins/&#xD;&#xA;cp -rf ../Plugins.RequestJTokenValidators/JTokenValidatorSamplePlugin.NET.6.x/bin/$(Configuration)/net6.0/*Plugin* $(TargetDir)Plugins/&#xD;&#xA;echo Non-Windows_NT end" />
   </Target>
   <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(OS)=='Windows_NT'">
