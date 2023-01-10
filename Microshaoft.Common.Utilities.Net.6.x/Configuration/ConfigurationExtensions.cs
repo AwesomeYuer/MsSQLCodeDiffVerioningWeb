@@ -67,9 +67,8 @@
                         );
             if (r)
             {
-                r = false;
                 sectionValue = configuration
-                                        .Get<T>();
+                                        .Get<T>()!;
                 r = true;
             }
             else

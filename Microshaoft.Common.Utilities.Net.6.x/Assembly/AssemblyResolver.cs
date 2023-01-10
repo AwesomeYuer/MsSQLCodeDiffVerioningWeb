@@ -20,12 +20,12 @@ namespace Microshaoft
         public AssemblyResolver(string path)
         {
             this.Assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(path);
-            this.dependencyContext = DependencyContext.Load(this.Assembly);
+            this.dependencyContext = DependencyContext.Load(this.Assembly)!;
 
             this.assemblyResolver = new CompositeCompilationAssemblyResolver
             (new ICompilationAssemblyResolver[]
             {
-                new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(path)),
+                new AppBaseCompilationAssemblyResolver(Path.GetDirectoryName(path)!),
                 new ReferenceAssemblyPathResolver(),
                 new PackageCompilationAssemblyResolver()
             });
