@@ -106,7 +106,7 @@ namespace Microshaoft.Web
                         //@value = ((DateTime) jValue).ToString("yyyy-MM-ddTHH:mm:ss.fffff");
                         if (format.IsNullOrEmptyOrWhiteSpace())
                         {
-                            format = csvFormatterOptions.DateTimeFormat;
+                            format = csvFormatterOptions.DateTimeFormat!;
                         }
                         if (!format.IsNullOrEmptyOrWhiteSpace())
                         {
@@ -236,7 +236,7 @@ namespace Microshaoft.Web
                                                         (
                                                             nameof(csvFormatterOptions.CsvColumnsDelimiter)
                                                             , ","
-                                                        );
+                                                        )!;
                 csvFormatterOptions
                             .DateFormat =
                                         exportCsvFormatterConfiguration
@@ -244,14 +244,14 @@ namespace Microshaoft.Web
                                                         (
                                                             nameof(csvFormatterOptions.DateFormat)
                                                             , "yyyy-MM-dd"
-                                                        );
+                                                        )!;
                 csvFormatterOptions
                         .DateTimeFormat = exportCsvFormatterConfiguration
                                                 .GetValue
                                                         (
                                                             nameof(csvFormatterOptions.DateTimeFormat)
                                                             , "yyyy-MM-ddTHH:mm:ss.fffff"
-                                                        );
+                                                        )!;
 
                 csvFormatterOptions
                         .DigitsTextSuffix = exportCsvFormatterConfiguration
@@ -259,7 +259,7 @@ namespace Microshaoft.Web
                                                         (
                                                             nameof(csvFormatterOptions.DigitsTextSuffix)
                                                             , "\t"
-                                                        );
+                                                        )!;
                 encodingName = exportCsvFormatterConfiguration
                                                 .GetValue
                                                         (
@@ -268,7 +268,7 @@ namespace Microshaoft.Web
                                                         );
 
                 csvFormatterOptions
-                            .Encoding = Encoding.GetEncoding(encodingName);
+                            .Encoding = Encoding.GetEncoding(encodingName!);
 
 
                 csvFormatterOptions
@@ -287,7 +287,7 @@ namespace Microshaoft.Web
                                                             , true
                                                         );
             }
-            encodingName = (string) request.Query["e"];
+            encodingName = (string) request.Query["e"]!;
             Encoding e = null!;
             if (!encodingName.IsNullOrEmptyOrWhiteSpace())
             {
@@ -377,25 +377,25 @@ namespace Microshaoft.Web
                                                                 {
                                                                     var columnName = xx
                                                                                         .GetValue<string>
-                                                                                                ("ColumnName");
+                                                                                                ("ColumnName")!;
                                                                     var columnTitle = xx
                                                                                         .GetValue
                                                                                                 (
                                                                                                     "ColumnTitle"
                                                                                                     , columnName
-                                                                                                );
+                                                                                                )!;
                                                                     var dataFormat = xx
                                                                                         .GetValue
                                                                                                 (
                                                                                                     "DataFormat"
                                                                                                     , string.Empty
-                                                                                                );
+                                                                                                )!;
                                                                     var digitsTextSuffix = xx
                                                                                         .GetValue<string>
                                                                                                 (
                                                                                                     "DigitsTextSuffix"
                                                                                                     , null!
-                                                                                                );
+                                                                                                )!;
                                                                     return
                                                                         (
                                                                             ColumnName: columnName
@@ -404,10 +404,10 @@ namespace Microshaoft.Web
                                                                             , DigitsTextSuffix: digitsTextSuffix
                                                                         );
                                                                 }
-                                                            )
+                                                            )!
                                                         .ToArray();
                                             }
-                                        )
+                                        )!
                                     .ToArray();
                         (
                             string ColumnName

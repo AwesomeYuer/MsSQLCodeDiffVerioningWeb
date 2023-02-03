@@ -200,7 +200,7 @@
                         {
                             CachedParametersDefinitionExpiredInSeconds =
                                 ConfigurationHelper
-                                            .Configuration
+                                            .Configuration!
                                             .GetValue
                                                 (
                                                     $"CachedParametersDefinitionExpiredInSeconds"
@@ -213,7 +213,7 @@
                                     {
                                         ConnectionString =
                                             ConfigurationHelper
-                                                        .Configuration
+                                                        .Configuration!
                                                         .GetValue<string>
                                                             (
                                                                 $"Connections:c1:connectionString"

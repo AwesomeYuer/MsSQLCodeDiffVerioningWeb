@@ -205,7 +205,7 @@
                         };
             var connectionID = "c1";
             string connectionString = nameof(connectionString);
-            connectionString = Configuration.GetValue<string>($"connections:{connectionID}:{connectionString}");
+            connectionString = Configuration.GetValue<string>($"connections:{connectionID}:{connectionString}")!;
             // there are only one Thread that's DequeueThread write it, so it's security
             var requestResponseLoggingData = new JArray();
             GlobalManager
@@ -566,7 +566,7 @@
                                                                         (
                                                                             nameof(csvFormatterOptions.CsvColumnsDelimiter)
                                                                             , ","
-                                                                        );
+                                                                        )!;
                                     csvFormatterOptions
                                                 .DateFormat =
                                                             exportCsvFormatterConfiguration
@@ -574,14 +574,14 @@
                                                                             (
                                                                                 nameof(csvFormatterOptions.DateFormat)
                                                                                 , "yyyy-MM-dd"
-                                                                            );
+                                                                            )!;
                                     csvFormatterOptions
                                             .DateTimeFormat = exportCsvFormatterConfiguration
                                                                     .GetValue
                                                                             (
                                                                                 nameof(csvFormatterOptions.DateTimeFormat)
                                                                                 , "yyyy-MM-ddTHH:mm:ss.fffff"
-                                                                            );
+                                                                            )!;
 
                                     csvFormatterOptions
                                             .DigitsTextSuffix = exportCsvFormatterConfiguration
@@ -589,7 +589,7 @@
                                                                             (
                                                                                 nameof(csvFormatterOptions.DigitsTextSuffix)
                                                                                 , "\t"
-                                                                            );
+                                                                            )!;
                                     var encodingName = Encoding.UTF8.EncodingName;
                                     encodingName = exportCsvFormatterConfiguration
                                                                     .GetValue
@@ -599,7 +599,7 @@
                                                                             );
 
                                     csvFormatterOptions
-                                                .Encoding = Encoding.GetEncoding(encodingName);
+                                                .Encoding = Encoding.GetEncoding(encodingName!);
 
 
                                     csvFormatterOptions

@@ -67,7 +67,7 @@ namespace Microshaoft.Web
                                 }
                             )
                         .ToArray();
-            return result;
+            return result!;
         }
 
         protected virtual void LoadDynamicExecutors

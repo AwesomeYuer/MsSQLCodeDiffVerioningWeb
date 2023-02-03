@@ -183,14 +183,14 @@
                             jObjectRow
                                     .TryGetValue
                                         (
-                                            ColumnName
+                                            ColumnName!
                                             , StringComparison.OrdinalIgnoreCase
                                             , out JToken? jTokenValue
                                         );
                             jObjectNewRow
                                         .Add
                                             (
-                                                new JProperty(ColumnName, jTokenValue)
+                                                new JProperty(ColumnName!, jTokenValue)
                                             );
                             j ++;
                         }
@@ -239,7 +239,7 @@
                 result = result
                             .MapToNew
                                 (
-                                    mappings
+                                    mappings!
                                 );
             }
             return

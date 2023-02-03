@@ -91,7 +91,7 @@ namespace Microshaoft.Web
                         var r = parameters
                                     .TryGetValue
                                         (
-                                            parameterName
+                                            parameterName!
                                             , StringComparison
                                                     .OrdinalIgnoreCase
                                             , out _
@@ -108,8 +108,8 @@ namespace Microshaoft.Web
                                 (r && !allowOverride)
                             )
                         {
-                            object parameterValue = inputParameter.GetValue<object>("Value");
-                            parameters[parameterName] = new JValue(parameterValue);
+                            object parameterValue = inputParameter.GetValue<object>("Value")!;
+                            parameters[parameterName!] = new JValue(parameterValue);
                         }
                     }
                 }

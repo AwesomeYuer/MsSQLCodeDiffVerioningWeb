@@ -23,7 +23,7 @@ namespace Microshaoft.Web.ReverseProxyKit
             var protocol = forwardContext.HttpContext.Request.Scheme;
             var @for = forwardContext.HttpContext.Connection.RemoteIpAddress;
             var host = forwardContext.HttpContext.Request.Headers["Host"];
-            var hostString = HostString.FromUriComponent(host);
+            var hostString = HostString.FromUriComponent(host!);
             var pathBase = forwardContext.HttpContext.Request.PathBase.Value;
 
             headers.ApplyXForwardedHeaders(@for!, hostString, protocol, pathBase);

@@ -104,7 +104,7 @@ namespace Microshaoft.Web
                                 out parameters
                                 , out secretJwtToken
                                 , null!
-                                , jwtTokenName
+                                , jwtTokenName!
                             );
                 if (ok)
                 {
@@ -123,7 +123,7 @@ namespace Microshaoft.Web
                         .Items
                         .TryGetValue
                             (
-                                jwtTokenName
+                                jwtTokenName!
                                 , out object? value
                             )
                 )
@@ -171,7 +171,7 @@ namespace Microshaoft.Web
                     ok = JwtTokenHelper
                                 .TryValidateToken
                                     (
-                                        jwtToken
+                                        jwtToken!
                                         , jwtSecretKey
                                         , out var validatedPlainToken
                                         , out var claimsPrincipal

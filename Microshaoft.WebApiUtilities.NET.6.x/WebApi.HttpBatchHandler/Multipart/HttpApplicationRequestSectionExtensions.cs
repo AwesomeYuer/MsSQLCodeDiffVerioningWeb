@@ -88,7 +88,7 @@ namespace Microshaoft.HttpBatchHandler.Multipart
                 throw new InvalidOperationException("Invalid Host Header");
             }
 
-            var hostString = new HostString(hostHeader.Single());
+            var hostString = new HostString(hostHeader.Single()!);
             if (!hostString.HasValue)
             {
                 return null!;

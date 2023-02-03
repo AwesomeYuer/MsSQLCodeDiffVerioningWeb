@@ -352,11 +352,11 @@
                                     (
                                         (x) =>
                                         {
-                                            if (!x.IsNullOrEmptyOrWhiteSpace())
+                                            if (!x!.IsNullOrEmptyOrWhiteSpace())
                                             {
                                                 if
                                                     (
-                                                        x.StartsWith(".")
+                                                        x!.StartsWith(".")
                                                         &&
                                                         !x.StartsWith("..")
                                                     )
@@ -379,7 +379,7 @@
                                         {
                                             var r =
                                                 (
-                                                    !x
+                                                    !x!
                                                         .IsNullOrEmptyOrWhiteSpace()
                                                     &&
                                                     Directory
@@ -388,7 +388,7 @@
                                             return r;
                                         }
                                     );
-            return result;
+            return result!;
         }
     }
 }

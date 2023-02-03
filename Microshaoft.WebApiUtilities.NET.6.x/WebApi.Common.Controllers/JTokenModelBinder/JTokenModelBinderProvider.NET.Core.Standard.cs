@@ -40,7 +40,7 @@ namespace Microshaoft.WebApi.ModelBinders
                                         bindingContext
                                             .GetFormJTokenAsync();
                             }
-                            , jwtTokenName
+                            , jwtTokenName!
                         );
             if (ok)
             {
@@ -69,7 +69,7 @@ namespace Microshaoft.WebApi.ModelBinders
                         .Items
                         .Add
                             (
-                                jwtTokenName
+                                jwtTokenName!
                                 , secretJwtToken
                             );
             }

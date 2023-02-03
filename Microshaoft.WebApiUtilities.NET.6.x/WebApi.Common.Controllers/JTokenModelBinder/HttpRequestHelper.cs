@@ -405,7 +405,7 @@
             }
             extractJwtToken();
             parameters = jToken;
-            secretJwtToken = jwtToken;
+            secretJwtToken = jwtToken!;
             r = true;
             return r;
         }

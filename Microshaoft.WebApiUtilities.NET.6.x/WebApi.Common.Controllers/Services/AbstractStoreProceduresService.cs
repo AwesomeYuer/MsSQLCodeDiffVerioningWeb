@@ -93,7 +93,7 @@
                             )
                         .ToArray();
             return
-                result;
+                result!;
         }
 
         protected virtual void LoadDynamicExecutors
@@ -741,7 +741,7 @@
                         , storeProcedureName
                         , commandTimeoutInSeconds
                         , enableStatistics
-                    );
+                    )!;
             }
             success = _configuration
                             .TryGetSection
@@ -786,7 +786,7 @@
             var connectionID = actionConfiguration
                                             .GetValue<string>
                                                     ("ConnectionID");
-            success = !connectionID.IsNullOrEmptyOrWhiteSpace();
+            success = !connectionID!.IsNullOrEmptyOrWhiteSpace();
             if (!success)
             {
                 statusCode = 500;
@@ -803,7 +803,7 @@
             connectionString = connectionConfiguration
                                             .GetValue<string>
                                                     ("ConnectionString");
-            success = !connectionString.IsNullOrEmptyOrWhiteSpace();
+            success = !connectionString!.IsNullOrEmptyOrWhiteSpace();
             if (!success)
             {
                 statusCode = 500;
@@ -814,7 +814,7 @@
             dataBaseType = connectionConfiguration
                                     .GetValue<string>
                                             ("DataBaseType");
-            success = !dataBaseType
+            success = !dataBaseType!
                             .IsNullOrEmptyOrWhiteSpace();
             if (!success)
             {
@@ -892,7 +892,7 @@
                     }
                 }
             }
-            success = !storeProcedureName.IsNullOrEmptyOrWhiteSpace();
+            success = !storeProcedureName!.IsNullOrEmptyOrWhiteSpace();
             if (!success)
             {
                 statusCode = 500;

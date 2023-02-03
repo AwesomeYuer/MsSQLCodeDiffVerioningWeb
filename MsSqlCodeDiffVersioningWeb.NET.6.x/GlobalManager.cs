@@ -111,12 +111,12 @@
                                 .Parse<LogLevel>
                                     (
                                         ConfigurationHelper
-                                                    .Configuration
+                                                    .Configuration!
                                                     .GetValue
                                                         (
                                                             "RequestResponseLoggingLogLevel"
                                                             , nameof(LogLevel.Trace)
-                                                        )
+                                                        )!
                                         , true
                                     );
 
@@ -156,7 +156,7 @@
                                                     .UTF8
                                                     .GetBytes
                                                         (
-                                                            ConfigurationHelper.Configuration.GetValue<string>("SecretKey")
+                                                            ConfigurationHelper.Configuration!.GetValue<string>("SecretKey")!
                                                         )
                                         );
         public static readonly SigningCredentials jwtSigningCredentials = new SigningCredentials

@@ -30,14 +30,14 @@ namespace Microshaoft.Web
         public override void EvaluateRequest(HttpContext context, CorsPolicy policy, CorsResult result)
         {
             var origin = context.Request.Headers[CorsConstants.Origin];
-            EvaluateOriginForWildcard(policy.Origins, origin);
+            EvaluateOriginForWildcard(policy.Origins, origin!);
             base.EvaluateRequest(context, policy, result);
         }
 
         public override void EvaluatePreflightRequest(HttpContext context, CorsPolicy policy, CorsResult result)
         {
             var origin = context.Request.Headers[CorsConstants.Origin];
-            EvaluateOriginForWildcard(policy.Origins, origin);
+            EvaluateOriginForWildcard(policy.Origins, origin!);
             base.EvaluatePreflightRequest(context, policy, result);
         }
 

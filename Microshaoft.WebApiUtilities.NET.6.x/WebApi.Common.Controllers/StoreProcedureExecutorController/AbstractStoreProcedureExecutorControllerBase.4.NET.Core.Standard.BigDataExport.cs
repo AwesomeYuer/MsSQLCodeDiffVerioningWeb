@@ -268,7 +268,7 @@
         {
             var actionRoutePath = Request.GetActionRoutePath();
             var httpMethod = $"http{Request.Method}";
-            var encodingName = (string) Request.Query["e"];
+            var encodingName = (string) Request.Query["e"]!;
             Encoding e = null!;
             if (!encodingName.IsNullOrEmptyOrWhiteSpace())
             {
@@ -354,25 +354,25 @@
                                                                 {
                                                                     var columnName = xx
                                                                                         .GetValue<string>
-                                                                                                ("ColumnName");
+                                                                                                ("ColumnName")!;
                                                                     var columnTitle = xx
                                                                                         .GetValue
                                                                                                 (
                                                                                                     "ColumnTitle"
                                                                                                     , columnName
-                                                                                                );
+                                                                                                )!;
                                                                     var dataFormat = xx
                                                                                         .GetValue
                                                                                                 (
                                                                                                     "DataFormat"
                                                                                                     , string.Empty
-                                                                                                );
+                                                                                                )!;
                                                                     var digitsTextSuffix = xx
                                                                                         .GetValue<string>
                                                                                                 (
                                                                                                     "DigitsTextSuffix"
                                                                                                     , null!
-                                                                                                );
+                                                                                                )!;
                                                                     return
                                                                         (
                                                                             ColumnName: columnName
