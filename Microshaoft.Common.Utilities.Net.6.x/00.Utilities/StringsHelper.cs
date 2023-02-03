@@ -8,15 +8,13 @@
     public static class StringHelper
     {
         // 控制字符
-        private static readonly Regex _controlCharRegex = new Regex(@"[\p{C}]", RegexOptions.Compiled);
+        //private static readonly Regex _controlCharRegex = new Regex(@"[\p{C}]", RegexOptions.Compiled);
 
         /// <summary>
         /// 移除控制字符
         /// </summary>
         public static string RemoveControlChars(this string @this)
-        {
-            return _controlCharRegex.Replace(@this, string.Empty);
-        }
+                    => (@this == null ? null : string.Concat(@this.Where(c => !char.IsControl(c))))!;
         public static string RemoveStarts(this string @this, string remove)
         {
             var r = @this;
