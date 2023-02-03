@@ -13,6 +13,7 @@
         /// <summary>
         /// 移除控制字符
         /// </summary>
+        /// https://www.cnblogs.com/deali/p/17085516.html
         public static string RemoveControlChars(this string @this)
                     => (@this == null ? null : string.Concat(@this.Where(c => !char.IsControl(c))))!;
         public static string RemoveStarts(this string @this, string remove)
