@@ -20,6 +20,7 @@
     <Compile Remove="00.Utilities\FtpWebRequestResponseHelper.cs" />
     <Compile Remove="00.Utilities\RemotingHelper.cs" />
     <Compile Remove="Configuration\ConfigurationAppSettingsHelper.cs" />
+    <Compile Remove="Yarp.ReverseProxy.Utilities\ParsedMetadataEntry.cs" />
   </ItemGroup>
 
   <ItemGroup>
