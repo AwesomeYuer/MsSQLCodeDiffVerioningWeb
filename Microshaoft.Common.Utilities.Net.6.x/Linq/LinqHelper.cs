@@ -1,4 +1,6 @@
-﻿public static class LinqHelper
+﻿namespace Microshaoft;
+
+public static class LinqHelper
 {
     public static void ForEach<T>(this IEnumerable<T> @this, Func<int, T, bool> eachProcessFunc)
     {
