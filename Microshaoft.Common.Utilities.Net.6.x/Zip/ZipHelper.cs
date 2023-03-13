@@ -149,7 +149,7 @@ public static class ZipHelper
                     (
                         needUpdateEntry
                         &&
-                        entryStream != null
+                        entryStream is not null
                         &&
                         !string.IsNullOrEmpty(entryName)
                         &&
