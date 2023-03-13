@@ -5,10 +5,23 @@ public static class LinqHelper
     public static void ForEach<T>(this IEnumerable<T> @this, Func<int, T, bool> eachProcessFunc)
     {
         var i = 0;
-        foreach (T x in @this)
+        foreach (T t in @this)
         {
             i++;
-            if (eachProcessFunc(i, x))
+            if (eachProcessFunc(i, t))
+            {
+                break;
+            }
+        }
+    }
+
+    public static async Task ForEachAsync<T>(this IEnumerable<T> @this, Func<int, T, Task<bool>> eachProcessAsync)
+    {
+        var i = 0;
+        foreach (T t in @this)
+        {
+            i++;
+            if (await eachProcessAsync(i, t))
             {
                 break;
             }
@@ -19,15 +32,21 @@ public static class LinqHelper
                                 TakeTopFirst<T>
                                         (
                                             this IEnumerable<T> @this
-                                            , Func<int, T, bool> predict
+                                            , Func<int, T, (bool, bool)> predict
                                         )
     {
         var i = 0;
-        foreach (T x in @this)
+        foreach (T t in @this)
         {
             i++;
-            yield return x;
-            if (predict(i, x))
+            (bool needYield, bool needBreak)
+                                    = predict(i, t);
+
+            if (needYield)
+            {
+                yield return t;
+            }
+            if (needBreak)
             {
                 break;
             }
@@ -38,16 +57,20 @@ public static class LinqHelper
                             TakeTopFirst<T>
                                     (
                                         this IEnumerable<T> @this
-                                        , Func<int, T, Task<bool>> predictAsync
+                                        , Func<int, T, Task<(bool, bool)>> predictAsync
                                     )
     {
         var i = 0;
-        foreach (T x in @this)
+        foreach (T t in @this)
         {
             i++;
-            yield return x;
-            bool b;
-            if (b = predictAsync(i, x).Result)
+            (bool needYield, bool needBreak)
+                                    = predictAsync(i, t).Result;
+            if (needYield)
+            {
+                yield return t;
+            }
+            if (needBreak)
             {
                 break;
             }
@@ -58,16 +81,20 @@ public static class LinqHelper
                                 TakeTopFirstAsync<T>
                                         (
                                             this IEnumerable<T> @this
-                                            , Func<int, T, Task<bool>> predictAsync
+                                            , Func<int, T, Task<(bool, bool)>> predictAsync
                                         )
     {
         var i = 0;
-        foreach (T x in @this)
+        foreach (T t in @this)
         {
             i++;
-            yield return x;
-            bool b;
-            if (b = await predictAsync(i, x))
+            (bool needYield, bool needBreak)
+                                    = await predictAsync(i, t);
+            if (needYield)
+            {
+                yield return t;
+            }
+            if (needBreak)
             {
                 break;
             }
@@ -78,16 +105,20 @@ public static class LinqHelper
                                 TakeTopFirstAsync<T>
                                         (
                                             this IAsyncEnumerable<T> @this
-                                            , Func<int, T, Task<bool>> predictAsync
+                                            , Func<int, T, Task<(bool, bool)>> predictAsync
                                         )
     {
         var i = 0;
-        await foreach (T x in @this)
+        await foreach (T t in @this)
         {
             i++;
-            yield return x;
-            bool b;
-            if (b = await predictAsync(i, x))
+            (bool needYield, bool needBreak)
+                                    = await predictAsync(i, t);
+            if (needYield)
+            {
+                yield return t;
+            }
+            if (needBreak)
             {
                 break;
             }
@@ -98,16 +129,20 @@ public static class LinqHelper
                             TakeTopFirstAsync<T>
                                     (
                                         this IAsyncEnumerable<T> @this
-                                        , Func<int, T, bool> predict
+                                        , Func<int, T, (bool, bool)> predict
                                     )
     {
         var i = 0;
-        await foreach (T x in @this)
+        await foreach (T t in @this)
         {
             i++;
-            yield return x;
-            bool b;
-            if (b = predict(i, x))
+            (bool needYield, bool needBreak)
+                                    = predict(i, t);
+            if (needYield)
+            {
+                yield return t;
+            }
+            if (needBreak)
             {
                 break;
             }

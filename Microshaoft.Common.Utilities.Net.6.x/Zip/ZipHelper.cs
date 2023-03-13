@@ -29,7 +29,7 @@ public static class ZipHelper
                             , async (x) =>
                             {
                                 (var entryName, var entryStream) = await onUpdateEntryProcessFuncAsync(x);
-                                return (false, true, entryName, entryStream);
+                                return (false, true, entryName, entryStream, true);
                             }
                             , entryNameEncoding
                             , entryCompressionLevelOnCreate
@@ -44,7 +44,7 @@ public static class ZipHelper
                                                 (
                                                     this IEnumerable<T>
                                                                 @this
-                                                    , Func<T, Task<(bool, bool, string, Stream)>>
+                                                    , Func<T, Task<(bool, bool, string, Stream, bool)>>
                                                                 onUpdateEntryProcessFuncAsync
                                                     , Encoding?
                                                                 entryNameEncoding = null
@@ -104,7 +104,7 @@ public static class ZipHelper
                         , async (x) =>
                         {
                             (var entryName, var entryStream) = await onUpdateEntryProcessFuncAsync(x);
-                            return (false, true, entryName, entryStream);
+                            return (false, true, entryName, entryStream, true);
                         }
                         , entryNameEncoding
                         , entryCompressionLevelOnCreate
@@ -118,7 +118,7 @@ public static class ZipHelper
                                                 (
                                                     this IEnumerable<T>
                                                                 @this
-                                                    , Func<T, Task<(bool, bool, string, Stream)>>
+                                                    , Func<T, Task<(bool, bool, string, Stream, bool)>>
                                                                 onUpdateEntryProcessFuncAsync
                                                     , Encoding?
                                                                 entryNameEncoding = null
@@ -126,6 +126,7 @@ public static class ZipHelper
                                                                 entryCompressionLevelOnCreate = CompressionLevel.Optimal
                                                     , string?
                                                                 extractToDirectoryName = null
+
                                                 )
     {
         bool compressed = false;
@@ -133,56 +134,72 @@ public static class ZipHelper
         MemoryStream zipStream = null!;
         foreach (var item in @this)
         {
+
             (
                 bool needBreak
                 , bool needUpdateEntry
                 , string entryName
                 , Stream entryStream
+                , bool needDisposeEntryStream
             )
             = await onUpdateEntryProcessFuncAsync(item);
-
-            if
-                (
-                    needUpdateEntry
-                    &&
-                    entryStream != null
-                    &&
-                    !string.IsNullOrEmpty(entryName)
-                    &&
-                    !string.IsNullOrWhiteSpace(entryName)
-                )
+            try
             {
-                if (zipArchive is null)
+                if
+                    (
+                        needUpdateEntry
+                        &&
+                        entryStream != null
+                        &&
+                        !string.IsNullOrEmpty(entryName)
+                        &&
+                        !string.IsNullOrWhiteSpace(entryName)
+                    )
                 {
-                    zipStream = new MemoryStream();
-                    zipArchive = new ZipArchive
-                                            (
-                                                zipStream
-                                                , ZipArchiveMode.Update
-                                                , true
-                                                , entryNameEncoding
-                                            );
+                    if (zipArchive is null)
+                    {
+                        zipStream = new MemoryStream();
+                        zipArchive = new ZipArchive
+                                                (
+                                                    zipStream
+                                                    , ZipArchiveMode.Update
+                                                    , true
+                                                    , entryNameEncoding
+                                                );
+                    }
+
+                    ZipArchiveEntry entry = zipArchive.GetEntry(entryName)!;
+                    if (entry == null)
+                    {
+                        entry = zipArchive.CreateEntry(entryName, entryCompressionLevelOnCreate);
+                    }
+
+                    using var entryUpdateStream = entry.Open();
+                    await entryStream.CopyToAsync(entryUpdateStream);
+                    entryUpdateStream.Close();
+                    entry = null!;
+
+                    if (!compressed)
+                    {
+                        compressed = true;
+                    }
                 }
-
-                ZipArchiveEntry entry = zipArchive.GetEntry(entryName)!;
-                if (entry == null)
+                if (needBreak)
                 {
-                    entry = zipArchive.CreateEntry(entryName, entryCompressionLevelOnCreate);
-                }
-
-                using var entryUpdateStream = entry.Open();
-                await entryStream.CopyToAsync(entryUpdateStream);
-                entryUpdateStream.Close();
-                entry = null!;
-
-                if (!compressed)
-                {
-                    compressed = true;
+                    break;
                 }
             }
-            if (needBreak)
+            finally
             {
-                break;
+                if (needDisposeEntryStream)
+                {
+                    if (entryStream is not null)
+                    {
+                        entryStream.Close();
+                        entryStream.Dispose();
+                        entryStream = null!;
+                    }
+                }
             }
         }
         if
