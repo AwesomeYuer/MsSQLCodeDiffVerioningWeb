@@ -73,11 +73,7 @@ public static class ZipHelper
         }
         finally
         {
-            if (zipArchive is not null)
-            {
-                zipArchive.Dispose();
-                //zipArchive = null!;
-            }
+            zipArchive?.Dispose();
         }
     }
 
@@ -156,23 +152,18 @@ public static class ZipHelper
                         !string.IsNullOrWhiteSpace(entryName)
                     )
                 {
-                    if (zipArchive is null)
-                    {
-                        zipStream = new MemoryStream();
-                        zipArchive = new ZipArchive
+                    zipStream ??= new MemoryStream();
+                    zipArchive ??= new ZipArchive
                                                 (
                                                     zipStream
                                                     , ZipArchiveMode.Update
                                                     , true
                                                     , entryNameEncoding
                                                 );
-                    }
 
                     ZipArchiveEntry entry = zipArchive.GetEntry(entryName)!;
-                    if (entry == null)
-                    {
-                        entry = zipArchive.CreateEntry(entryName, entryCompressionLevelOnCreate);
-                    }
+
+                    entry ??= zipArchive.CreateEntry(entryName, entryCompressionLevelOnCreate);
 
                     using var entryUpdateStream = entry.Open();
                     await entryStream.CopyToAsync(entryUpdateStream);
@@ -205,8 +196,8 @@ public static class ZipHelper
         if
             (
                 compressed
-            //&&
-            //zipStream is not null
+                //&&
+                //zipStream is not null
             )
         {
             if
