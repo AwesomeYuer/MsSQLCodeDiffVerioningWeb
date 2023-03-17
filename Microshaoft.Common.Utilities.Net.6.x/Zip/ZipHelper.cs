@@ -11,7 +11,7 @@ public static class ZipHelper
                                             (
                                                 this IEnumerable<T>
                                                             @this
-                                                , Func<T, Task<(string, Stream)>>
+                                                , Func<T, Task<(string EntryName, Stream EntryStream)>>
                                                             onUpdateEntryProcessFuncAsync
                                                 , Encoding?
                                                             entryNameEncoding = null
@@ -44,7 +44,7 @@ public static class ZipHelper
                                                 (
                                                     this IEnumerable<T>
                                                                 @this
-                                                    , Func<T, Task<(bool, bool, string, Stream, bool)>>
+                                                    , Func<T, Task<(bool NeedBreak, bool NeedUpdateEntry, string EntryName, Stream EntryStream, bool NeedDisposeEntryStream)>>
                                                                 onUpdateEntryProcessFuncAsync
                                                     , Encoding?
                                                                 entryNameEncoding = null
@@ -82,7 +82,7 @@ public static class ZipHelper
                                             (
                                                 this IEnumerable<T>
                                                             @this
-                                                , Func<T, Task<(string, Stream)>>
+                                                , Func<T, Task<(string EntryName, Stream EntryStream)>>
                                                             onUpdateEntryProcessFuncAsync
                                                 , Encoding?
                                                             entryNameEncoding = null
@@ -114,7 +114,7 @@ public static class ZipHelper
                                                 (
                                                     this IEnumerable<T>
                                                                 @this
-                                                    , Func<T, Task<(bool, bool, string, Stream, bool)>>
+                                                    , Func<T, Task<(bool NeedBreak, bool NeedUpdateEntry, string EntryName, Stream EntryStream, bool NeedDisposeEntryStream)>>
                                                                 onUpdateEntryProcessFuncAsync
                                                     , Encoding?
                                                                 entryNameEncoding = null
@@ -196,8 +196,8 @@ public static class ZipHelper
         if
             (
                 compressed
-                //&&
-                //zipStream is not null
+            //&&
+            //zipStream is not null
             )
         {
             if
