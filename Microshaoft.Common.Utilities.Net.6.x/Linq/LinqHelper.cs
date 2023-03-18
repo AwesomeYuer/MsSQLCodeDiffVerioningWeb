@@ -17,7 +17,7 @@ public static class LinqHelper
     public static IEnumerable<T> ForEachAsIEnumerable<T>
                                         (
                                             this IEnumerable<T> @this
-                                            , Func<int, T, (bool NeedBreak, bool NeedYield)>
+                                            , Func<int, T, (bool NeedYield, bool NeedBreak)>
                                                     predict
                                         )
     {
@@ -42,7 +42,7 @@ public static class LinqHelper
     public static async IAsyncEnumerable<T> ForEachAsIAsyncEnumerable<T>
                                         (
                                             this IEnumerable<T> @this
-                                            , Func<int, T, Task<(bool NeedBreak, bool NeedYield)>>
+                                            , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>>
                                                     predictAsync
                                         )
     {
@@ -68,7 +68,7 @@ public static class LinqHelper
     public static async IAsyncEnumerable<T> ForEachAsIAsyncEnumerable<T>
                                         (
                                             this IAsyncEnumerable<T> @this
-                                            , Func<int, T, Task<(bool NeedBreak, bool NeedYield)>>
+                                            , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>>
                                                     predictAsync
                                         )
     {
