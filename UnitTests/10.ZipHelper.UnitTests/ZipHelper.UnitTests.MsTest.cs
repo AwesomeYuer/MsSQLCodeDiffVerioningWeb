@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Utilities;
 
 [TestClass]
-public class ZipHelperMsUnitTests
+public class ZipHelperMsTests
 {
     [TestMethod]
     public async Task TestMethod1Async()
@@ -15,7 +15,7 @@ public class ZipHelperMsUnitTests
                                     (
                                         $@"00.ZipHelper.UnitTests\SourceFiles"
                                         , "Temp"
-                                        , $"TempFile.{nameof(ZipHelperMsUnitTests)}"
+                                        , $"TempFile.{nameof(ZipHelperMsTests)}"
                                         , (x) =>
                                         {
                                             Assert

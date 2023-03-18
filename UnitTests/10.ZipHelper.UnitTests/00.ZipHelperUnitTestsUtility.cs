@@ -2,8 +2,6 @@
 
 namespace UnitTests.Utilities;
 
-
-
 public static class ZipHelperUnitTestsUtility
 {
 

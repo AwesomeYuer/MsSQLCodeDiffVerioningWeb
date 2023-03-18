@@ -1,7 +1,6 @@
 namespace UnitTests.NUnitTest;
 
 using NUnit.Framework;
-using System.Runtime.CompilerServices;
 using UnitTests.Utilities;
 
 public class ZipHelperNUnitTests

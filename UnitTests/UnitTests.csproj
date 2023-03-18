@@ -15,6 +15,7 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
 		<PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
 		<PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+		<PackageReference Include="NuGet.Versioning" Version="6.5.0" />
 
 		<PackageReference Include="xunit" Version="2.4.2" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
@@ -41,127 +42,127 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBAdditionalModel.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBAdditionalModel.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBAKS.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBAKS.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBModel.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBModel.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBModelPrivateEndpoint.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBModelPrivateEndpoint.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBUI.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBUI.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBUIFirewall.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBUIFirewall.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBUIPrivateDnsZone.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createBLOBUIPrivateDnsZone.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createCosmosDB.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createCosmosDB.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createCosmosDBPrivateEndpoint.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createCosmosDBPrivateEndpoint.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\01\createDiagnosticSettings.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\01\createDiagnosticSettings.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\createEventHub.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\createEventHub.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\createEvpNSG.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\createEvpNSG.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createACR.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createACR.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAKSEvpHub.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAKSEvpHub.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAKSModelConverter.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAKSModelConverter.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAKSModelConverterHttpApplicationRouting.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAKSModelConverterHttpApplicationRouting.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAksNSG.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAksNSG.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAksSubnet.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAksSubnet.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAKSWorkflowManagement.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAKSWorkflowManagement.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAlertRule.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAlertRule.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createAppGW.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createAppGW.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createApplicationGatewaySubnet.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createApplicationGatewaySubnet.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\00\createApplicationGWNSG.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\00\createApplicationGWNSG.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\createApplicationResourceNSG.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\createApplicationResourceNSG.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\createApplicationResourceSubnet.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\createApplicationResourceSubnet.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageAndDbNSG.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageAndDbNSG.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageAndDbSubnet.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageAndDbSubnet.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageNSG.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageNSG.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageSubnet.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createStorageSubnet.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createUiDefinition.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createUiDefinition.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createUserAssignedIdentities.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createUserAssignedIdentities.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createVirtualNetwork.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\createVirtualNetwork.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\bbb\mainTemplate.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\bbb\mainTemplate.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\createEvpSubnet.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\createEvpSubnet.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\createKV.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\createKV.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\createKVPrivateEndpoint.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\createKVPrivateEndpoint.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\createLogAnalytics.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\createLogAnalytics.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\createLogAnalyticsPrivateEndpoint.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\createLogAnalyticsPrivateEndpoint.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\aaa\createSqlDatabase.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\aaa\createSqlDatabase.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\createSqlDatabaseAuditingSettings.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\createSqlDatabaseAuditingSettings.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="00.ZipHelper.UnitTests\SourceFiles\createSqlDatabasePrivateEndpoint.json">
+	  <None Update="10.ZipHelper.UnitTests\SourceFiles\createSqlDatabasePrivateEndpoint.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
