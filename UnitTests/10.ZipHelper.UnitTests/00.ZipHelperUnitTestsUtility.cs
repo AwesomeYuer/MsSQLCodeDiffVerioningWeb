@@ -23,7 +23,7 @@ public static class ZipHelperUnitTestsUtility
                                                 onAssertProcess
                                 )
     {
-
+        sourceDirectory = @"10.ZipHelper.UnitTests\\SourceFiles";
         var extractToDirectoryPath = Path.Combine(targetRootDirectory , "zip", $"{zipFileName}.zip.extracted");
 
         var zipFilePath = Path.Combine(targetRootDirectory, "zip", $"{zipFileName}.zip");
