@@ -35,8 +35,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "50.Swagger", "50.Swagger", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Solution Items", "00.Solution Items", "{7D226DD2-1926-44FB-8382-76ACC447CBC7}"
 	ProjectSection(SolutionItems) = preProject
-		ci-cd-all-in-one.sh = ci-cd-all-in-one.sh
 		azure-pipelines.yml.txt = azure-pipelines.yml.txt
+		ci-cd-all-in-one.sh = ci-cd-all-in-one.sh
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 		VSCode.Rest.Client.Test\RestClientTest.http = VSCode.Rest.Client.Test\RestClientTest.http
@@ -50,6 +50,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlCodeDiffVersioningWeb.NET.6.x.Windows", "MsSqlCodeDiffVersioningWeb.NET.6.x\MsSqlCodeDiffVersioningWeb.NET.6.x.Windows.csproj", "{38EE3694-3AC3-4B1C-BD68-3975B50C912A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlCodeDiffVersioningWeb.NET.6.x.Linux", "MsSqlCodeDiffVersioningWeb.NET.6.x\MsSqlCodeDiffVersioningWeb.NET.6.x.Linux.csproj", "{ACEDC510-5B71-4D06-9A40-7B51B93F357D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "80.UnitTests", "80.UnitTests", "{D414D963-C3DF-46EC-96F0-295BD6568115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -101,6 +105,10 @@ Global
 		{ACEDC510-5B71-4D06-9A40-7B51B93F357D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACEDC510-5B71-4D06-9A40-7B51B93F357D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACEDC510-5B71-4D06-9A40-7B51B93F357D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +128,7 @@ Global
 		{E7D9C8C7-DC49-4C77-84C2-136167D1854D} = {6CA30516-47D9-4B1F-BD8F-0374D9714624}
 		{38EE3694-3AC3-4B1C-BD68-3975B50C912A} = {E3A62127-E4C7-407D-92FF-345700FA60A5}
 		{ACEDC510-5B71-4D06-9A40-7B51B93F357D} = {E3A62127-E4C7-407D-92FF-345700FA60A5}
+		{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60} = {D414D963-C3DF-46EC-96F0-295BD6568115}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0669E030-A1FE-4EF0-994F-FC8C85086896}
