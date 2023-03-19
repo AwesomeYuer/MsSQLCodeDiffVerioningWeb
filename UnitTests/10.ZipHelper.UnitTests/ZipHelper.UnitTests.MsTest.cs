@@ -1,5 +1,6 @@
 namespace UnitTests.MsTest;
 
+using Microshaoft;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using UnitTests.Utilities;
 
@@ -24,7 +25,7 @@ public class ZipHelperMsTests
                                                         !x.ZipStream.CanRead
                                                         &&
                                                         !x.ZipStream.CanWrite
-                                                                            &&
+                                                        &&
                                                         !x.ZipStream.CanSeek
                                                         &&
                                                         !x.ZipStream.CanTimeout
@@ -44,21 +45,23 @@ public class ZipHelperMsTests
                                             Assert.IsNull(x.ZipStream);
 
                                             r = x.EntriesStreams
-                                                            .All
-                                                                (
-                                                                    (xx) =>
-                                                                    {
-                                                                        try
+                                                                .All
+                                                                    (
+                                                                        (xx) =>
                                                                         {
-                                                                            xx.EntryStream.Position = 0;
+                                                                            return 
+                                                                                    xx
+                                                                                        .EntryStream
+                                                                                        .CheckDisposed
+                                                                                                <Stream>
+                                                                                                    (
+                                                                                                        (xxx) =>
+                                                                                                        {
+                                                                                                            xxx.Position = xxx.Position;
+                                                                                                        }
+                                                                                                    );
                                                                         }
-                                                                        catch (ObjectDisposedException)
-                                                                        {
-                                                                            return true;
-                                                                        }
-                                                                        return false;
-                                                                    }
-                                                                );
+                                                                    );
                                             Assert.IsTrue(r);
 
                                             
