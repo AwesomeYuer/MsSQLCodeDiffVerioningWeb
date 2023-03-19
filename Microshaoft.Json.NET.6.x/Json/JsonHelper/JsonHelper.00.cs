@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Xml.Linq;
     using System.Collections.Generic;
+    using System.Text.Json.Nodes;
 
     public class JObjectComparer : IEqualityComparer<JToken>
     {
@@ -101,6 +102,63 @@
         }
 
         public static bool IsJson
+                    (
+                        this string @this
+                        , out JsonNode jsonNode
+                        , bool validate = false
+                    )
+        {
+            jsonNode = null!;
+            char c = @this.FirstNonWhitespaceCharacter();
+            //IL_0018: Unknown result type (might be due to invalid IL or missing references)
+            bool r = (c == '{' || c == '[');
+            if (r && validate)
+            {
+                try
+                {
+                    jsonNode = JsonNode.Parse(@this)!;
+                    r = true;
+                }
+                catch
+                {
+                    r = false;
+                }
+            }
+            return r;
+        }
+
+
+        public static bool IsJson<T>
+            (
+                this string @this
+                , Func<string, T> onParseProcessFunc
+                , out T jsonNode
+                , bool validate = false
+            )
+            where T : class
+        {
+            jsonNode = default!;
+            char c = @this.FirstNonWhitespaceCharacter();
+            //IL_0018: Unknown result type (might be due to invalid IL or missing references)
+            bool r = (c == '{' || c == '[');
+            if (r && validate)
+            {
+                try
+                {
+                    jsonNode = onParseProcessFunc(@this)!;
+                    r = true;
+                }
+                catch
+                {
+                    r = false;
+                }
+            }
+            return r;
+        }
+
+
+
+        public static bool IsJson
                             (
                                 this string @this
                                 , out JToken jToken
@@ -135,7 +193,7 @@
             {
                 try
                 {
-                    r = 
+                    r =
                         (
                             TryParseJson(@this, out _)
                             ==
@@ -163,13 +221,13 @@
             {
                 try
                 {
-                    r = 
+                    r =
                         (
                             TryParseJson
                                 (
                                     @this
                                     , out JToken jToken
-                                ) 
+                                )
                             ==
                             JTokenType.Array
                         );
@@ -199,7 +257,7 @@
             {
                 try
                 {
-                    r = 
+                    r =
                         (
                             TryParseJson(@this, out JToken jToken)
                             ==
@@ -228,7 +286,7 @@
             {
                 try
                 {
-                    r = 
+                    r =
                         (
                             TryParseJson(@this, out _)
                             ==
@@ -250,9 +308,9 @@
                                     )
         {
             object r = null!;
-            if 
+            if
                 (
-                    @this.Type == JTokenType.Null 
+                    @this.Type == JTokenType.Null
                     ||
                     @this.Type == JTokenType.Undefined
                     ||
@@ -360,8 +418,8 @@
                     typeof(double) == @this
                     ||
                     typeof(decimal) == @this
-                    //||
-                    //typeof(Single) == @this
+                //||
+                //typeof(Single) == @this
                 )
             {
                 r = JTokenType.Float;
@@ -555,7 +613,7 @@
                                             , Func<TKey, TValue, TElement> OnOneElementProcessFunc
                                         )
                                     where
-                                        TKey : notnull 
+                                        TKey : notnull
         {
             //IEnumerable<TElement> r = default(IEnumerable<TElement>);
             return

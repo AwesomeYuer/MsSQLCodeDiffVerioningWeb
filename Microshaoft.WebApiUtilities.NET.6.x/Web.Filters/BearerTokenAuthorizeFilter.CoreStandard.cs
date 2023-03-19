@@ -1,6 +1,7 @@
 ﻿#if NETCOREAPP
 namespace Microshaoft.Web
 {
+    using Microshaoft.WebApi.ModelBinders;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Microsoft.Extensions.Configuration;
@@ -22,7 +23,7 @@ namespace Microshaoft.Web
                         Attribute
                         , IActionFilter
     {
-        private const string _itemKeyOfRequestJTokenParameters = "requestJTokenParameters";
+        private const string _itemKeyOfRequestJTokenParameters = JsonModelBinder<string>.ItemKeyOfRequestJsonParameters;
         private bool _isRequired = true;
         public bool IsRequired
         {
@@ -99,12 +100,12 @@ namespace Microshaoft.Web
             else
             {
                 ok = request
-                        .TryParseJTokenParameters
+                         .TryParseObjectJsonParameters
                             (
-                                out parameters
+                                (x) => JToken.Parse(x)
+                                , out parameters
                                 , out secretJwtToken
-                                , null!
-                                , jwtTokenName!
+                                , jwtTokenName: jwtTokenName!
                             );
                 if (ok)
                 {

@@ -523,6 +523,13 @@
                                                 .WithExposedHeaders("*");
                                         }
                                     );
+                            //options.AddPolicy("AllowAll",
+                            //    builder =>
+                            //    {
+                            //        builder.AllowAnyOrigin()
+                            //               .AllowAnyMethod()
+                            //               .AllowAnyHeader();
+                            //    });
                         }
                   );
             #endregion

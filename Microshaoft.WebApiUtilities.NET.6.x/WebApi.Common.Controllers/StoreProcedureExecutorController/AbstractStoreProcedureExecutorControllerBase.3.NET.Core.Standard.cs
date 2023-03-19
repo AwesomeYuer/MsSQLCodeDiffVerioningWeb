@@ -278,7 +278,16 @@
                                     //(ss.StartsWith("{") && ss.EndsWith("}"))
                                     //||
                                     //(ss.StartsWith("[") && ss.EndsWith("]"))
-                                    s.IsJson(out var jToken, true)
+                                    s.IsJson
+                                            <JToken>
+                                                (
+                                                    (x) =>
+                                                    {
+                                                        return JToken.Parse(x);
+                                                    },
+                                                    out var jToken
+                                                    , true
+                                                )
                                 )
                             {
                                 //try

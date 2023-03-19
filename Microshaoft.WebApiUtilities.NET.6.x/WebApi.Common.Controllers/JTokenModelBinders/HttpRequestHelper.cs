@@ -11,6 +11,7 @@ using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -288,22 +289,36 @@ public static partial class HttpRequestHelper
         return
             r;
     }
-    public static bool TryParseJsonParameters<T>
+    public static bool TryParseObjectJsonParameters<T>
         (
             this HttpRequest @this
             , Func<string, T> onParseProcessFunc
             , out T parameters
             , out string secretJwtToken
-            , Func<Task<T>> onFormProcessFuncAsync = null!
-            , Func<IEnumerable<KeyValuePair<string, StringValues>>, T> onQueryProcessFunc = null!
+            , Func
+                <
+                    IEnumerable
+                        <
+                            KeyValuePair<string, StringValues>
+                        >
+                        , T
+                >
+                    onKeyValuePairsProcessFunc = null!
+            , ModelBindingContext modelBindingContext = null!
             , string jwtTokenName = "xJwtToken"
             , Func<T, string, string> onExtractJwtTokenProcessFuncAsync = null!
 
         )
-        where T : class
+                                    where T : class
     {
         bool r;
         T result = default!;
+        if (modelBindingContext is not null)
+        { 
+        
+        
+        }
+
         void requestFormBodyProcess()
         {
             var hasContentLength = @this.ContentLength > 0;
@@ -316,9 +331,16 @@ public static partial class HttpRequestHelper
                     hasContentLength
                 )
             {
-                if (onFormProcessFuncAsync != null)
+
+                if 
+                    (
+                        modelBindingContext is not null
+                        &&
+                        onKeyValuePairsProcessFunc is not null
+                    )
                 {
-                    result = onFormProcessFuncAsync().Result;
+                    result = modelBindingContext
+                                        .GetFormObjectJsonAsync(onKeyValuePairsProcessFunc).Result;
                 }
             }
             else if (hasContentLength)
@@ -372,9 +394,9 @@ public static partial class HttpRequestHelper
             }
             if (!isJson)
             {
-                if (onQueryProcessFunc != null)
+                if (onKeyValuePairsProcessFunc != null)
                 {
-                    result = @this.Query.ToObjectJson(onQueryProcessFunc);
+                    result = @this.Query.ToObjectJson(onKeyValuePairsProcessFunc);
                 }
                 //Console.WriteLine("@this.Query.ToJToken()");
             }
@@ -382,6 +404,14 @@ public static partial class HttpRequestHelper
         // 取 jwtToken 优先级顺序：Header → QueryString → Body
         StringValues jwtToken = string.Empty;
         var needExtractJwtToken = !jwtTokenName.IsNullOrEmptyOrWhiteSpace();
+
+        if (needExtractJwtToken)
+        {
+            secretJwtToken = (jwtToken = @this.Headers[jwtTokenName.ToLower()]).ToString();
+            needExtractJwtToken = secretJwtToken.IsNullOrEmptyOrWhiteSpace();
+        }
+
+
         void extractJwtToken()
         {
             if (needExtractJwtToken)
@@ -436,9 +466,44 @@ public static partial class HttpRequestHelper
         return r;
     }
 
+    public static bool TryParseObjectJsonParameters<T>
+        (
+            this ModelBindingContext @this
+            , Func<string, T> onParseProcessFunc
+            , out T parameters
+            , out string secretJwtToken
+            , Func
+                <
+                    IEnumerable
+                        <
+                            KeyValuePair<string, StringValues>
+                        >
+                        , T
+                >
+                    onKeyValuePairsProcessFunc = null!
+            , string jwtTokenName = "xJwtToken"
+            , Func<T, string, string> onExtractJwtTokenProcessFuncAsync = null!
+
+        )
+                                    where T : class
+    {
+        return
+            TryParseObjectJsonParameters
+                        (
+                            @this.HttpContext.Request
+                            , onParseProcessFunc
+                            , out parameters
+                            , out secretJwtToken
+                            , onKeyValuePairsProcessFunc
+                            , @this
+                            , jwtTokenName
+                            , onExtractJwtTokenProcessFuncAsync
+                        );
+    }
+
 
     public static async
-                Task<T> GetFormTJsonAsync<T>
+                Task<T> GetFormObjectJsonAsync<T>
                     (
                         this ModelBindingContext @this
                         , Func

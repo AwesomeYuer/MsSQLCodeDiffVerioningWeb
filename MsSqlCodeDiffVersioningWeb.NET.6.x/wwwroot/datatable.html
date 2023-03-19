@@ -49,7 +49,7 @@
                 $('#loading').hide();
             }
         });
-        window.jwtToken = "";
+        window.jwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkZBUkVBU1RcXHhpeXVleXUiLCJpcCI6Ijo6MSIsIkV4dGVuc2lvbiI6IlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBbXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7IFI6XCJtYW5nZXIxMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExXCIsRDpcIkhSMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExXCIgfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLHsgUjpcIm1hbmdlcjFcIixEOlwiSFIxXCIgfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBdIiwibmJmIjoxNTQyOTgxMDUzLCJleHAiOjE1NDI5ODQ2NTMsImlhdCI6MTU0Mjk4MTA1MywiaXNzIjoiYWFhIiwiYXVkIjoiYXBwMSJ9.ur2JCkCmghISfyBkn8M5DpLd8a2eB1WxHJ5EKvGnqGs";
         var binded1 = false;
         var binded2 = false;
         var usedDataTables = null;
@@ -113,7 +113,11 @@
             $.ajax({
                 type: 'post',
                 url: url,
-                data: { sql: sql, rowcount: rowcount },
+                headers: {
+                    "Authorization": window.jwtToken
+                    , "xJwtToken": window.jwtToken
+                },
+                data: { sql: sql, rowcount: rowcount, xxxJwtToken: window.jwtToken },
                 beforeSend: function (xhr) {
                     //xhr.setRequestHeader
                 },

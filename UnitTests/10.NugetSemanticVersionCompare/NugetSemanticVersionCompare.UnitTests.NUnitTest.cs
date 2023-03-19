@@ -67,7 +67,7 @@ public partial class NugetSemanticVersionNUnitTests
             _       => false
         };
 
-        Assert.AreEqual(r, expect , $"failed! compare result is NOT: {left} {@operator} {right}");
+        Assert.That(expect, Is.EqualTo(r), $"failed! compare result is NOT: {left} {@operator} {right}");
 
         var x = leftSemanticVersion.ToString();
         r = x == left;
