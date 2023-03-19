@@ -77,9 +77,9 @@ MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\00.DataBase
     MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\MsSqlCodeDiffVersioningWeb.NET.6.x.Windows.csproj
     ```
 
-1. Portal entry
+1.  Portal entry
     ```
-    # sql code version compare
+    # sql code version tracking and compare, click search button
     https://localhost:7283/index.html
 
     # sql online query
