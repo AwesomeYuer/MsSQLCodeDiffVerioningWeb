@@ -30,7 +30,7 @@ MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\00.DataBase
         windows: "%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json"
         linux/macOS: ~/.microsoft/usersecrets/<user_secrets_id>/secrets.json
         ```
-        * content
+        * content ,modify it for your environment
         ```json
         {
           "NeedAutoRefreshExecutedTimeForSlideExpire": "False",
