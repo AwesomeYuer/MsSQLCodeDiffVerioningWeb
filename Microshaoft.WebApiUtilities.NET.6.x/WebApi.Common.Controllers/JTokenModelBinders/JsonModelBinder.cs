@@ -13,8 +13,6 @@ public abstract class JsonModelBinder<T>
 
     protected virtual string JwtTokenKey { get; set; } = "xJwtToken";
 
-    protected override string JwtTokenKey { get => "xJwtToken"; }
-
     public abstract string OnExtractJwtTokenProcessFunc(T tJson, string jwtTokenName);
 
     public abstract T OnParseProcessFunc(string json);
@@ -30,7 +28,7 @@ public abstract class JsonModelBinder<T>
                                 (
                                     ModelBindingContext bindingContext
                                 )
-
+        
     {
         var httpContext = bindingContext
                                     .HttpContext;
@@ -49,7 +47,7 @@ public abstract class JsonModelBinder<T>
                     );
         if (ok)
         {
-            if
+            if 
                 (
                     parameters is not null
                     &&
@@ -61,7 +59,7 @@ public abstract class JsonModelBinder<T>
                                 )
                 )
             {
-
+                
                 httpContext
                         .Items
                         .Add
@@ -87,7 +85,7 @@ public abstract class JsonModelBinder<T>
     public virtual Task BindModelAsync(ModelBindingContext bindingContext)
     {
 
-        var parameters = GetJsonModelBindingResult
+        var result = GetJsonModelBindingResult
                                         (
                                             bindingContext
                                         );
@@ -95,7 +93,7 @@ public abstract class JsonModelBinder<T>
                     .Result = ModelBindingResult
                                             .Success
                                                 (
-                                                    parameters
+                                                    result
                                                 );
         return
             Task

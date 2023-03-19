@@ -19,7 +19,12 @@ public class JTokenModelBinder : JsonModelBinder<JToken>, IModelBinder
     }
     public override string OnExtractJwtTokenProcessFunc(JToken jToken, string jwtTokenName)
     {
-        return jToken[jwtTokenName]?.Value<string>()!;
+        var r = string.Empty;
+        if (jToken is not JArray)
+        {
+            r = jToken[jwtTokenName]?.Value<string>()!;
+        }
+        return r;
     }
 }
 

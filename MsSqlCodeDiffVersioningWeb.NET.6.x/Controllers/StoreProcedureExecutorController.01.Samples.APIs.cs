@@ -15,32 +15,9 @@ namespace Microshaoft.WebApi.Controllers
     using System.Collections.Concurrent;
     using System.Collections.Generic;
 
-    //[ModelBinder(BinderType = typeof(RequestParams))]
-    public class RequestParams : JTokenModelBinder
+    public class Some
     {
-        public string Param1 { get; set; } = null!;
-        public int Param2 { get; set; }
-        public DateTime Param3 { get; set; }
-
-        public override Task BindModelAsync(ModelBindingContext bindingContext)
-        {
-            var jToken = base.GetJTokenModelBindingResult(bindingContext);
-            var json = jToken.ToString();
-            //var result = JsonSerializer
-            //                    .Deserialize
-            //                            <RequestParams>
-            //                                (
-            //                                    json
-            //                                    , new JsonSerializerOptions()
-            //                                        {
-            //                                            PropertyNameCaseInsensitive = true
-            //                                        }
-            //                                );
-            var result = JsonConvert.DeserializeObject<RequestParams>(json);
-            bindingContext.Result = ModelBindingResult.Success(result);
-            return
-                Task.CompletedTask;
-        }
+        public int Id { get; set; }
     }
 
 
@@ -130,8 +107,8 @@ namespace Microshaoft.WebApi.Controllers
         [Route("Echo2")]
         public ActionResult Echo
                         (
-                            [ModelBinder(typeof(RequestParams))]
-                            RequestParams
+                            [ModelBinder(typeof(StrongTypeModelBinder<Some>))]
+                            Some
                                     parameters = null!
                         )
         {

@@ -24,7 +24,12 @@ public class JsonNodeModelBinder : JsonModelBinder<JsonNode> ,IModelBinder
     }
     public override string OnExtractJwtTokenProcessFunc(JsonNode jsonNode, string jwtTokenName)
     {
-        return jsonNode[jwtTokenName]?.GetValue<string>()!;
+        var r = string.Empty;
+        if (jsonNode is not JsonArray)
+        { 
+            r = jsonNode[jwtTokenName]?.GetValue<string>()!;
+        }
+        return r;
     }
 }
 

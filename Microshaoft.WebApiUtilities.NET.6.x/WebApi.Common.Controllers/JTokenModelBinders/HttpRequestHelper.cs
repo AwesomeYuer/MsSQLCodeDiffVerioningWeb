@@ -349,13 +349,13 @@ public static partial class HttpRequestHelper
                 var json = streamReader.ReadToEnd();
                 if (!json.IsNullOrEmptyOrWhiteSpace())
                 {
-                    json
-                        .IsJson
-                            (
-                                onParseProcessFunc
-                                , out result
-                                , true
-                            );
+                    r = json
+                            .IsJson
+                                (
+                                    onParseProcessFunc
+                                    , out result
+                                    , true
+                                );
                 }
             }
         }
@@ -507,11 +507,11 @@ public static partial class HttpRequestHelper
                     (
                         this ModelBindingContext @this
                         , Func
-                                    <
-                                        IEnumerable
-                                                <KeyValuePair<string, StringValues>>
-                                        , T
-                                    >
+                                <
+                                    IEnumerable
+                                            <KeyValuePair<string, StringValues>>
+                                    , T
+                                >
                                 onReturnProcessFunc
                     )
     {
