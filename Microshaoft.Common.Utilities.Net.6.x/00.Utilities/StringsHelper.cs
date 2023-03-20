@@ -145,6 +145,13 @@
                     ||
                     string.IsNullOrWhiteSpace(@this);
         }
+        public static bool IsNullOrEmptyOrWhiteSpaceOrZeroLength(this string @this)
+        {
+            return
+                    IsNullOrEmptyOrWhiteSpace(@this)
+                    ||
+                    @this.Length == 0;
+        }
         public static bool IsValidString(string text)
         {
             return 
