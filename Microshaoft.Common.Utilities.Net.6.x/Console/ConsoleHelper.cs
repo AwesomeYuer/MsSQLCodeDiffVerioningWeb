@@ -31,8 +31,8 @@
             var message = string.Empty;
             var errorMessage = string.Empty;
             // store original console output
-            TextWriter consoleOut = null!;
-            TextWriter consoleError = null!;
+            TextWriter originalConsoleOut = null!;
+            TextWriter originalConsoleError = null!;
             
             try
             {
@@ -45,7 +45,7 @@
                         errorStreamWriter = new StreamWriter(errorStream);
                         errorStreamWriter.AutoFlush = true;
                     }
-                    consoleError = Console.Error;
+                    originalConsoleError = Console.Error;
                     Console.SetError(errorStreamWriter);
                 }
                 else if
@@ -56,13 +56,13 @@
                         allStreamWriter = new StreamWriter(allStream);
                         allStreamWriter.AutoFlush = true;
                     }
-                    consoleOut = Console.Out;
+                    originalConsoleOut = Console.Out;
                     Console.SetOut(allStreamWriter);
 
 
                     if (captureOption == CaptureOption.CaptureAll)
                     {
-                        consoleError = Console.Error;
+                        originalConsoleError = Console.Error;
                         Console.SetError(allStreamWriter);
                     }
                     else if (captureOption == CaptureOption.CaptureEvery)
@@ -73,7 +73,7 @@
                             errorStreamWriter = new StreamWriter(errorStream);
                             errorStreamWriter.AutoFlush = true;
                         }
-                        consoleError = Console.Error;
+                        originalConsoleError = Console.Error;
                         Console.SetError(errorStreamWriter);
                     }
                 }
@@ -126,14 +126,14 @@
                 }
 
                 // restore original Console.Error
-                if (consoleError is not null)
+                if (originalConsoleError is not null)
                 {
-                    Console.SetError(consoleError);
+                    Console.SetError(originalConsoleError);
                 }
                 
-                if (consoleOut is not null)
+                if (originalConsoleOut is not null)
                 {
-                    Console.SetOut(consoleOut);
+                    Console.SetOut(originalConsoleOut);
                 }
             }
             return (hasErrors, message, errorMessage);
