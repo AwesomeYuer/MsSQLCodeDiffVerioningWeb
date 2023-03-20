@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 public class JsonNodeModelBinder : JsonModelBinder<JsonNode> ,IModelBinder
 {
@@ -13,7 +14,18 @@ public class JsonNodeModelBinder : JsonModelBinder<JsonNode> ,IModelBinder
 
     public override JsonNode OnParseProcessFunc(string json)
     {
-        return JsonNode.Parse(json)!;
+        return
+            JsonNode
+                .Parse
+                    (
+                        json
+                        , documentOptions:
+                            new JsonDocumentOptions()
+                                {
+                                    CommentHandling = JsonCommentHandling.Skip
+                                    , AllowTrailingCommas = true
+                                }
+                    )!;
     }
 
     public override JsonNode OnKeyValuePairsProcessFunc(IEnumerable<KeyValuePair<string, StringValues>> keyValuePairs)

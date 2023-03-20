@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace Microshaoft.WebApi.ModelBinders;
 
-public class StrongTypeModelBinder<T> : JsonNodeModelBinder
+public class JsonNodeStrongTypeModelBinder<T> : JsonNodeModelBinder
 {
     public override Task BindModelAsync(ModelBindingContext bindingContext)
     {

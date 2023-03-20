@@ -8,7 +8,17 @@ public class JTokenModelBinder : JsonModelBinder<JToken>, IModelBinder
 {
     public override JToken OnParseProcessFunc(string json)
     {
-        return JToken.Parse(json)!;
+        return
+            JToken
+                .Parse
+                    (
+                        json
+                        , new JsonLoadSettings()
+                        {
+                            CommentHandling = CommentHandling.Ignore
+                            , LineInfoHandling = LineInfoHandling.Ignore
+                        }
+                    )!;
     }
 
     public override JToken OnKeyValuePairsProcessFunc(IEnumerable<KeyValuePair<string, StringValues>> keyValuePairs)

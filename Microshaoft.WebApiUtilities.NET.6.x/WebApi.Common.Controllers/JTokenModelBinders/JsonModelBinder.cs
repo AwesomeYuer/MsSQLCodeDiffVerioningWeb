@@ -36,7 +36,7 @@ public abstract class JsonModelBinder<T>
                                 .Request;
         var ok = false;
         ok = bindingContext
-                .TryParseObjectJsonParameters<T>
+                .TryParseObjectJsonParameters
                     (
                         OnParseProcessFunc
                         , out T parameters

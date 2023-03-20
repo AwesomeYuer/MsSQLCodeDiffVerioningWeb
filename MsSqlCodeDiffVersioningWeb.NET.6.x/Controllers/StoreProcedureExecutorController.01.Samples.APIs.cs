@@ -107,7 +107,7 @@ namespace Microshaoft.WebApi.Controllers
         [Route("Echo2")]
         public ActionResult Echo
                         (
-                            [ModelBinder(typeof(StrongTypeModelBinder<Some>))]
+                            [ModelBinder(typeof(JsonNodeStrongTypeModelBinder<Some>))]
                             Some
                                     parameters = null!
                         )
