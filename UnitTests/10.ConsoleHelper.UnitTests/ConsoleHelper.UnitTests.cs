@@ -93,7 +93,7 @@ public class ConsoleHelperUnitTests
     [InlineData(CaptureOption.CaptureAll            , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
     [InlineData(CaptureOption.CaptureStandardOnly   , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
     [InlineData(CaptureOption.CaptureEvery          , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
-    [xTheoryAttribute]
+    [xTheory]
     public void Test_Console_Error
                             (
                                 CaptureOption captureOption
