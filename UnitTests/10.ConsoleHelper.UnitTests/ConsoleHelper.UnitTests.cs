@@ -12,6 +12,7 @@ using xAssert = Xunit.Assert;
 using xTheoryAttribute = Xunit.TheoryAttribute;
 
 using static Microshaoft.ConsoleHelper;
+using Microshaoft.UnitTests.MsTest;
 
 [TestClass]
 public class ConsoleHelperUnitTests
@@ -126,5 +127,67 @@ public class ConsoleHelperUnitTests
         MsAssert.IsTrue(hasErrors == expectHasErrors);
         MsAssert.IsTrue(message == expectMessage);
         MsAssert.IsTrue(errorMessage == expectErrorMessage);
+    }
+
+    [Fact]
+    [TestCase]
+    [TestMethod]
+    public void Test_Console_Caught_InvalidOperationException()
+    {
+        static void process()
+        {
+            using Stream stream = new MemoryStream();
+            using TextWriter textWriter = new StreamWriter(stream);
+            var (hasErrors, message, errorMessage) =
+                        textWriter
+                            .CaptureOutput
+                                (
+                                    () =>
+                                    {
+                                        textWriter.WriteLine("aaaaa");
+                                    }
+                                );
+        }
+
+        MsAssert
+                .That
+                .CaughtUnhandleException
+                        <InvalidOperationException>
+                            (
+                                () =>
+                                { 
+                                    process();
+                                }
+                                , $"Can't capture non Console output!"
+                            );
+
+        MsAssert
+            .ThrowsException
+                <InvalidOperationException>
+                    (
+                        () =>
+                        {
+                            process();
+                        }
+                    );
+        NAssert
+            .Throws
+                <InvalidOperationException>
+                    (
+                        () =>
+                        {
+                            process();
+                        }
+                    );
+
+        xAssert
+            .Throws
+                <InvalidOperationException>
+                    (
+                        () =>
+                        {
+                            process();
+                        }
+                    );
     }
 }
