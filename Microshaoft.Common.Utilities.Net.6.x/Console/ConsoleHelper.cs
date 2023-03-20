@@ -16,7 +16,7 @@
 
 
         public static (bool? HasErrors, string Message, string ErrorMessage)
-                            CaptureConsoleOutput
+                            CaptureOutput
                                 (
                                     this TextWriter @this
                                     , Action onCaptureProcessAction// = null!
@@ -59,7 +59,7 @@
                     consoleOut = Console.Out;
                     Console.SetOut(allStreamWriter);
 
-                    
+
                     if (captureOption == CaptureOption.CaptureAll)
                     {
                         consoleError = Console.Error;
@@ -76,6 +76,10 @@
                         consoleError = Console.Error;
                         Console.SetError(errorStreamWriter);
                     }
+                }
+                else
+                { 
+                    throw new InvalidOperationException($"Can't capture non Console output!");
                 }
                 onCaptureProcessAction();
                 if (errorStreamWriter is not null)
@@ -132,8 +136,6 @@
                     Console.SetOut(consoleOut);
                 }
             }
-           
-            
             return (hasErrors, message, errorMessage);
         }
 

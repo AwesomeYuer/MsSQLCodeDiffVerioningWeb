@@ -42,7 +42,7 @@ public class ConsoleHelperUnitTests
          (var hasErrors, message, errorMessage) =
                             Console
                                 .Out
-                                .CaptureConsoleOutput
+                                .CaptureOutput
                                     (
                                         () =>
                                         {
@@ -107,7 +107,7 @@ public class ConsoleHelperUnitTests
         (var hasErrors, message, errorMessage) =
                             Console
                                 .Error
-                                .CaptureConsoleOutput
+                                .CaptureOutput
                                     (
                                         () =>
                                         {
