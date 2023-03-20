@@ -8,22 +8,22 @@ using Microshaoft.UnitTests.MsTest;
 [TestClass]
 public class ConsoleHelperUnitTests
 {
-    [TestCase(CaptureOption.CaptureAll            , "[standard{0}]", "(error{0})", "[standard1](error1)[standard2](error2)"    , ""                  , null)]
-    [TestCase(CaptureOption.CaptureStandardOnly   , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , ""                  , null)]
-    [TestCase(CaptureOption.CaptureEvery          , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , "(error1)(error2)"  , true)]
+    [TestCase(CaptureOutputOption.All            , "[standard{0}]", "(error{0})", "[standard1](error1)[standard2](error2)"    , ""                  , null)]
+    [TestCase(CaptureOutputOption.StandardOnly   , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , ""                  , null)]
+    [TestCase(CaptureOutputOption.Every          , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , "(error1)(error2)"  , true)]
 
-    [DataRow(CaptureOption.CaptureAll            , "[standard{0}]", "(error{0})", "[standard1](error1)[standard2](error2)"    , ""                  , null)]
-    [DataRow(CaptureOption.CaptureStandardOnly   , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , ""                  , null)]
-    [DataRow(CaptureOption.CaptureEvery          , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , "(error1)(error2)"  , true)]
+    [DataRow(CaptureOutputOption.All            , "[standard{0}]", "(error{0})", "[standard1](error1)[standard2](error2)"    , ""                  , null)]
+    [DataRow(CaptureOutputOption.StandardOnly   , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , ""                  , null)]
+    [DataRow(CaptureOutputOption.Every          , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , "(error1)(error2)"  , true)]
     [TestMethod]
 
-    [InlineData(CaptureOption.CaptureAll            , "[standard{0}]", "(error{0})", "[standard1](error1)[standard2](error2)"    , ""                  , null)]
-    [InlineData(CaptureOption.CaptureStandardOnly   , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , ""                  , null)]
-    [InlineData(CaptureOption.CaptureEvery          , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , "(error1)(error2)"  , true)]
+    [InlineData(CaptureOutputOption.All            , "[standard{0}]", "(error{0})", "[standard1](error1)[standard2](error2)"    , ""                  , null)]
+    [InlineData(CaptureOutputOption.StandardOnly   , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , ""                  , null)]
+    [InlineData(CaptureOutputOption.Every          , "[standard{0}]", "(error{0})", "[standard1][standard2]"                    , "(error1)(error2)"  , true)]
     [xTheory]
     public void Test_Console_Out
                             (
-                                CaptureOption captureOption
+                                CaptureOutputOption captureOption
                                 , string message
                                 , string errorMessage
                                 , string expectMessage
@@ -64,31 +64,31 @@ public class ConsoleHelperUnitTests
 
     }
 
-    [TestCase(CaptureOption.CaptureAll            , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [TestCase(CaptureOption.CaptureStandardOnly   , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [TestCase(CaptureOption.CaptureEvery          , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [TestCase(CaptureOption.CaptureAll            , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
-    [TestCase(CaptureOption.CaptureStandardOnly   , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
-    [TestCase(CaptureOption.CaptureEvery          , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [TestCase(CaptureOutputOption.All            , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [TestCase(CaptureOutputOption.StandardOnly   , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [TestCase(CaptureOutputOption.Every          , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [TestCase(CaptureOutputOption.All            , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [TestCase(CaptureOutputOption.StandardOnly   , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [TestCase(CaptureOutputOption.Every          , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
 
-    [DataRow(CaptureOption.CaptureAll            , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [DataRow(CaptureOption.CaptureStandardOnly   , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [DataRow(CaptureOption.CaptureEvery          , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [DataRow(CaptureOption.CaptureAll            , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
-    [DataRow(CaptureOption.CaptureStandardOnly   , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
-    [DataRow(CaptureOption.CaptureEvery          , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [DataRow(CaptureOutputOption.All            , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [DataRow(CaptureOutputOption.StandardOnly   , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [DataRow(CaptureOutputOption.Every          , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [DataRow(CaptureOutputOption.All            , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [DataRow(CaptureOutputOption.StandardOnly   , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [DataRow(CaptureOutputOption.Every          , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
     [TestMethod]
 
-    [InlineData(CaptureOption.CaptureAll            , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [InlineData(CaptureOption.CaptureStandardOnly   , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [InlineData(CaptureOption.CaptureEvery          , "[standard{0}]", ""              , ""    , ""                    , false)]
-    [InlineData(CaptureOption.CaptureAll            , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
-    [InlineData(CaptureOption.CaptureStandardOnly   , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
-    [InlineData(CaptureOption.CaptureEvery          , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [InlineData(CaptureOutputOption.All            , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [InlineData(CaptureOutputOption.StandardOnly   , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [InlineData(CaptureOutputOption.Every          , "[standard{0}]", ""              , ""    , ""                    , false)]
+    [InlineData(CaptureOutputOption.All            , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [InlineData(CaptureOutputOption.StandardOnly   , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
+    [InlineData(CaptureOutputOption.Every          , "[standard{0}]", "(error{0})"    , ""    , "(error1)(error2)"    , true)]
     [xTheory]
     public void Test_Console_Error
                             (
-                                CaptureOption captureOption
+                                CaptureOutputOption captureOption
                                 , string message
                                 , string errorMessage
                                 , string expectMessage

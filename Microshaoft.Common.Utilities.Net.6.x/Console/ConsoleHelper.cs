@@ -7,26 +7,25 @@
 
     public static class ConsoleHelper
     {
-        public enum CaptureOption
+        public enum CaptureOutputOption
         { 
-            CaptureStandardOnly
-            , CaptureAll
-            , CaptureEvery
+            StandardOnly
+            , All
+            , Every
         }
-
 
         public static (bool? HasErrors, string Message, string ErrorMessage)
                             CaptureOutput
                                 (
                                     this TextWriter @this
                                     , Action onCaptureProcessAction// = null!
-                                    , CaptureOption captureOption = CaptureOption.CaptureEvery
+                                    , CaptureOutputOption captureOption = CaptureOutputOption.Every
                                 )
         {
-            Stream allStream = null!;
+            Stream outStream = null!;
             Stream errorStream = null!;
             StreamWriter errorStreamWriter = null!;// = new StreamWriter(stream);
-            StreamWriter allStreamWriter = null!;// = new StreamWriter(stream);
+            StreamWriter outStreamWriter = null!;// = new StreamWriter(stream);
             bool? hasErrors = null;
             var message = string.Empty;
             var errorMessage = string.Empty;
@@ -49,22 +48,22 @@
                 else if
                     (@this == Console.Out)
                 {
-                    allStream ??= new MemoryStream();
+                    outStream ??= new MemoryStream();
                     
-                    allStreamWriter ??= new StreamWriter(allStream);
-                    allStreamWriter.AutoFlush = true;
+                    outStreamWriter ??= new StreamWriter(outStream);
+                    outStreamWriter.AutoFlush = true;
 
                     originalConsoleOut = Console.Out;
-                    Console.SetOut(allStreamWriter);
+                    Console.SetOut(outStreamWriter);
 
                     if 
-                        (captureOption == CaptureOption.CaptureAll)
+                        (captureOption == CaptureOutputOption.All)
                     {
                         originalConsoleError = Console.Error;
-                        Console.SetError(allStreamWriter);
+                        Console.SetError(outStreamWriter);
                     }
                     else if
-                        (captureOption == CaptureOption.CaptureEvery)
+                        (captureOption == CaptureOutputOption.Every)
                     {
                         errorStream ??= new MemoryStream();
                         errorStreamWriter ??= new StreamWriter(errorStream);
@@ -87,11 +86,11 @@
                     errorMessage = streamReader.ReadToEnd();
                     hasErrors = !errorMessage.IsNullOrEmptyOrWhiteSpaceOrZeroLength();
                 }
-                if (allStreamWriter is not null)
+                if (outStreamWriter is not null)
                 {
-                    allStreamWriter.Flush();
-                    using var streamReader = new StreamReader(allStream);
-                    allStream.Position = 0;
+                    outStreamWriter.Flush();
+                    using var streamReader = new StreamReader(outStream);
+                    outStream.Position = 0;
                     message = streamReader.ReadToEnd();
                 }
             }
@@ -103,11 +102,11 @@
                     errorStream.Dispose();
                     errorStream = null!;
                 }
-                if (allStream is not null)
+                if (outStream is not null)
                 {
-                    allStream.Close();
-                    allStream.Dispose();
-                    allStream = null!;
+                    outStream.Close();
+                    outStream.Dispose();
+                    outStream = null!;
                 }
                 if (errorStreamWriter is not null)
                 {
@@ -115,11 +114,11 @@
                     errorStreamWriter.Dispose();
                     errorStreamWriter = null!;
                 }
-                if (allStreamWriter is not null)
+                if (outStreamWriter is not null)
                 {
-                    allStreamWriter.Close();
-                    allStreamWriter.Dispose();
-                    allStreamWriter = null!;
+                    outStreamWriter.Close();
+                    outStreamWriter.Dispose();
+                    outStreamWriter = null!;
                 }
 
                 // restore original Console.Error

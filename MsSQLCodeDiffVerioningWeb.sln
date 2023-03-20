@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MsSqlCodeDiffVersioningWeb.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "80.UnitTests", "80.UnitTests", "{D414D963-C3DF-46EC-96F0-295BD6568115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{56F1C6A7-8C93-45FA-8D53-61F9CBB56A60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
