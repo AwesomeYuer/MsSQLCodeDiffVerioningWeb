@@ -1,4 +1,4 @@
-namespace UnitTests.MsTest;
+namespace UnitTests;
 
 using Microshaoft;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,7 +10,6 @@ using NAssert = NUnit.Framework.Assert;
 using Xunit;
 using xAssert = Xunit.Assert;
 using xTheoryAttribute = Xunit.TheoryAttribute;
-
 
 using static Microshaoft.ConsoleHelper;
 

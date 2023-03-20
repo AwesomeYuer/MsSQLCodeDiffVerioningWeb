@@ -1,12 +1,25 @@
-namespace UnitTests.MsTest;
+namespace UnitTests;
 
 using Microshaoft;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using MAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+
+using NUnit.Framework;
+using NAssert = NUnit.Framework.Assert;
+
+using Xunit;
+using xAssert = Xunit.Assert;
+//using xTheoryAttribute = Xunit.TheoryAttribute;
+
+
 using UnitTests.Utilities;
 
 [TestClass]
-public class ZipHelperMsTests
+public class ZipHelperUnitTests
 {
+    [Fact]
+    [TestCase]
     [TestMethod]
     public async Task TestMethod1Async()
     {
@@ -16,11 +29,33 @@ public class ZipHelperMsTests
                                     (
                                         $@"00.ZipHelper.UnitTests\SourceFiles"
                                         , "Temp"
-                                        , $"TempFile.{nameof(ZipHelperMsTests)}"
+                                        , $"TempFile.{nameof(ZipHelperUnitTests)}"
                                         , (x) =>
                                         {
-                                            Assert
+                                            MAssert
                                                .IsTrue
+                                                    (
+                                                        !x.ZipStream.CanRead
+                                                        &&
+                                                        !x.ZipStream.CanWrite
+                                                        &&
+                                                        !x.ZipStream.CanSeek
+                                                        &&
+                                                        !x.ZipStream.CanTimeout
+                                                    );
+                                            NAssert
+                                               .IsTrue
+                                                    (
+                                                        !x.ZipStream.CanRead
+                                                        &&
+                                                        !x.ZipStream.CanWrite
+                                                        &&
+                                                        !x.ZipStream.CanSeek
+                                                        &&
+                                                        !x.ZipStream.CanTimeout
+                                                    );
+                                            xAssert
+                                               .True
                                                     (
                                                         !x.ZipStream.CanRead
                                                         &&
@@ -39,10 +74,16 @@ public class ZipHelperMsTests
                                             {
                                                 r = true;
                                             }
-                                            Assert.IsTrue(r);
+
+                                            MAssert.IsTrue(r);
+                                            NAssert.IsTrue(r);
+                                            xAssert.True(r);
 
                                             x.ZipStream = null!;
-                                            Assert.IsNull(x.ZipStream);
+
+                                            MAssert.IsNull(x.ZipStream);
+                                            NAssert.IsNull(x.ZipStream);
+                                            xAssert.Null(x.ZipStream);
 
                                             r = x.EntriesStreams
                                                                 .All
@@ -62,9 +103,12 @@ public class ZipHelperMsTests
                                                                                                     );
                                                                         }
                                                                     );
-                                            Assert.IsTrue(r);
 
-                                            
+                                            MAssert.IsTrue(r);
+                                            NAssert.IsTrue(r);
+                                            xAssert.True(r);
+
+
                                             r = Directory
                                                         .GetFiles
                                                             (
@@ -86,7 +130,9 @@ public class ZipHelperMsTests
                                                                     return rr;
                                                                 }
                                                             );
-                                            Assert.IsTrue(r);
+                                            MAssert.IsTrue(r);
+                                            NAssert.IsTrue(r);
+                                            xAssert.True(r);
                                             //Directory.Delete(@"zip", true);
 
                                         }
