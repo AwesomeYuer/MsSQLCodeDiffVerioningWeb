@@ -59,13 +59,14 @@
                     originalConsoleOut = Console.Out;
                     Console.SetOut(allStreamWriter);
 
-
-                    if (captureOption == CaptureOption.CaptureAll)
+                    if 
+                        (captureOption == CaptureOption.CaptureAll)
                     {
                         originalConsoleError = Console.Error;
                         Console.SetError(allStreamWriter);
                     }
-                    else if (captureOption == CaptureOption.CaptureEvery)
+                    else if
+                        (captureOption == CaptureOption.CaptureEvery)
                     {
                         if (errorStreamWriter is null)
                         {
