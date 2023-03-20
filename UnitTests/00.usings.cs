@@ -1,5 +1,5 @@
 ﻿global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using MsAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+global using MAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 global using NUnit.Framework;
 global using NAssert = NUnit.Framework.Assert;

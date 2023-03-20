@@ -50,9 +50,9 @@ public class ConsoleHelperUnitTests
         Console.WriteLine($"Capture: {nameof(hasErrors)}: {hasErrors}\r\n\t{nameof(message)}:\r\n\t[{message}],\r\n{nameof(errorMessage)}:\r\n\t[{errorMessage}]");
         Console.WriteLine($"==========================");
 
-        MsAssert.IsTrue(hasErrors == expectHasErrors);
-        MsAssert.IsTrue(message == expectMessage);
-        MsAssert.IsTrue(errorMessage == expectErrorMessage);
+        MAssert.IsTrue(hasErrors == expectHasErrors);
+        MAssert.IsTrue(message == expectMessage);
+        MAssert.IsTrue(errorMessage == expectErrorMessage);
 
         NAssert.IsTrue(hasErrors == expectHasErrors);
         NAssert.IsTrue(message == expectMessage);
@@ -115,9 +115,9 @@ public class ConsoleHelperUnitTests
         Console.WriteLine($"Capture: {nameof(hasErrors)}: {hasErrors}\r\n\t{nameof(message)}:\r\n\t[{message}],\r\n{nameof(errorMessage)}:\r\n\t[{errorMessage}]");
         Console.WriteLine($"==========================");
 
-        MsAssert.IsTrue(hasErrors == expectHasErrors);
-        MsAssert.IsTrue(message == expectMessage);
-        MsAssert.IsTrue(errorMessage == expectErrorMessage);
+        MAssert.IsTrue(hasErrors == expectHasErrors);
+        MAssert.IsTrue(message == expectMessage);
+        MAssert.IsTrue(errorMessage == expectErrorMessage);
     }
 
     [Fact]
@@ -140,7 +140,7 @@ public class ConsoleHelperUnitTests
                                 );
         }
 
-        MsAssert
+        MAssert
                 .That
                 .CaughtUnhandleException
                         <InvalidOperationException>
@@ -152,7 +152,7 @@ public class ConsoleHelperUnitTests
                                 , $"Can't capture non Console output!"
                             );
 
-        MsAssert
+        MAssert
             .ThrowsException
                 <InvalidOperationException>
                     (

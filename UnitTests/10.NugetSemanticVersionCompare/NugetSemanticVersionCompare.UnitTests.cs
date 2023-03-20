@@ -1,16 +1,6 @@
 namespace UnitTests;
 
 using NuGet.Versioning;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using MAssert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
-
-using NUnit.Framework;
-using NAssert = NUnit.Framework.Assert;
-
-using Xunit;
-using xAssert = Xunit.Assert;
-using xTheoryAttribute = Xunit.TheoryAttribute;
 
 [TestClass, TestCategory(nameof(NugetSemanticVersionUnitTests))]
 public partial class NugetSemanticVersionUnitTests
