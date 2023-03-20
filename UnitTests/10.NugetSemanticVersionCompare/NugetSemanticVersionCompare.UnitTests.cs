@@ -52,22 +52,22 @@ public partial class NugetSemanticVersionUnitTests
     [TestMethod]
 
 
-    [InlineData("1.0.1", ">=", "1.0.0", true)]
-    [InlineData("1.0.1", ">=", "001.000.001", true)]
+    [InlineData("1.0.1",       ">=",       "1.0.0"             , true)]
+    [InlineData("1.0.1",       ">=",       "001.000.001"       , true)]
+                                                  
+    [InlineData("1.0.01",      ">=",       "0.0.0001"          , true)]
+    [InlineData("1.0.001",     ">=",       "00.0000.01"        , true)]
 
-    [InlineData("1.0.01", ">=", "0.0.0001", true)]
-    [InlineData("1.0.001", ">=", "00.0000.01", true)]
+    [InlineData("1.0.1",       "==",       "1.000.01"          , true)]
+    [InlineData("01.0.1",      "=",        "1.000.00001"       , true)]
 
-    [InlineData("1.0.1", "==", "1.000.01", true)]
-    [InlineData("01.0.1", "=", "1.000.00001", true)]
+    [InlineData("0.9.1",       ">=",       "0.9.2"             , false)]
+    [InlineData("0.9.1",       "<=",       "000.0999.0999"     , true)]
+    [InlineData("0.9.1",       "<=",       "000.09.0001"       , true)]
 
-    [InlineData("0.9.1", ">=", "0.9.2", false)]
-    [InlineData("0.9.1", "<=", "000.0999.0999", true)]
-    [InlineData("0.9.1", "<=", "000.09.0001", true)]
-
-    [InlineData("000.0.1", "<", "1.0.0", true)]
-    [InlineData("0.0.9999", "<", "0.001.0", true)]
-    [InlineData("0001.0.2", "<", "1.0.003", true)]
+    [InlineData("000.0.1",     "<",        "1.0.0"             , true)]
+    [InlineData("0.0.9999",    "<",        "0.001.0"           , true)]
+    [InlineData("0001.0.2",    "<",        "1.0.003"           , true)]
     [xTheory]
     public void Test_For_NugetSemanticVersionCompare
                                         (
