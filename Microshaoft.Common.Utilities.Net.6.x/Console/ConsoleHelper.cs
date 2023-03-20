@@ -23,7 +23,7 @@
                                     , CaptureOption captureOption = CaptureOption.CaptureEvery
                                 )
         {
-            Stream allStream = new MemoryStream();
+            Stream allStream = null!;
             Stream errorStream = null!;
             StreamWriter errorStreamWriter = null!;// = new StreamWriter(stream);
             StreamWriter allStreamWriter = null!;// = new StreamWriter(stream);
@@ -39,23 +39,21 @@
                 if
                     (@this == Console.Error)
                 {
-                    if (errorStreamWriter is null)
-                    {
-                        errorStream ??= new MemoryStream();
-                        errorStreamWriter = new StreamWriter(errorStream);
-                        errorStreamWriter.AutoFlush = true;
-                    }
+                    errorStream ??= new MemoryStream();
+                    errorStreamWriter ??= new StreamWriter(errorStream);
+                    errorStreamWriter.AutoFlush = true;
+                    
                     originalConsoleError = Console.Error;
                     Console.SetError(errorStreamWriter);
                 }
                 else if
                     (@this == Console.Out)
                 {
-                    if (allStreamWriter is null)
-                    {
-                        allStreamWriter = new StreamWriter(allStream);
-                        allStreamWriter.AutoFlush = true;
-                    }
+                    allStream ??= new MemoryStream();
+                    
+                    allStreamWriter ??= new StreamWriter(allStream);
+                    allStreamWriter.AutoFlush = true;
+
                     originalConsoleOut = Console.Out;
                     Console.SetOut(allStreamWriter);
 
@@ -68,12 +66,10 @@
                     else if
                         (captureOption == CaptureOption.CaptureEvery)
                     {
-                        if (errorStreamWriter is null)
-                        {
-                            errorStream ??= new MemoryStream();
-                            errorStreamWriter = new StreamWriter(errorStream);
-                            errorStreamWriter.AutoFlush = true;
-                        }
+                        errorStream ??= new MemoryStream();
+                        errorStreamWriter ??= new StreamWriter(errorStream);
+                        errorStreamWriter.AutoFlush = true;
+                        
                         originalConsoleError = Console.Error;
                         Console.SetError(errorStreamWriter);
                     }
@@ -137,7 +133,8 @@
                     Console.SetOut(originalConsoleOut);
                 }
             }
-            return (hasErrors, message, errorMessage);
+            return
+                (hasErrors, message, errorMessage);
         }
 
 
