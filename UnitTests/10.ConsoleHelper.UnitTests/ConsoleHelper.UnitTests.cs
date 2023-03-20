@@ -132,7 +132,7 @@ public class ConsoleHelperUnitTests
     [Fact]
     [TestCase]
     [TestMethod]
-    public void Test_Console_Caught_InvalidOperationException()
+    public void Test_Non_Console_Caught_InvalidOperationException()
     {
         static void process()
         {
