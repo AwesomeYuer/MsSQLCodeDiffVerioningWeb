@@ -1,8 +1,5 @@
-﻿#define MsTestUnitTests
-#if MsTestUnitTests
-namespace Microshaoft.UnitTests.MsTest;
+﻿namespace Microshaoft.UnitTests;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 public static class AssertHelper
@@ -38,9 +35,11 @@ public static class AssertHelper
 
     }
 
-    private static void processExpectedExceptionMessage
+    static void processExpectedExceptionMessage
                                 (
                                     Exception exception
+                                    , Action<bool, string>
+                                            onCheckIsTrueAssertProcessAction
                                     , string expectedExceptionMessage = null!
                                 )
     {
@@ -53,59 +52,128 @@ public static class AssertHelper
                             )
             )
         {
-            Assert
-                .IsTrue
-                    (
-                        string.Compare(expectedExceptionMessage, exception.Message, true) == 0
-                        , $@"Expected exception of type {exception.GetType()} with a message of ""{expectedExceptionMessage}"" but expected exception with actual message of ""{exception.Message}"" was thrown instead.
+            var failedMessage = $@"Expected exception of type {exception.GetType()} with a message of ""{expectedExceptionMessage}"" but expected exception with actual message of ""{exception.Message}"" was thrown instead.
 The caught actual ""{exception.GetType()}"" as below:
 {_beginSpliterLineOfMessageBlock}
 {exception}
 {_endSpliterLineOfMessageBlock}
-"
-                    );
+";
+            onCheckIsTrueAssertProcessAction
+                (
+                    string.Compare(expectedExceptionMessage, exception.Message, true) == 0
+                    , failedMessage
+                );
+
+            
         }
     }
 
     public static void CaughtUnhandleException
-                            <TExpectedException>
-                                (
-                                    this Assert @this
-                                    , Action action
-                                    , string expectedExceptionMessage = null!
-                                    , Action<TExpectedException> onProcessAction = null!
-                                    , bool needDrillDownInnerExceptions = true
-                                )
-                                    where TExpectedException : Exception
+                            <TAssert, TExpectedException>
+                                    (
+                                        Action
+                                                action
+                                        , string
+                                                expectedExceptionMessage = null!
+                                        , Action<TExpectedException>
+                                                onCaughtExpectedExceptionWithMessageAssertProcessAction = null!
+                                        , bool
+                                                needDrillDownInnerExceptions = true
+                                    )
+                                where TExpectedException : Exception
     {
-        Action<Exception> actionExceptionProcess = null!;
-        if (onProcessAction != null)
+        Action<Exception> onCaughtExceptionWithMessageAssertProcessAction = null!;
+        if (onCaughtExpectedExceptionWithMessageAssertProcessAction != null)
         {
-            actionExceptionProcess = (e) =>
+            onCaughtExceptionWithMessageAssertProcessAction = (e) =>
             {
-                onProcessAction((TExpectedException)e);
+                onCaughtExpectedExceptionWithMessageAssertProcessAction((TExpectedException) e);
             };
         }
-        Throws
-            (
-                @this
-                , action
-                , typeof(TExpectedException)
-                , expectedExceptionMessage
-                , actionExceptionProcess
-                , needDrillDownInnerExceptions
-            );
+
+        CaughtUnhandleException
+                        (
+                              action
+                            , typeof(TExpectedException)
+                            , (failedMessage) =>
+                            {
+                                if
+                                    (typeof(TAssert) == typeof(MAssert))
+                                {
+                                    MAssert.Fail(failedMessage);
+                                }
+                                else if
+                                    (typeof(TAssert) == typeof(NAssert))
+                                {
+                                    NAssert.Fail(failedMessage);
+                                }
+                                else if
+                                    (typeof(TAssert) == typeof(NAssert))
+                                {
+                                    xAssert.Fail(failedMessage);
+                                }
+                            }
+                            , (found, failedMessage) =>
+                            {
+                                if
+                                    (typeof(TAssert) == typeof(MAssert))
+                                {
+                                    MAssert.IsTrue(found, failedMessage);
+                                }
+                                else if
+                                    (typeof(TAssert) == typeof(NAssert))
+                                {
+                                    NAssert.IsTrue(found, failedMessage);
+                                }
+                                else if
+                                    (typeof(TAssert) == typeof(NAssert))
+                                {
+                                    xAssert.True(found, failedMessage);
+                                }
+                            }
+                            , expectedExceptionMessage
+                            , onCaughtExceptionWithMessageAssertProcessAction
+                            , needDrillDownInnerExceptions
+                        );
     }
 
-    public static void Throws
+    public static void CaughtUnhandleException
+                                <TExpectedException>
+                                        (
+                                             this MAssert @this
+                                            , Action action
+                                            , string expectedExceptionMessage = null!
+                                            , Action<TExpectedException>
+                                                    onCaughtExpectedExceptionWithMessageAssertProcessAction = null!
+                                            , bool needDrillDownInnerExceptions = true
+                                        )
+                                    where TExpectedException : Exception
+    {
+            CaughtUnhandleException
+                        <MAssert, TExpectedException>
                             (
-                                this Assert @this
-                                , Action action
-                                , Type expectedExceptionType
-                                , string expectedExceptionMessage = null!
-                                , Action<Exception> onProcessAction = null!
-                                , bool needDrillDownInnerExceptions = true
-                            )
+                                  action
+                                , expectedExceptionMessage
+                                , onCaughtExpectedExceptionWithMessageAssertProcessAction
+                                , needDrillDownInnerExceptions
+                            );
+    }
+
+
+    private static void CaughtUnhandleException
+                                (
+                                    Action action
+                                    , Type expectedExceptionType
+                                    , Action<string>
+                                            onCatchNothingAssertProcessAction
+                                    , Action<bool, string>
+                                            onCheckIsTrueAssertProcessAction
+                                    , string
+                                            expectedExceptionMessage = null!
+                                    , Action<Exception>
+                                            onCaughtExpectedExceptionWithMessageAssertProcessAction = null!
+                                    , bool needDrillDownInnerExceptions = true
+                                )
     {
         Exception caughtException = null!;
         Exception caughtExpectedException = null!;
@@ -235,11 +303,8 @@ The caught actual ""{exception.GetType()}"" as below:
 
         if (caughtException == null)
         {
-            Assert
-                .Fail
-                    (
-                        $@"Expected exception of type ""{expectedExceptionType}"" but no exception was thrown."
-                    );
+            var failedMessage = $@"Expected exception of type ""{expectedExceptionType}"" but no exception was thrown.";
+            onCatchNothingAssertProcessAction(failedMessage);
         }
         else
         {
@@ -250,22 +315,17 @@ The caught actual ""{exception.GetType()}"" as below:
                     caughtExpectedException != null
                 )
             {
-                processExpectedExceptionMessage(caughtExpectedException, expectedExceptionMessage);
+                processExpectedExceptionMessage(caughtExpectedException, onCheckIsTrueAssertProcessAction,expectedExceptionMessage);
             }
 
-            Assert
-                .IsTrue
-                    (
-                        foundCaughtExpectedExceptionWithMessage
-                        , $@"Expected exception of type ""{expectedExceptionType}"" but actual type of ""{caughtException.GetType()}"" was thrown instead.
+            var failedMessage = $@"Expected exception of type ""{expectedExceptionType}"" but actual type of ""{caughtException.GetType()}"" was thrown instead.
 The caught actual ""{caughtException.GetType()}"" as below:
 {_beginSpliterLineOfMessageBlock}
 {caughtException}
 {_endSpliterLineOfMessageBlock}
-"
-                    );
-            onProcessAction?.Invoke(caughtExpectedExceptionWithMessage);
+";
+            onCheckIsTrueAssertProcessAction(foundCaughtExpectedExceptionWithMessage, failedMessage);
+            onCaughtExpectedExceptionWithMessageAssertProcessAction?.Invoke(caughtExpectedExceptionWithMessage);
         }
     }
 }
-#endif

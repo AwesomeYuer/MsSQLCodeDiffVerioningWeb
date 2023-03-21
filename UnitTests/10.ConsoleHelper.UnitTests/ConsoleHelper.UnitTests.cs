@@ -3,7 +3,7 @@ namespace UnitTests;
 using Microshaoft;
 
 using static Microshaoft.ConsoleHelper;
-using Microshaoft.UnitTests.MsTest;
+using Microshaoft.UnitTests;
 
 [TestClass]
 public class ConsoleHelperUnitTests
@@ -140,17 +140,61 @@ public class ConsoleHelperUnitTests
                                 );
         }
 
+        var expectedExceptionMessage = $"Can't capture non Console output!";
+
         MAssert
-                .That
-                .CaughtUnhandleException
-                        <InvalidOperationException>
-                            (
-                                () =>
-                                { 
-                                    process();
-                                }
-                                , $"Can't capture non Console output!"
-                            );
+            .That
+            .CaughtUnhandleException
+                    <InvalidOperationException>
+                        (
+                            () =>
+                            {
+                                Task
+                                    .Run
+                                        (
+                                            () =>
+                                            {
+                                                process();
+                                            }
+                                        )
+                                    .Wait();
+                            }
+                            , expectedExceptionMessage
+                            , (x) =>
+                            { 
+                                MAssert.IsInstanceOfType<InvalidOperationException>(x);
+                            }
+                        );
+
+        AssertHelper
+            .CaughtUnhandleException
+                    <NAssert, InvalidOperationException>
+                        (
+                            () =>
+                            {
+                                process();
+                            }
+                            , expectedExceptionMessage
+                            , (x) =>
+                            {
+                                NAssert.IsInstanceOf<InvalidOperationException>(x);
+                            }
+                        );
+
+        AssertHelper
+            .CaughtUnhandleException
+                    <xAssert, InvalidOperationException>
+                        (
+                            () =>
+                            {
+                                process();
+                            }
+                            , expectedExceptionMessage
+                            , (x) =>
+                            {
+                                xAssert.IsType<InvalidOperationException>(x);
+                            }
+                        );
 
         MAssert
             .ThrowsException
@@ -173,11 +217,19 @@ public class ConsoleHelperUnitTests
 
         xAssert
             .Throws
-                <InvalidOperationException>
+                <AggregateException>
                     (
                         () =>
                         {
-                            process();
+                            Task
+                                .Run
+                                    (
+                                        () =>
+                                        {
+                                            process();
+                                        }
+                                    )
+                                .Wait();
                         }
                     );
     }
