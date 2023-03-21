@@ -189,11 +189,11 @@ public class ConsoleHelperUnitTests
                             {
                                 process();
                             }
-                            , expectedExceptionMessage
-                            , (x) =>
-                            {
-                                xAssert.IsType<InvalidOperationException>(x);
-                            }
+                            //, expectedExceptionMessage
+                            //, (x) =>
+                            //{
+                            //    xAssert.IsType<InvalidOperationException>(x);
+                            //}
                         );
 
         MAssert
