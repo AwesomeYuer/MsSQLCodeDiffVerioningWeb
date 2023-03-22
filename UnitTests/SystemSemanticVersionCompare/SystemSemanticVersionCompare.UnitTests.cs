@@ -1,6 +1,7 @@
 namespace UnitTests;
 
 using NuGet.Versioning;
+using Microshaoft;
 
 [TestClass, TestCategory(nameof(NugetSemanticVersionUnitTests))]
 public partial class NugetSemanticVersionUnitTests
@@ -70,6 +71,9 @@ public partial class NugetSemanticVersionUnitTests
         bool r;
 
         @operator = @operator.Trim();
+
+        var xx = System.Version.Parse(left);
+
 
         r = NuGetVersion.TryParse(left, out NuGetVersion leftNugetVersion);
 
@@ -186,4 +190,121 @@ public partial class NugetSemanticVersionUnitTests
         NAssert.IsTrue(r, failedMessage);
         xAssert.True(r, failedMessage);
     }
+
+    [TestCase("1.0.1", ">=", "1.0.0", true)]
+    [TestCase("1.0.1", ">=", "001.000.001", true)]
+
+    [TestCase("1.0.01", ">=", "0.0.0001", true)]
+    [TestCase("1.0.001", ">=", "00.0000.01", true)]
+
+    [TestCase("1.0.1", "==", "1.000.01", true)]
+    [TestCase("01.0.1", "=", "1.000.00001", true)]
+
+    [TestCase("0.9.1", ">=", "0.9.2", false)]
+    [TestCase("0.9.1", "<=", "000.0999.0999", true)]
+    [TestCase("0.9.1", "<=", "000.09.0001", true)]
+
+    [TestCase("000.0.1", "<", "1.0.0", true)]
+    [TestCase("0.0.9999", "<", "0.001.0", true)]
+    [TestCase("0001.0.2", "<", "1.0.003", true)]
+
+
+    [DataRow("1.0.1", ">=", "1.0.0", true)]
+    [DataRow("1.0.1", ">=", "001.000.001", true)]
+
+    [DataRow("1.0.01", ">=", "0.0.0001", true)]
+    [DataRow("1.0.001", ">=", "00.0000.01", true)]
+
+    [DataRow("1.0.1", "==", "1.000.01", true)]
+    [DataRow("01.0.1", "=", "1.000.00001", true)]
+
+    [DataRow("0.9.1", ">=", "0.9.2", false)]
+    [DataRow("0.9.1", "<=", "000.0999.0999", true)]
+    [DataRow("0.9.1", "<=", "000.09.0001", true)]
+
+    [DataRow("000.0.1", "<", "1.0.0", true)]
+    [DataRow("0.0.9999", "<", "0.001.0", true)]
+    [DataRow("0001.0.2", "<", "1.0.003", true)]
+    [TestMethod]
+
+
+    [InlineData("1.0.1", ">=", "1.0.0", true)]
+    [InlineData("1.0.1", ">=", "001.000.001", true)]
+
+    [InlineData("1.0.01", ">=", "0.0.0001", true)]
+    [InlineData("1.0.001", ">=", "00.0000.01", true)]
+
+    [InlineData("1.0.1", "==", "1.000.01", true)]
+    [InlineData("01.0.1", "=", "1.000.00001", true)]
+
+    [InlineData("0.9.1", ">=", "0.9.2", false)]
+    [InlineData("0.9.1", "<=", "000.0999.0999", true)]
+    [InlineData("0.9.1", "<=", "000.09.0001", true)]
+
+    [InlineData("000.0.1", "<", "1.0.0", true)]
+    [InlineData("0.0.9999", "<", "0.001.0", true)]
+    [InlineData("0001.0.2", "<", "1.0.003", true)]
+    [xTheory]
+    public void Test_For_SystemVersionCompare
+                                       (
+                                           string left
+                                           , string @operator
+                                           , string right
+                                           , bool expect
+                                       )
+    {
+        bool r;
+
+        @operator = @operator.Trim();
+
+        var xx = System.Version.Parse("1.0.0.1");
+
+
+        r = Version.TryParse(left, out Version? leftVersion);
+
+        var failedMessage = $"failed! {nameof(left)} is not a {nameof(Version)}";
+
+        MAssert.IsTrue(r, failedMessage);
+        NAssert.IsTrue(r, failedMessage);
+        xAssert.True(r, failedMessage);
+
+        r = Version.TryParse(right, out Version? rightVersion);
+
+        failedMessage = $"failed! {nameof(right)} is not a {nameof(Version)}";
+        MAssert.IsTrue(r, failedMessage);
+        NAssert.IsTrue(r, failedMessage);
+        xAssert.True(r, failedMessage);
+
+        r = @operator switch
+        {
+            ">" =>  leftVersion >   rightVersion,
+            ">=" => leftVersion >=  rightVersion,
+            "!=" => leftVersion !=  rightVersion,
+            "<>" => leftVersion !=  rightVersion,
+            "><" => leftVersion !=  rightVersion,
+            "==" => leftVersion ==  rightVersion,
+            "=" =>  leftVersion ==  rightVersion,
+            "<=" => leftVersion <=  rightVersion,
+            "<" =>  leftVersion <   rightVersion,
+            _ => false
+        };
+
+        failedMessage = $"failed! compare result is NOT: {left} {@operator} {right}";
+        MAssert.AreEqual(r, expect, failedMessage);
+        NAssert.That(expect, Is.EqualTo(r), failedMessage);
+        xAssert.Equal(r, expect);
+
+        var leftNormalized = left.ToNormalizedVersionString();
+        failedMessage = $"failed! {nameof(leftNormalized)}: {leftNormalized} != {leftVersion} {nameof(leftVersion)} ";
+        MAssert.AreEqual(leftNormalized, leftVersion!.ToString(), failedMessage);
+
+
+        var rightNormalized = right.ToNormalizedVersionString();
+
+        failedMessage = $"failed! {nameof(rightNormalized)}: {rightNormalized} != {rightVersion} {nameof(rightVersion)} ";
+        MAssert.AreEqual(rightNormalized, rightVersion!.ToString(), failedMessage);
+
+    }
+    
+
 }

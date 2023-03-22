@@ -9,8 +9,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="10.NugetSemanticVersionCompare\NugetSemanticVersionCompare.UnitTests.NUnitTest.cs" />
-	  <Compile Remove="10.NugetSemanticVersionCompare\NugetSemanticVersionCompare.UnitTests.xUnitTest.cs" />
+	  <Compile Remove="SystemSemanticVersionCompare\NugetSemanticVersionCompare.UnitTests.NUnitTest.cs" />
+	  <Compile Remove="SystemSemanticVersionCompare\NugetSemanticVersionCompare.UnitTests.xUnitTest.cs" />
 	  <Compile Remove="10.ZipHelper.UnitTests\ZipHelper.UnitTests.NUnitTest.cs" />
 	  <Compile Remove="10.ZipHelper.UnitTests\ZipHelper.UnitTests.xUnitTest.cs" />
 	</ItemGroup>

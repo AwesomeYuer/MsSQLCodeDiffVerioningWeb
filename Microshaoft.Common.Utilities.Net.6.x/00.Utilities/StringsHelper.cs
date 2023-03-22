@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using System.Text.RegularExpressions;
 
     public static class StringHelper
     {
@@ -236,6 +235,37 @@
                 }
             }
             return r;
+        }
+        public static string ToNormalizedVersionString
+                            (
+                                this string @this
+                            )
+        {
+            return @this
+                        .Split
+                            (
+                                '.'
+                            )
+                        .Aggregate
+                            (
+                                (x, y) =>
+                                {
+                                    if (!x.StartsWith("0."))
+                                    {
+                                        x = x.TrimStart('0');
+                                    }
+                                    y = y.TrimStart('0');
+                                    if (x.Length == 0)
+                                    {
+                                        x = "0";
+                                    }
+                                    if (y.Length == 0)
+                                    {
+                                        y = "0";
+                                    }
+                                    return $"{x}.{y}";
+                                }
+                            );
         }
     }
 }
