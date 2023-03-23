@@ -1,7 +1,6 @@
 ﻿namespace Microshaoft;
 
 using Newtonsoft.Json.Linq;
-
 public static partial class JsonHelper
 {
 
@@ -35,7 +34,7 @@ public static partial class JsonHelper
                     var jToken = jProperty.Value[i];
                     if (jToken is JObject)
                     {
-                        InplaceSortBy((JObject)jProperty.Value[i]!, keySelector);
+                        InplaceSortBy((JObject) jProperty.Value[i]!, keySelector);
                     }
                 }
             }
@@ -43,18 +42,39 @@ public static partial class JsonHelper
         return @this;
     }
 
-    public static JObject Flatten(this JObject @this, bool needClone = true)
+    public static JObject Flatten
+                                (
+                                    this JObject @this
+                                    , Func
+                                            <
+                                                (string Prefix, string PropertyName, int IndexInArray, string Seprator, string PrefixPropertyName)
+                                                , string
+                                            >
+                                                onPropertySegmentsNamingProcessFunc = null!         
+                                    , bool needClone = true
+                                )
     {
         var result = new JObject();
         var clone = @this;
         if (needClone)
         {
-            clone = (JObject)clone.DeepClone();
+            clone = (JObject) clone.DeepClone();
         }
-        Flatten("", clone, result);
+        Flatten("", clone, result, onPropertySegmentsNamingProcessFunc);
         return result;
     }
-    private static void Flatten(string prefix, JToken jToken, JObject result)
+    private static void Flatten
+                            (
+                                string prefix
+                                , JToken jToken
+                                , JObject result
+                                , Func
+                                        <
+                                            (string Prefix, string PropertyName, int indexInArray, string Seprator, string PrefixPropertyName)
+                                            , string
+                                        >
+                                            onPropertySegmentsNamingProcessFunc = null!
+                            )
     {
         switch (jToken.Type)
         {
@@ -63,7 +83,20 @@ public static partial class JsonHelper
 
                 foreach (var jProperty in jProperties)
                 {
-                    Flatten(CombinePrefix($"{prefix}", jProperty.Name), jProperty.Value, result);
+                    var combined = CombinePrefix
+                                    (
+                                        $"{prefix}"
+                                        , jProperty.Name
+                                        , -1
+                                        , onPropertySegmentsNamingProcessFunc
+                                    );
+                    Flatten
+                        (
+                            combined
+                            , jProperty.Value
+                            , result
+                            , onPropertySegmentsNamingProcessFunc
+                        );
                 }
                 break;
             case JTokenType.Array:
@@ -71,7 +104,22 @@ public static partial class JsonHelper
                 var items = jToken.Children();
                 foreach (var item in items)
                 {
-                    Flatten(CombinePrefix(prefix, $"[{i}]", ""), item, result);
+                    var combined = CombinePrefix
+                                    (
+                                        prefix
+                                        , $"[{i}]"
+                                        , i
+                                        , onPropertySegmentsNamingProcessFunc
+                                        , string.Empty
+                                    );
+                    Flatten
+                        (
+                             combined
+                            , item
+                            , result
+                            , onPropertySegmentsNamingProcessFunc
+                            //, string.Empty
+                        );
                     i++;
                 }
                 break;
@@ -81,8 +129,28 @@ public static partial class JsonHelper
         }
     }
 
-    private static string CombinePrefix(string prefix, string name, string seprator = ".")
+    private static string CombinePrefix
+                                    (
+                                        string prefix
+                                        , string properyName
+                                        , int indexInArray
+                                        , Func
+                                                <
+                                                    (string Prefix, string PropertyName, int IndexInArray, string Seprator, string PrefixPropertyName)
+                                                    , string
+                                                >
+                                                    onPropertySegmentsNamingProcessFunc = null!
+                                        , string seprator = "."
+                                    )
     {
-        return string.IsNullOrEmpty(prefix) ? name : $"{prefix}{seprator}{name}";
+        var r = string.IsNullOrEmpty(prefix) ? properyName : $"{prefix}{seprator}{properyName}";
+        if (onPropertySegmentsNamingProcessFunc != null)
+        {
+            r = onPropertySegmentsNamingProcessFunc
+                        (
+                            (prefix, properyName, indexInArray, seprator, r)
+                        );
+        }
+        return r;
     }
 }
