@@ -3,6 +3,7 @@
 using Microshaoft;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework.Internal;
+using System;
 
 [TestClass]
 public class JsonHelperUnitTests
@@ -71,6 +72,9 @@ public class JsonHelperUnitTests
                         .ToString()
                         ;
         Console.WriteLine( json );
+
+        json = jObject.Flatten().ToString();
+        Console.WriteLine(json);
     }
 
 }

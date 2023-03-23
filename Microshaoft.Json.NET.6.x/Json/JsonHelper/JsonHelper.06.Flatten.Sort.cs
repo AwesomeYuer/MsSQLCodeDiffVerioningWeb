@@ -1,8 +1,24 @@
 ﻿namespace Microshaoft;
 
 using Newtonsoft.Json.Linq;
+
 public static partial class JsonHelper
 {
+    public static JArray SortBy<TKey>
+                        (
+                            this JArray @this
+                            , Func<JToken, TKey> keySelector
+                            , bool needClone = true
+                        )
+    {
+        var clone = @this;
+        if (needClone)
+        {
+            clone = (JArray) clone.DeepClone();
+        }
+        return
+            new JArray(clone.OrderBy(keySelector));
+    }
 
     public static JObject InplaceSortBy<TKey>
                         (
