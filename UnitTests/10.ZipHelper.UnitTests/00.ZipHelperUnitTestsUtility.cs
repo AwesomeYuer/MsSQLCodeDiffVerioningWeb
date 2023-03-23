@@ -15,6 +15,7 @@ public static class ZipHelperUnitTestsUtility
                                                 (
                                                     string TargetRootDirectory
                                                     , Stream ZipStream
+                                                    , Stream MemoryZipStream
                                                     , string ExtractToDirectoryPath
                                                     , string ZipFilePath
                                                     , List<(string EntryName, Stream EntryStream)> EntriesStreams
@@ -23,7 +24,7 @@ public static class ZipHelperUnitTestsUtility
                                                 onAssertProcess
                                 )
     {
-        sourceDirectory = @"10.ZipHelper.UnitTests\\SourceFiles";
+        sourceDirectory = @"10.ZipHelper.UnitTests\SourceFiles";
         var extractToDirectoryPath = Path.Combine(targetRootDirectory , "zip", $"{zipFileName}.zip.extracted");
 
         var zipFilePath = Path.Combine(targetRootDirectory, "zip", $"{zipFileName}.zip");
@@ -31,9 +32,10 @@ public static class ZipHelperUnitTestsUtility
         List<(string EntryName, Stream EntryStream)> entriesStreams = new();
 
         Stream? zipStream = null;
+        Stream memoryZipStream = null!;
         try
         {
-            zipStream = await Directory
+            var files = Directory
                                     .GetFiles
                                         (
                                             sourceDirectory
@@ -41,9 +43,11 @@ public static class ZipHelperUnitTestsUtility
                                             , new EnumerationOptions()
                                             {
                                                 RecurseSubdirectories = true
-                                                , MaxRecursionDepth = 3
+                                                ,
+                                                MaxRecursionDepth = 3
                                             }
-                                        )
+                                        );
+            zipStream = await files
                                     .CompressAsync
                                         (
                                             async (filePath) =>
@@ -59,7 +63,12 @@ public static class ZipHelperUnitTestsUtility
                                             , extractToDirectoryName: extractToDirectoryPath
                                         );
             zipStream!.Position = 0;
-            
+
+            memoryZipStream = new MemoryStream();
+            zipStream.CopyTo(memoryZipStream);
+
+            zipStream!.Position = 0;
+
             if (File.Exists(zipFilePath))
             {
                 File.Delete(zipFilePath);
@@ -84,6 +93,7 @@ public static class ZipHelperUnitTestsUtility
                     (
                           targetRootDirectory
                         , zipStream
+                        , memoryZipStream
                         , extractToDirectoryPath
                         , zipFilePath
                         , entriesStreams

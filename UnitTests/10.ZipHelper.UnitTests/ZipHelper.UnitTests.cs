@@ -1,24 +1,34 @@
 namespace UnitTests;
 
 using Microshaoft;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Linq;
+using System.IO.Compression;
 using UnitTests.Utilities;
 
 [TestClass]
 public class ZipHelperUnitTests
 {
+    private class c1
+    {
+        public int F1 = 0;
+    }
     [Fact]
     [TestCase]
     [TestMethod]
     public async Task TestMethod1Async()
     {
+
+
+        var tempFileName = $"TempFile.{nameof(ZipHelperUnitTests)}";
         await
             ZipHelperUnitTestsUtility
                                 .ZipCompressProcessAsync
                                     (
                                         $@"00.ZipHelper.UnitTests\SourceFiles"
                                         , "Temp"
-                                        , $"TempFile.{nameof(ZipHelperUnitTests)}"
-                                        , (x) =>
+                                        , tempFileName
+                                        , async (x) =>
                                         {
                                             MAssert
                                                .IsTrue
@@ -56,7 +66,7 @@ public class ZipHelperUnitTests
                                             bool r = false;
                                             try
                                             {
-                                                x.ZipStream.Position = 0;
+                                                x.ZipStream.Position = x.ZipStream.Position;
                                             }
                                             catch (ObjectDisposedException)
                                             {
@@ -121,6 +131,73 @@ public class ZipHelperUnitTests
                                             MAssert.IsTrue(r);
                                             NAssert.IsTrue(r);
                                             xAssert.True(r);
+
+                                            var jj = 0;
+
+                                            var cc = new c1();
+
+                                            var zipArchive = new ZipArchive(x.MemoryZipStream);
+                                            var entries = zipArchive
+                                                                .Entries
+                                                                .ForEachAsIAsyncEnumerableAsync
+                                                                    (
+                                                                        (i, entry) =>
+                                                                        { 
+                                                                            var needYield = true;
+                                                                            var needBreak = false;
+                                                                            if (i > 5)
+                                                                            {
+                                                                                needYield = true;
+                                                                                needBreak = true;
+                                                                            }
+                                                                            cc.F1++;
+                                                                            return
+                                                                                (needYield, needBreak, cc);
+                                                                        }
+                                                                    );
+
+
+                                            await foreach (var entry in entries)
+                                            {
+                                                cc.F1++;
+                                                //entry.Result.F1 = 10;
+                                                var filePath = Path.Combine
+                                                                        (
+                                                                            x.ExtractToDirectoryPath
+                                                                            , entry.Source.FullName
+                                                                        );
+
+                                                r = File.Exists(filePath);
+
+                                                Console.WriteLine(entry.Source.FullName);
+                                                MAssert.IsTrue(r);
+                                                NAssert.IsTrue(r);
+                                                xAssert.True(r);
+                                                using var entryStream = entry.Source.Open();
+                                                using var textReader = new StreamReader(entryStream);
+                                                var json = textReader.ReadToEnd();
+                                                try
+                                                {
+                                                    _ = JToken.Parse(json);
+                                                    r = true;
+                                                }
+                                                catch
+                                                {
+                                                    r = false;
+                                                }
+
+                                                MAssert.IsTrue(r);
+                                                NAssert.IsTrue(r);
+                                                xAssert.True(r);
+
+                                               
+
+                                            }
+
+
+
+
+
                                             //Directory.Delete(@"zip", true);
 
                                         }

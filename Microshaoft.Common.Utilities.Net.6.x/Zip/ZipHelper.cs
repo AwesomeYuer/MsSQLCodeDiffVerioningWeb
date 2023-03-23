@@ -6,6 +6,7 @@ using System.Text;
 public static class ZipHelper
 {
 
+
     public static async Task<Stream>
                                 CompressAsync<T>
                                             (

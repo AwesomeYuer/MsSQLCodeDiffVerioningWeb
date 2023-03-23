@@ -2,19 +2,227 @@
 
 public static class LinqHelper
 {
-    public static void ForEach<T>(this IEnumerable<T> @this, Func<int, T, bool> predict)
+    public static void ForEach<T>(this IEnumerable<T> @this, Func<int, T, bool> predict = null!)
     {
         var i = 0;
+        var needBreak = false;
         foreach (T t in @this)
         {
             i++;
-            if (predict(i, t))
+            if (predict != null)
+            {
+                needBreak = predict(i, t);
+            }
+            if (needBreak)
             {
                 break;
             }
         }
     }
-    public static IEnumerable<T> ForEachAsIEnumerable<T>
+
+
+    public static async Task ForEachAsync<T>
+                                (
+                                    this IEnumerable<T> @this
+                                    , Func<int, T, Task<bool>>
+                                                    predictAsync = null!
+                                )
+    {
+        Func<int, T, bool> predict = null!;
+        if (predictAsync != null)
+        {
+            predict = new Func<int, T, bool>
+                        (
+                            (i, t) =>
+                            {
+                                return predictAsync(i, t).Result;
+                            }
+                        );
+        }
+        ForEach(@this, predict);
+        await Task.CompletedTask;
+    }
+
+
+    public static IEnumerable<(TSource Source, TResult Result)>
+                                    ForEachAsIEnumerable<TSource, TResult>
+                                                (
+                                                    this IEnumerable<TSource> @this
+                                                    , Func
+                                                            <
+                                                                int
+                                                                , TSource
+                                                                , (bool NeedYield, bool NeedBreak, TResult Result)
+                                                            >
+                                                                predict = null!
+                                                )
+    {
+        TResult result = default!;
+
+        var i = 0;
+        bool needYield = true;
+        foreach (TSource source in @this)
+        {
+            i++;
+            bool needBreak = false;
+            if (predict != null)
+            {
+                (
+                    needYield
+                    , needBreak
+                    , result
+                )
+                    = predict(i, source);
+            }
+            if (needYield)
+            {
+                yield
+                    return
+                        (source, result!);
+            }
+            if (needBreak)
+            {
+                break;
+            }
+        }
+    }
+
+    public static IEnumerable<(TSource Source, TResult Result)>
+                                    ForEachAsIEnumerable<TSource, TResult>
+                                                (
+                                                    this IEnumerable<TSource> @this
+                                                    , Func
+                                                            <
+                                                                int
+                                                                , TSource
+                                                                , Task<(bool NeedYield, bool NeedBreak, TResult Result)>
+                                                            >
+                                                                predictAsync = null!
+                                                )
+    {
+        Func<int, TSource, (bool NeedYield, bool NeedBreak, TResult Result)> predict = null!;
+        if (predictAsync != null)
+        {
+            predict = new Func<int, TSource, (bool NeedYield, bool NeedBreak, TResult Result)>
+                        (
+                            (i, source) =>
+                            {
+                                return
+                                    predictAsync
+                                            (i, source)
+                                                    .Result;
+                            }
+                        );
+        }
+        return
+            ForEachAsIEnumerable
+                    (
+                        @this
+                        , predict
+                    );
+    }
+
+    public static async IAsyncEnumerable<(TSource Source, TResult Result)>
+                                    ForEachAsIAsyncEnumerableAsync<TSource, TResult>
+                                                    (
+                                                        this IEnumerable<TSource> @this
+                                                        , Func
+                                                                <
+                                                                    int
+                                                                    , TSource
+                                                                    , (bool NeedYield, bool NeedBreak, TResult Result)
+                                                                >
+                                                                    predict = null!
+                                                    )
+    {
+        var i = 0;
+        bool needYield = true;
+        TResult result = default!;
+        foreach (TSource source in @this)
+        {
+            i++;
+            bool needBreak = false;
+            if (predict != null)
+            {
+                (needYield, needBreak, result)
+                                        = predict(i, source);
+            }
+            if (needYield)
+            {
+                yield return await
+                                Task
+                                    .FromResult
+                                        (
+                                            (source, result)
+                                        );
+            }
+            if (needBreak)
+            {
+                break;
+            }
+        }
+
+    }
+
+    public static async IAsyncEnumerable<(TSource, TResult)>
+                            ForEachAsIAsyncEnumerableAsyncAsync<TSource, TResult>
+                                            (
+                                                this IEnumerable<TSource> @this
+                                                , Func
+                                                        <
+                                                            int
+                                                            , TSource
+                                                            , Task<(bool NeedYield, bool NeedBreak, TResult result)>
+                                                        >
+                                                            predictAsync = null!
+                                            )
+    {
+        Func<int, TSource, (bool NeedYield, bool NeedBreak, TResult result)> predict = null!;
+        if (predictAsync != null)
+        {
+            predict = new Func<int, TSource, (bool NeedYield, bool NeedBreak, TResult result)>
+                        (
+                            (i, source) =>
+                            {
+                                return
+                                    predictAsync(i, source).Result;
+                            }
+                        );
+        }
+        var i = 0;
+        bool needYield = true;
+        TResult result = default!;
+        foreach (TSource source in @this)
+        {
+            i++;
+            bool needBreak = false;
+            if (predict != null)
+            {
+                (needYield, needBreak, result)
+                                    = await predictAsync!(i, source);
+            }
+            if (needYield)
+            {
+                yield return
+                            await
+                                Task
+                                    .FromResult
+                                        (
+                                            (source, result)
+                                        );
+            }
+            if (needBreak)
+            {
+                break;
+            }
+        }
+    }
+       
+
+
+
+    public static IEnumerable<T>
+                                TakeTopFirst<T>
                                         (
                                             this IEnumerable<T> @this
                                             , Func<int, T, (bool NeedYield, bool NeedBreak)>
@@ -25,103 +233,9 @@ public static class LinqHelper
         foreach (T t in @this)
         {
             i++;
-            (bool needYield, bool needBreak)
-                                    = predict(i, t);
 
-            if (needYield)
-            {
-                yield return t;
-            }
-            if (needBreak)
-            {
-                break;
-            }
-        }
-    }
-
-    public static async IAsyncEnumerable<T> ForEachAsIAsyncEnumerable<T>
-                                        (
-                                            this IEnumerable<T> @this
-                                            , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>>
-                                                    predictAsync
-                                        )
-    {
-        var i = 0;
-        foreach (T t in @this)
-        {
-            i++;
-            (bool needYield, bool needBreak)
-                                    = await predictAsync(i, t);
-
-            if (needYield)
-            {
-                yield return t;
-            }
-            if (needBreak)
-            {
-                break;
-            }
-        }
-    }
-
-
-    public static async IAsyncEnumerable<T> ForEachAsIAsyncEnumerable<T>
-                                        (
-                                            this IAsyncEnumerable<T> @this
-                                            , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>>
-                                                    predictAsync
-                                        )
-    {
-        var i = 0;
-        await foreach (T t in @this)
-        {
-            i++;
-            (bool needYield, bool needBreak)
-                                    = await predictAsync(i, t);
-
-            if (needYield)
-            {
-                yield return t;
-            }
-            if (needBreak)
-            {
-                break;
-            }
-        }
-    }
-
-    public static async Task ForEachAsync<T>
-                                    (
-                                        this IEnumerable<T> @this
-                                        , Func<int, T, Task<bool>>
-                                                        predictAsync
-                                    )
-    {
-        var i = 0;
-        foreach (T t in @this)
-        {
-            i++;
-            if (await predictAsync(i, t))
-            {
-                break;
-            }
-        }
-    }
-
-    public static IEnumerable<T>
-                                TakeTopFirst<T>
-                                        (
-                                            this IEnumerable<T> @this
-                                            , Func<int, T, (bool NeedYield, bool NeedBreak)> predict
-                                        )
-    {
-        var i = 0;
-        foreach (T t in @this)
-        {
-            i++;
-            (bool needYield, bool needBreak)
-                                    = predict(i, t);
-
+            var (needYield, needBreak) = predict(i, t);
+            
             if (needYield)
             {
                 yield return t;
@@ -137,15 +251,19 @@ public static class LinqHelper
                             TakeTopFirst<T>
                                     (
                                         this IEnumerable<T> @this
-                                        , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>> predictAsync
+                                        , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>>
+                                                predictAsync
                                     )
     {
         var i = 0;
+
         foreach (T t in @this)
         {
             i++;
-            (bool needYield, bool needBreak)
-                                    = predictAsync(i, t).Result;
+            
+            var (needYield, needBreak)
+                            = predictAsync(i, t).Result;
+            
             if (needYield)
             {
                 yield return t;
@@ -161,15 +279,16 @@ public static class LinqHelper
                                 TakeTopFirstAsync<T>
                                         (
                                             this IEnumerable<T> @this
-                                            , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>> predictAsync
+                                            , Func<int, T, Task<(bool NeedYield, bool NeedBreak)>>
+                                                    predictAsync
                                         )
     {
         var i = 0;
         foreach (T t in @this)
         {
             i++;
-            (bool needYield, bool needBreak)
-                                    = await predictAsync(i, t);
+            var (needYield, needBreak)
+                            = await predictAsync(i, t);
             if (needYield)
             {
                 yield return t;
@@ -192,7 +311,7 @@ public static class LinqHelper
         await foreach (T t in @this)
         {
             i++;
-            (bool needYield, bool needBreak)
+            var (needYield, needBreak)
                                     = await predictAsync(i, t);
             if (needYield)
             {
@@ -216,7 +335,7 @@ public static class LinqHelper
         await foreach (T t in @this)
         {
             i++;
-            (bool needYield, bool needBreak)
+            var (needYield, needBreak)
                                     = predict(i, t);
             if (needYield)
             {
