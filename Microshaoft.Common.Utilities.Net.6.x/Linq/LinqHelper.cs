@@ -44,6 +44,7 @@ public static class LinqHelper
     }
 
     // ForEachAsIEnumerable 可以替代 TakeTopFirst, TakeTopFirst 没用了
+    // ForEachAsIEnumerable 同时替代了 Select Where
 
     public static IEnumerable<(TSource Source, TResult Result)>
                                     ForEachAsIEnumerable<TSource, TResult>
@@ -124,7 +125,7 @@ public static class LinqHelper
     }
 
     public static async IAsyncEnumerable<(TSource Source, TResult Result)>
-                                    ForEachAsIAsyncEnumerableAsync<TSource, TResult>
+                                    ForEachAsIAsyncEnumerableSyncAsync<TSource, TResult>
                                                     (
                                                         this IEnumerable<TSource> @this
                                                         , Func

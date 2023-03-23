@@ -5,14 +5,12 @@ using System.Text;
 
 public static class ZipHelper
 {
-
-
     public static async Task<Stream>
                                 CompressAsync<T>
                                             (
                                                 this IEnumerable<T>
                                                             @this
-                                                , Func<T, Task<(string EntryName, Stream EntryStream)>>
+                                                , Func<T, Task<(string entryFullName, Stream EntryStream)>>
                                                             onUpdateEntryProcessFuncAsync
                                                 , Encoding?
                                                             entryNameEncoding = null
@@ -29,8 +27,8 @@ public static class ZipHelper
                             @this
                             , async (x) =>
                             {
-                                (var entryName, var entryStream) = await onUpdateEntryProcessFuncAsync(x);
-                                return (false, true, entryName, entryStream, true);
+                                (var entryFullName, var entryStream) = await onUpdateEntryProcessFuncAsync(x);
+                                return (false, true, entryFullName, entryStream, true);
                             }
                             , entryNameEncoding
                             , entryCompressionLevelOnCreate
@@ -45,7 +43,20 @@ public static class ZipHelper
                                                 (
                                                     this IEnumerable<T>
                                                                 @this
-                                                    , Func<T, Task<(bool NeedBreak, bool NeedUpdateEntry, string EntryName, Stream EntryStream, bool NeedDisposeEntryStream)>>
+                                                    , Func
+                                                            <
+                                                                T
+                                                                , Task
+                                                                        <
+                                                                            (
+                                                                                  bool NeedBreak
+                                                                                , bool NeedUpdateEntry
+                                                                                , string entryFullName
+                                                                                , Stream EntryStream
+                                                                                , bool NeedDisposeEntryStream
+                                                                            )
+                                                                        >
+                                                            >
                                                                 onUpdateEntryProcessFuncAsync
                                                     , Encoding?
                                                                 entryNameEncoding = null
@@ -83,7 +94,17 @@ public static class ZipHelper
                                             (
                                                 this IEnumerable<T>
                                                             @this
-                                                , Func<T, Task<(string EntryName, Stream EntryStream)>>
+                                                , Func
+                                                        <
+                                                            T
+                                                            , Task
+                                                                    <
+                                                                        (
+                                                                            string entryFullName
+                                                                            , Stream EntryStream
+                                                                        )
+                                                                    >
+                                                        >
                                                             onUpdateEntryProcessFuncAsync
                                                 , Encoding?
                                                             entryNameEncoding = null
@@ -100,8 +121,9 @@ public static class ZipHelper
                         @this
                         , async (x) =>
                         {
-                            (var entryName, var entryStream) = await onUpdateEntryProcessFuncAsync(x);
-                            return (false, true, entryName, entryStream, true);
+                            (var entryFullName, var entryStream) =
+                                                await onUpdateEntryProcessFuncAsync(x);
+                            return (false, true, entryFullName, entryStream, true);
                         }
                         , entryNameEncoding
                         , entryCompressionLevelOnCreate
@@ -115,7 +137,20 @@ public static class ZipHelper
                                                 (
                                                     this IEnumerable<T>
                                                                 @this
-                                                    , Func<T, Task<(bool NeedBreak, bool NeedUpdateEntry, string EntryName, Stream EntryStream, bool NeedDisposeEntryStream)>>
+                                                    , Func
+                                                            <
+                                                                T
+                                                                , Task
+                                                                        <
+                                                                            (
+                                                                                bool NeedBreak
+                                                                                , bool NeedUpdateEntry
+                                                                                , string entryFullName
+                                                                                , Stream EntryStream
+                                                                                , bool NeedDisposeEntryStream
+                                                                            )
+                                                                        >
+                                                            >
                                                                 onUpdateEntryProcessFuncAsync
                                                     , Encoding?
                                                                 entryNameEncoding = null
@@ -135,7 +170,7 @@ public static class ZipHelper
             (
                 bool needBreak
                 , bool needUpdateEntry
-                , string entryName
+                , string entryFullName
                 , Stream entryStream
                 , bool needDisposeEntryStream
             )
@@ -148,9 +183,9 @@ public static class ZipHelper
                         &&
                         entryStream is not null
                         &&
-                        !string.IsNullOrEmpty(entryName)
+                        !string.IsNullOrEmpty(entryFullName)
                         &&
-                        !string.IsNullOrWhiteSpace(entryName)
+                        !string.IsNullOrWhiteSpace(entryFullName)
                     )
                 {
                     zipStream ??= new MemoryStream();
@@ -162,9 +197,9 @@ public static class ZipHelper
                                                     , entryNameEncoding
                                                 );
 
-                    ZipArchiveEntry entry = zipArchive.GetEntry(entryName)!;
+                    ZipArchiveEntry entry = zipArchive.GetEntry(entryFullName)!;
 
-                    entry ??= zipArchive.CreateEntry(entryName, entryCompressionLevelOnCreate);
+                    entry ??= zipArchive.CreateEntry(entryFullName, entryCompressionLevelOnCreate);
 
                     using var entryUpdateStream = entry.Open();
                     await entryStream.CopyToAsync(entryUpdateStream);

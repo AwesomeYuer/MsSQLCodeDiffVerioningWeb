@@ -131,14 +131,12 @@ public class ZipHelperUnitTests
                                             NAssert.IsTrue(r);
                                             xAssert.True(r);
 
-                                            var jj = 0;
 
-                                            var cc = new c1();
 
                                             var zipArchive = new ZipArchive(x.MemoryZipStream);
                                             var entries = zipArchive
                                                                 .Entries
-                                                                .ForEachAsIAsyncEnumerableAsync
+                                                                .ForEachAsIAsyncEnumerableSyncAsync
                                                                     (
                                                                         (i, entry) =>
                                                                         { 
@@ -149,16 +147,14 @@ public class ZipHelperUnitTests
                                                                                 needYield = true;
                                                                                 needBreak = true;
                                                                             }
-                                                                            cc.F1++;
                                                                             return
-                                                                                (needYield, needBreak, cc);
+                                                                                (needYield, needBreak, entry);
                                                                         }
                                                                     );
 
 
                                             await foreach (var entry in entries)
                                             {
-                                                cc.F1++;
                                                 //entry.Result.F1 = 10;
                                                 var filePath = Path.Combine
                                                                         (
