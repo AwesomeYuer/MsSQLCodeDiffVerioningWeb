@@ -43,6 +43,7 @@ public static class LinqHelper
         await Task.CompletedTask;
     }
 
+    // ForEachAsIEnumerable 可以替代 TakeTopFirst, TakeTopFirst 没用了
 
     public static IEnumerable<(TSource Source, TResult Result)>
                                     ForEachAsIEnumerable<TSource, TResult>
@@ -221,7 +222,7 @@ public static class LinqHelper
 
 
 
-    public static IEnumerable<T>
+    private static IEnumerable<T>
                                 TakeTopFirst<T>
                                         (
                                             this IEnumerable<T> @this
@@ -247,7 +248,7 @@ public static class LinqHelper
         }
     }
 
-    public static IEnumerable<T>
+    private static IEnumerable<T>
                             TakeTopFirst<T>
                                     (
                                         this IEnumerable<T> @this
@@ -275,7 +276,7 @@ public static class LinqHelper
         }
     }
 
-    public static async IAsyncEnumerable<T>
+    private static async IAsyncEnumerable<T>
                                 TakeTopFirstAsync<T>
                                         (
                                             this IEnumerable<T> @this
@@ -300,7 +301,7 @@ public static class LinqHelper
         }
     }
 
-    public static async IAsyncEnumerable<T>
+    private static async IAsyncEnumerable<T>
                                 TakeTopFirstAsync<T>
                                         (
                                             this IAsyncEnumerable<T> @this
@@ -324,7 +325,7 @@ public static class LinqHelper
         }
     }
 
-    public static async IAsyncEnumerable<T>
+    private static async IAsyncEnumerable<T>
                             TakeTopFirstAsync<T>
                                     (
                                         this IAsyncEnumerable<T> @this
