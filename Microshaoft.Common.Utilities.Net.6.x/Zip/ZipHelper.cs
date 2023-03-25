@@ -146,7 +146,7 @@ public static class ZipHelper
 
 
     public static async Task<(ZipArchive, Stream)>
-                                    ZipCompressAsync2<T>
+                                    ZipCompressAsync<T>
                                                 (
                                                     this IAsyncEnumerable<T>
                                                                 @this
