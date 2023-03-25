@@ -14,7 +14,7 @@ MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET\MsSqlCodeDiffVersioning
 ```
 
 ## DataBase preparation
-* Get Microsoft SQL Server Scripts location and than run them on your SQL Server Database
+* Get Microsoft SQL Server Scripts location and then run them on your SQL Server Database
 ```
 MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET\00.DataBase
 ```
