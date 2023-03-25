@@ -1,0 +1,2 @@
+F,name,object_id,principal_id,schema_id,parent_object_id,type,type_desc,create_date,modify_date,is_ms_shipped,is_published,is_schema_published
+"111",sysrscols,3,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.163+08:00","2019-09-24T14:19:54.173+08:00",True,False,False
