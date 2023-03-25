@@ -10,23 +10,23 @@ MsSQL Code Difference Versioning Web is an website for quickly and easily creati
 
 ## Run/debug entry program/project
 ```
-MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\MsSqlCodeDiffVersioningWeb.NET.6.x.Windows.csproj
+MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET\MsSqlCodeDiffVersioningWeb.NET.Windows.csproj
 ```
 
 ## DataBase preparation
 * Get Microsoft SQL Server Scripts location and than run them on your SQL Server Database
 ```
-MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\00.DataBase
+MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET\00.DataBase
 ```
-* Config DataBase connection string in secrets.json for `MsSqlCodeDiffVersioningWeb.NET.6.x.Windows`
+* Config DataBase connection string in secrets.json for `MsSqlCodeDiffVersioningWeb.NET.Windows`
     - userSecretsID location
     ```
-    MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\usersSecretsID.json
+    MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET\usersSecretsID.json
     ```
     * secrets.json
         * location
         ```
-        The <user_secrets_id> as below must in above "MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\usersSecretsID.json" 
+        The <user_secrets_id> as below must in above "MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET\usersSecretsID.json" 
         windows: "%APPDATA%\Microsoft\UserSecrets\<user_secrets_id>\secrets.json"
         linux/macOS: ~/.microsoft/usersecrets/<user_secrets_id>/secrets.json
         ```
@@ -74,7 +74,7 @@ MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\00.DataBase
 
 1. Run/debug entry program/project
     ```
-    MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET.6.x\MsSqlCodeDiffVersioningWeb.NET.6.x.Windows.csproj
+    MsSQLCodeDiffVerioningWeb\MsSqlCodeDiffVersioningWeb.NET\MsSqlCodeDiffVersioningWeb.NET.Windows.csproj
     ```
 
 1.  Portal entry
