@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microshaoft.Json.NET.6.x\Microshaoft.Json.NET.6.x.csproj" />
-    <ProjectReference Include="..\..\Microshaoft.WebApiUtilities.NET.6.x\Microshaoft.WebApiUtilities.NET.6.x.csproj" />
+    <ProjectReference Include="..\..\Microshaoft.WebApiUtilities.NET.6.x\Microshaoft.WebApiUtilities.NET.csproj" />
   </ItemGroup>
 
 </Project>

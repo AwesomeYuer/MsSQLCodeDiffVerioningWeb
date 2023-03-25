@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Microshaoft.StoreProceduresExecutors.NET._6.x</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DataReader\DataReaderHelper.02.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<ProjectReference Include="..\Microshaoft.Common.Utilities.NET\Microshaoft.Common.Utilities.NET.csproj" />
+    <ProjectReference Include="..\Microshaoft.Json.NET\Microshaoft.Json.NET.csproj" />
+  </ItemGroup>
+
+</Project>

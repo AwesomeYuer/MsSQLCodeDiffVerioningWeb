@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>JTokenValidatorSamplePlugin.NET._6.x</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Composition" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microshaoft.Json.NET\Microshaoft.Json.NET.csproj" />
+    <ProjectReference Include="..\..\Microshaoft.WebApiUtilities.NET\Microshaoft.WebApiUtilities.NET.csproj" />
+  </ItemGroup>
+
+</Project>
