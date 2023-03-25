@@ -45,8 +45,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
-	  <ProjectReference Include="..\Microshaoft.Json.NET.6.x\Microshaoft.Json.NET.6.x.csproj" />
+	  <ProjectReference Include="..\Microshaoft.Json.NET\Microshaoft.Json.NET.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

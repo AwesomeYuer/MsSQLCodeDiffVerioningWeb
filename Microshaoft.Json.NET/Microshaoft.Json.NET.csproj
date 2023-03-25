@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microshaoft.Common.Utilities.Net.6.x\Microshaoft.Common.Utilities.Net.6.x.csproj" />
+    <ProjectReference Include="..\Microshaoft.Common.Utilities.NET\Microshaoft.Common.Utilities.NET.csproj" />
   </ItemGroup>
 
 </Project>

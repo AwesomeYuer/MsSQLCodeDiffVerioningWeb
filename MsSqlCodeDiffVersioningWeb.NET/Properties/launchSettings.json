@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "MsSqlCodeDiffVersioningWeb.NET._6.x": {
+    "MsSqlCodeDiffVersioningWeb.NET": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

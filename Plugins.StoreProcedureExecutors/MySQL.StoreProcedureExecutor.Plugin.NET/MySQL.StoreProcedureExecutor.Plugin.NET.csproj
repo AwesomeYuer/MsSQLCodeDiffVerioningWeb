@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Microshaoft.StoreProceduresExecutors.NET.6.x\Microshaoft.StoreProceduresExecutors.NET.6.x.csproj" />
+    <ProjectReference Include="..\..\Microshaoft.StoreProceduresExecutors.NET\Microshaoft.StoreProceduresExecutors.NET.csproj" />
   </ItemGroup>
 
   <ItemGroup>
