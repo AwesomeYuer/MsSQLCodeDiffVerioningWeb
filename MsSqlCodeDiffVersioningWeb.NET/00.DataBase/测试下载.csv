@@ -1,0 +1,226 @@
+﻿F,name,object_id,principal_id,schema_id,parent_object_id,type,type_desc,create_date,modify_date,is_ms_shipped,is_published,is_schema_published
+""111"",sysrscols,3,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.163+08:00","2019-09-24T14:19:54.173+08:00",True,False,False
+""111"",sysrowsets,5,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.093+08:00","2019-09-24T14:19:54.583+08:00",True,False,False
+""111"",sysclones,6,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.42+08:00","2019-09-24T14:19:54.43+08:00",True,False,False
+""111"",sysallocunits,7,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.077+08:00","2019-09-24T14:19:54.2+08:00",True,False,False
+""111"",sysfiles1,8,,4,0,S ,SYSTEM_TABLE,"2003-04-08T09:13:38.093+08:00","2003-04-08T09:13:38.093+08:00",True,False,False
+""111"",sysseobjvalues,9,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.62+08:00","2019-09-24T14:19:54.63+08:00",True,False,False
+""111"",syspriorities,17,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.287+08:00","2019-09-24T14:19:54.3+08:00",True,False,False
+""111"",sysdbfrag,18,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.553+08:00","2019-09-24T14:19:54.563+08:00",True,False,False
+""111"",sysfgfrag,19,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.13+08:00","2019-09-24T14:19:54.137+08:00",True,False,False
+""111"",sysdbfiles,20,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.373+08:00","2019-09-24T14:19:54.38+08:00",True,False,False
+""111"",syspru,21,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.56+08:00","2019-09-24T14:19:54.567+08:00",True,False,False
+""111"",sysbrickfiles,22,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.563+08:00","2019-09-24T14:19:54.573+08:00",True,False,False
+""111"",sysphfg,23,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.133+08:00","2019-09-24T14:19:54.14+08:00",True,False,False
+""111"",sysprufiles,24,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.137+08:00","2019-09-24T14:19:54.147+08:00",True,False,False
+""111"",sysftinds,25,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.39+08:00","2019-09-24T14:19:54.123+08:00",True,False,False
+""111"",sysowners,27,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.373+08:00","2019-09-24T14:19:54.45+08:00",True,False,False
+""111"",sysdbreg,28,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.51+08:00","2019-09-24T14:19:54.523+08:00",True,False,False
+""111"",sysprivs,29,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.983+08:00","2009-04-13T12:59:10.983+08:00",True,False,False
+""111"",sysschobjs,34,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.17+08:00","2019-09-24T14:19:54.483+08:00",True,False,False
+""111"",syscsrowgroups,35,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.693+08:00","2022-06-08T17:58:42.15+08:00",True,False,False
+""111"",sysextsources,36,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.87+08:00","2019-09-24T14:19:55.073+08:00",True,False,False
+""111"",sysexttables,37,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.76+08:00","2019-09-24T14:19:55.043+08:00",True,False,False
+""111"",sysextfileformats,38,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.877+08:00","2019-09-24T14:19:55.09+08:00",True,False,False
+""111"",sysmultiobjvalues,40,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.79+08:00","2019-09-24T14:19:54.803+08:00",True,False,False
+""111"",syscolpars,41,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.31+08:00","2019-09-24T14:19:54.12+08:00",True,False,False
+""111"",sysxlgns,42,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.54+08:00","2019-09-24T14:19:54.553+08:00",True,False,False
+""111"",sysxsrvs,43,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.547+08:00","2019-09-24T14:19:54.557+08:00",True,False,False
+""111"",sysnsobjs,44,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.2+08:00","2009-04-13T12:59:11.2+08:00",True,False,False
+""111"",sysusermsgs,45,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.533+08:00","2019-09-24T14:19:54.54+08:00",True,False,False
+""111"",syscerts,46,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.013+08:00","2019-09-24T14:19:54.937+08:00",True,False,False
+""111"",sysrmtlgns,47,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.53+08:00","2019-09-24T14:19:54.537+08:00",True,False,False
+""111"",syslnklgns,48,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.523+08:00","2019-09-24T14:19:54.53+08:00",True,False,False
+""111"",sysxprops,49,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.5+08:00","2009-04-13T12:59:11.5+08:00",True,False,False
+""111"",sysscalartypes,50,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.95+08:00","2009-04-13T12:59:10.95+08:00",True,False,False
+""111"",systypedsubobjs,51,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.343+08:00","2009-04-13T12:59:11.343+08:00",True,False,False
+""111"",sysidxstats,54,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.36+08:00","2009-04-13T12:59:11.36+08:00",True,False,False
+""111"",sysiscols,55,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.36+08:00","2019-09-24T14:19:54.897+08:00",True,False,False
+""111"",sysendpts,56,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.517+08:00","2019-09-24T14:19:54.527+08:00",True,False,False
+""111"",syswebmethods,57,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.537+08:00","2019-09-24T14:19:54.543+08:00",True,False,False
+""111"",sysbinobjs,58,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.467+08:00","2009-04-13T12:59:12.493+08:00",True,False,False
+""111"",sysaudacts,59,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.32+08:00","2019-09-24T14:19:54.327+08:00",True,False,False
+""111"",sysobjvalues,60,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.17+08:00","2009-04-13T12:59:11.17+08:00",True,False,False
+""111"",syscscolsegments,62,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.487+08:00","2019-09-24T14:19:55.067+08:00",True,False,False
+""111"",syscsdictionaries,63,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.493+08:00","2019-09-24T14:19:55.07+08:00",True,False,False
+""111"",sysclsobjs,64,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.2+08:00","2009-04-13T12:59:11.2+08:00",True,False,False
+""111"",sysrowsetrefs,65,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.373+08:00","2019-09-24T14:19:54.127+08:00",True,False,False
+""111"",sysremsvcbinds,67,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.86+08:00","2009-04-13T12:59:12.883+08:00",True,False,False
+""111"",sysxmitqueue,68,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.89+08:00","2019-09-24T14:19:54.413+08:00",True,False,False
+""111"",sysrts,69,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.873+08:00","2009-04-13T12:59:12.9+08:00",True,False,False
+""111"",sysconvgroup,71,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.873+08:00","2009-04-13T12:59:12.883+08:00",True,False,False
+""111"",sysdesend,72,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.903+08:00","2009-04-13T12:59:13.003+08:00",True,False,False
+""111"",sysdercv,73,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13+08:00","2019-09-24T14:19:54.48+08:00",True,False,False
+""111"",syssingleobjrefs,74,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.967+08:00","2009-04-13T12:59:10.967+08:00",True,False,False
+""111"",sysmultiobjrefs,75,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.983+08:00","2009-04-13T12:59:10.983+08:00",True,False,False
+""111"",sysguidrefs,78,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.577+08:00","2009-04-13T12:59:12.6+08:00",True,False,False
+""111"",sysfoqueues,79,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.593+08:00","2019-09-24T14:19:54.6+08:00",True,False,False
+""111"",syschildinsts,80,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.503+08:00","2019-09-24T14:19:54.51+08:00",True,False,False
+""111"",syscompfragments,82,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.33+08:00","2019-09-24T14:19:54.337+08:00",True,False,False
+""111"",sysftsemanticsdb,84,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.57+08:00","2019-09-24T14:19:54.577+08:00",True,False,False
+""111"",sysftstops,85,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.333+08:00","2019-09-24T14:19:54.34+08:00",True,False,False
+""111"",sysftproperties,86,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.397+08:00","2019-09-24T14:19:54.41+08:00",True,False,False
+""111"",sysxmitbody,87,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.413+08:00","2019-09-24T14:19:54.42+08:00",True,False,False
+""111"",sysfos,89,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.587+08:00","2019-09-24T14:19:54.597+08:00",True,False,False
+""111"",sysqnames,90,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.593+08:00","2009-04-13T12:59:12.607+08:00",True,False,False
+""111"",sysxmlcomponent,91,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.593+08:00","2009-04-13T12:59:12.617+08:00",True,False,False
+""111"",sysxmlfacet,92,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.61+08:00","2009-04-13T12:59:12.62+08:00",True,False,False
+""111"",sysxmlplacement,93,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.61+08:00","2009-04-13T12:59:12.87+08:00",True,False,False
+""111"",sysobjkeycrypts,94,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.013+08:00","2009-04-13T12:59:13.023+08:00",True,False,False
+""111"",sysasymkeys,95,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.03+08:00","2019-09-24T14:19:54.937+08:00",True,False,False
+""111"",syssqlguides,96,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.047+08:00","2019-09-24T14:19:54.28+08:00",True,False,False
+""111"",sysbinsubobjs,97,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.483+08:00","2009-04-13T12:59:12.587+08:00",True,False,False
+""111"",syssoftobjrefs,98,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.23+08:00","2019-09-24T14:19:54.24+08:00",True,False,False
+""111"",sqlagent_jobs,101575400,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.727+08:00","2019-09-24T14:19:54.737+08:00",True,False,False
+""111"",sqlagent_jobsteps,117575457,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.733+08:00","2019-09-24T14:19:54.747+08:00",True,False,False
+""111"",sqlagent_job_history,133575514,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.74+08:00","2019-09-24T14:19:54.753+08:00",True,False,False
+""111"",sqlagent_jobsteps_logs,149575571,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.747+08:00","2019-09-24T14:19:54.75+08:00",True,False,False
+""111"",plan_persist_query_text,165575628,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.827+08:00","2019-09-24T14:19:54.983+08:00",True,False,False
+""111"",plan_persist_query,181575685,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.83+08:00","2019-09-24T14:19:55.01+08:00",True,False,False
+""111"",plan_persist_plan,197575742,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.837+08:00","2019-09-24T14:19:54.92+08:00",True,False,False
+""111"",plan_persist_runtime_stats,213575799,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.84+08:00","2022-06-08T17:58:42.147+08:00",True,False,False
+""111"",plan_persist_runtime_stats_interval,229575856,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.853+08:00","2019-09-24T14:19:54.853+08:00",True,False,False
+""111"",plan_persist_context_settings,245575913,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.857+08:00","2019-09-24T14:19:54.857+08:00",True,False,False
+""111"",plan_persist_query_hints,261575970,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.97+08:00","2019-09-24T14:19:54.97+08:00",True,False,False
+""111"",plan_persist_query_template_parameterization,277576027,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.98+08:00","2019-09-24T14:19:54.98+08:00",True,False,False
+""111"",plan_persist_wait_stats,293576084,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.99+08:00","2019-09-24T14:19:54.99+08:00",True,False,False
+""111"",persistent_version_store,309576141,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:55.02+08:00","2019-09-24T14:19:55.02+08:00",True,False,False
+""111"",persistent_version_store_long_term,325576198,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:55.023+08:00","2019-09-24T14:19:55.023+08:00",True,False,False
+""111"",wpr_bucket_table,565577053,,4,0,IT,INTERNAL_TABLE,"2022-06-08T18:01:06.193+08:00","2022-06-08T18:01:06.193+08:00",True,False,False
+""111"",TT_udt_ErrorExceptionLoggingEntry_22AA2996,581577110,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.22+08:00","2022-06-08T18:01:06.22+08:00",True,False,False
+""111"",TT_udt_int_239E4DCF,597577167,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.22+08:00","2022-06-08T18:01:06.22+08:00",True,False,False
+""111"",TT_udt_RequestResponseLoggingEntry_24927208,613577224,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.223+08:00","2022-06-08T18:01:06.223+08:00",True,False,False
+""111"",TT_udt_varchar_25869641,629577281,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.223+08:00","2022-06-08T18:01:06.223+08:00",True,False,False
+""111"",TT_udt_vcidt_267ABA7A,645577338,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.223+08:00","2022-06-08T18:01:06.223+08:00",True,False,False
+""111"",zTVF_SplitStringToTable,661577395,,1,0,TF,SQL_TABLE_VALUED_FUNCTION,"2022-06-08T18:01:06.227+08:00","2022-06-08T18:01:06.227+08:00",False,False,False
+""111"",zv_all_PARAMETERS,677577452,,1,0,V ,VIEW,"2022-06-08T18:01:06.233+08:00","2022-06-08T18:01:06.233+08:00",False,False,False
+""111"",AppCenters,693577509,,1,0,U ,USER_TABLE,"2022-06-08T18:01:06.237+08:00","2022-06-08T18:01:06.237+08:00",False,False,False
+""111"",ErrorExceptionLogging,709577566,,1,0,U ,USER_TABLE,"2022-06-08T18:01:06.237+08:00","2022-06-08T18:01:06.247+08:00",False,False,False
+""111"",PK_ErrorExceptionLogging,725577623,,1,709577566,PK,PRIMARY_KEY_CONSTRAINT,"2022-06-08T18:01:06.24+08:00","2022-06-08T18:01:06.24+08:00",False,False,False
+""111"",RequestResponseLogging,741577680,,1,0,U ,USER_TABLE,"2022-06-08T18:01:06.24+08:00","2022-06-08T18:01:06.25+08:00",False,False,False
+""111"",PK_RequestResponseLogging,757577737,,1,741577680,PK,PRIMARY_KEY_CONSTRAINT,"2022-06-08T18:01:06.24+08:00","2022-06-08T18:01:06.24+08:00",False,False,False
+Rows,Executes,StmtText,StmtId,NodeId,Parent,PhysicalOp,LogicalOp,Argument,DefinedValues,EstimateRows,EstimateIO,EstimateCPU,AvgRowSize,TotalSubtreeCost,OutputList,Warnings,Type,Parallel,EstimateExecutions
+100,1,"select '""111""' as F, *
+from
+sys.objects",1,1,0,,,,,100,,,,0.042779766,,,SELECT,False,
+0,0,  |--Compute Scalar(DEFINE:([Expr1051]='""111""')),1,2,1,Compute Scalar,Compute Scalar,DEFINE:([Expr1051]='""111""'),[Expr1051]='""111""',100,0,0.00026410655,241,0.042779766,"[o].[id], [o].[name], [o].[nsid], [o].[pid], [o].[created], [o].[modified], [r].[indepid], [n].[name], [Expr1003], [Expr1004], [Expr1007], [Expr1008], [Expr1051]",,PLAN_ROW,False,1
+100,1,"       |--Nested Loops(Left Outer Join, OUTER REFERENCES:([o].[type]))",1,3,2,Nested Loops,Left Outer Join,OUTER REFERENCES:([o].[type]),,100,0,0.010768977,237,0.042769767,"[o].[id], [o].[name], [o].[nsid], [o].[pid], [o].[created], [o].[modified], [r].[indepid], [n].[name], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+100,1,"            |--Nested Loops(Left Outer Join, OUTER REFERENCES:([o].[id]))",1,4,3,Nested Loops,Left Outer Join,OUTER REFERENCES:([o].[id]),,97.548134,0,0.010767677,177,0.023658305,"[o].[id], [o].[name], [o].[nsid], [o].[type], [o].[pid], [o].[created], [o].[modified], [r].[indepid], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+100,1,"            |    |--Filter(WHERE:(has_access('CO',[Test].[sys].[sysschobjs].[id] as [o].[id])=(1)))",1,5,4,Filter,Filter,"WHERE:(has_access('CO',[Test].[sys].[sysschobjs].[id] as [o].[id])=(1))",,97.53636,0,0.00407166,173,0.0045529897,"[o].[id], [o].[name], [o].[nsid], [o].[type], [o].[pid], [o].[created], [o].[modified], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+0,0,"            |    |    |--Compute Scalar(DEFINE:([Expr1003]=CONVERT(char(2),CASE WHEN [Test].[sys].[sysschobjs].[type] as [o].[type]='ET' THEN 'U' ELSE [Test].[sys].[sysschobjs].[type] as [o].[type] END,0), [Expr1004]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(1),0), [Expr1007]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(16),0), [Expr1008]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(64),0)))",1,6,5,Compute Scalar,Compute Scalar,"DEFINE:([Expr1003]=CONVERT(char(2),CASE WHEN [Test].[sys].[sysschobjs].[type] as [o].[type]='ET' THEN 'U' ELSE [Test].[sys].[sysschobjs].[type] as [o].[type] END,0), [Expr1004]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(1),0), [Expr1007]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(16),0), [Expr1008]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(64),0))","[Expr1003]=CONVERT(char(2),CASE WHEN [Test].[sys].[sysschobjs].[type] as [o].[type]='ET' THEN 'U' ELSE [Test].[sys].[sysschobjs].[type] as [o].[type] END,0), [Expr1004]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(1),0), [Expr1007]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(16),0), [Expr1008]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(64),0)",97.53636,0,0.0002577,175,0.0043988223,"[o].[id], [o].[name], [o].[nsid], [o].[type], [o].[pid], [o].[created], [o].[modified], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+2547,1,"            |    |         |--Clustered Index Scan(OBJECT:([Test].[sys].[sysschobjs].[clst] AS [o]), WHERE:([Test].[sys].[sysschobjs].[nsclass] as [o].[nsclass]=(0) AND [Test].[sys].[sysschobjs].[pclass] as [o].[pclass]=(1)))",1,7,6,Clustered Index Scan,Clustered Index Scan,"OBJECT:([Test].[sys].[sysschobjs].[clst] AS [o]), WHERE:([Test].[sys].[sysschobjs].[nsclass] as [o].[nsclass]=(0) AND [Test].[sys].[sysschobjs].[pclass] as [o].[pclass]=(1))","[o].[id], [o].[name], [o].[nsid], [o].[status], [o].[type], [o].[pid], [o].[created], [o].[modified]",97.53636,0.029791666,0.0029917,176,0.0043890653,"[o].[id], [o].[name], [o].[nsid], [o].[status], [o].[type], [o].[pid], [o].[created], [o].[modified]",,PLAN_ROW,False,1
+0,100,"            |    |--Clustered Index Seek(OBJECT:([Test].[sys].[syssingleobjrefs].[clst] AS [r]), SEEK:([r].[depid]=[Test].[sys].[sysschobjs].[id] as [o].[id] AND [r].[class]=(97) AND [r].[depsubid]=(0)) ORDERED FORWARD)",1,8,4,Clustered Index Seek,Clustered Index Seek,"OBJECT:([Test].[sys].[syssingleobjrefs].[clst] AS [r]), SEEK:([r].[depid]=[Test].[sys].[sysschobjs].[id] as [o].[id] AND [r].[class]=(97) AND [r].[depsubid]=(0)) ORDERED FORWARD",[r].[indepid],1,0.003125,0.0001581,11,0.018697616,[r].[indepid],,PLAN_ROW,False,98.49853
+100,100,"            |--Clustered Index Seek(OBJECT:([mssqlsystemresource].[sys].[syspalnames].[cl] AS [n]), SEEK:([n].[class]='OBTY' AND [n].[value]=[Test].[sys].[sysschobjs].[type] as [o].[type]) ORDERED FORWARD)",1,9,3,Clustered Index Seek,Clustered Index Seek,"OBJECT:([mssqlsystemresource].[sys].[syspalnames].[cl] AS [n]), SEEK:([n].[class]='OBTY' AND [n].[value]=[Test].[sys].[sysschobjs].[type] as [o].[type]) ORDERED FORWARD",[n].[name],1,0.003125,0.0001581,71,0.018703602,[n].[name],,PLAN_ROW,False,98.536385
+F,name,object_id,principal_id,schema_id,parent_object_id,type,type_desc,create_date,modify_date,is_ms_shipped,is_published,is_schema_published
+""222"",sysrscols,3,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.163+08:00","2019-09-24T14:19:54.173+08:00",True,False,False
+""222"",sysrowsets,5,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.093+08:00","2019-09-24T14:19:54.583+08:00",True,False,False
+""222"",sysclones,6,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.42+08:00","2019-09-24T14:19:54.43+08:00",True,False,False
+""222"",sysallocunits,7,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.077+08:00","2019-09-24T14:19:54.2+08:00",True,False,False
+""222"",sysfiles1,8,,4,0,S ,SYSTEM_TABLE,"2003-04-08T09:13:38.093+08:00","2003-04-08T09:13:38.093+08:00",True,False,False
+""222"",sysseobjvalues,9,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.62+08:00","2019-09-24T14:19:54.63+08:00",True,False,False
+""222"",syspriorities,17,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.287+08:00","2019-09-24T14:19:54.3+08:00",True,False,False
+""222"",sysdbfrag,18,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.553+08:00","2019-09-24T14:19:54.563+08:00",True,False,False
+""222"",sysfgfrag,19,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.13+08:00","2019-09-24T14:19:54.137+08:00",True,False,False
+""222"",sysdbfiles,20,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.373+08:00","2019-09-24T14:19:54.38+08:00",True,False,False
+""222"",syspru,21,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.56+08:00","2019-09-24T14:19:54.567+08:00",True,False,False
+""222"",sysbrickfiles,22,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.563+08:00","2019-09-24T14:19:54.573+08:00",True,False,False
+""222"",sysphfg,23,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.133+08:00","2019-09-24T14:19:54.14+08:00",True,False,False
+""222"",sysprufiles,24,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.137+08:00","2019-09-24T14:19:54.147+08:00",True,False,False
+""222"",sysftinds,25,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.39+08:00","2019-09-24T14:19:54.123+08:00",True,False,False
+""222"",sysowners,27,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.373+08:00","2019-09-24T14:19:54.45+08:00",True,False,False
+""222"",sysdbreg,28,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.51+08:00","2019-09-24T14:19:54.523+08:00",True,False,False
+""222"",sysprivs,29,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.983+08:00","2009-04-13T12:59:10.983+08:00",True,False,False
+""222"",sysschobjs,34,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.17+08:00","2019-09-24T14:19:54.483+08:00",True,False,False
+""222"",syscsrowgroups,35,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.693+08:00","2022-06-08T17:58:42.15+08:00",True,False,False
+""222"",sysextsources,36,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.87+08:00","2019-09-24T14:19:55.073+08:00",True,False,False
+""222"",sysexttables,37,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.76+08:00","2019-09-24T14:19:55.043+08:00",True,False,False
+""222"",sysextfileformats,38,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.877+08:00","2019-09-24T14:19:55.09+08:00",True,False,False
+""222"",sysmultiobjvalues,40,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.79+08:00","2019-09-24T14:19:54.803+08:00",True,False,False
+""222"",syscolpars,41,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.31+08:00","2019-09-24T14:19:54.12+08:00",True,False,False
+""222"",sysxlgns,42,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.54+08:00","2019-09-24T14:19:54.553+08:00",True,False,False
+""222"",sysxsrvs,43,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.547+08:00","2019-09-24T14:19:54.557+08:00",True,False,False
+""222"",sysnsobjs,44,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.2+08:00","2009-04-13T12:59:11.2+08:00",True,False,False
+""222"",sysusermsgs,45,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.533+08:00","2019-09-24T14:19:54.54+08:00",True,False,False
+""222"",syscerts,46,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.013+08:00","2019-09-24T14:19:54.937+08:00",True,False,False
+""222"",sysrmtlgns,47,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.53+08:00","2019-09-24T14:19:54.537+08:00",True,False,False
+""222"",syslnklgns,48,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.523+08:00","2019-09-24T14:19:54.53+08:00",True,False,False
+""222"",sysxprops,49,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.5+08:00","2009-04-13T12:59:11.5+08:00",True,False,False
+""222"",sysscalartypes,50,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.95+08:00","2009-04-13T12:59:10.95+08:00",True,False,False
+""222"",systypedsubobjs,51,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.343+08:00","2009-04-13T12:59:11.343+08:00",True,False,False
+""222"",sysidxstats,54,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.36+08:00","2009-04-13T12:59:11.36+08:00",True,False,False
+""222"",sysiscols,55,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.36+08:00","2019-09-24T14:19:54.897+08:00",True,False,False
+""222"",sysendpts,56,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.517+08:00","2019-09-24T14:19:54.527+08:00",True,False,False
+""222"",syswebmethods,57,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.537+08:00","2019-09-24T14:19:54.543+08:00",True,False,False
+""222"",sysbinobjs,58,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.467+08:00","2009-04-13T12:59:12.493+08:00",True,False,False
+""222"",sysaudacts,59,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.32+08:00","2019-09-24T14:19:54.327+08:00",True,False,False
+""222"",sysobjvalues,60,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.17+08:00","2009-04-13T12:59:11.17+08:00",True,False,False
+""222"",syscscolsegments,62,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.487+08:00","2019-09-24T14:19:55.067+08:00",True,False,False
+""222"",syscsdictionaries,63,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.493+08:00","2019-09-24T14:19:55.07+08:00",True,False,False
+""222"",sysclsobjs,64,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.2+08:00","2009-04-13T12:59:11.2+08:00",True,False,False
+""222"",sysrowsetrefs,65,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:11.373+08:00","2019-09-24T14:19:54.127+08:00",True,False,False
+""222"",sysremsvcbinds,67,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.86+08:00","2009-04-13T12:59:12.883+08:00",True,False,False
+""222"",sysxmitqueue,68,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.89+08:00","2019-09-24T14:19:54.413+08:00",True,False,False
+""222"",sysrts,69,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.873+08:00","2009-04-13T12:59:12.9+08:00",True,False,False
+""222"",sysconvgroup,71,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.873+08:00","2009-04-13T12:59:12.883+08:00",True,False,False
+""222"",sysdesend,72,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.903+08:00","2009-04-13T12:59:13.003+08:00",True,False,False
+""222"",sysdercv,73,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13+08:00","2019-09-24T14:19:54.48+08:00",True,False,False
+""222"",syssingleobjrefs,74,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.967+08:00","2009-04-13T12:59:10.967+08:00",True,False,False
+""222"",sysmultiobjrefs,75,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:10.983+08:00","2009-04-13T12:59:10.983+08:00",True,False,False
+""222"",sysguidrefs,78,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.577+08:00","2009-04-13T12:59:12.6+08:00",True,False,False
+""222"",sysfoqueues,79,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.593+08:00","2019-09-24T14:19:54.6+08:00",True,False,False
+""222"",syschildinsts,80,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.503+08:00","2019-09-24T14:19:54.51+08:00",True,False,False
+""222"",syscompfragments,82,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.33+08:00","2019-09-24T14:19:54.337+08:00",True,False,False
+""222"",sysftsemanticsdb,84,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.57+08:00","2019-09-24T14:19:54.577+08:00",True,False,False
+""222"",sysftstops,85,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.333+08:00","2019-09-24T14:19:54.34+08:00",True,False,False
+""222"",sysftproperties,86,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.397+08:00","2019-09-24T14:19:54.41+08:00",True,False,False
+""222"",sysxmitbody,87,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.413+08:00","2019-09-24T14:19:54.42+08:00",True,False,False
+""222"",sysfos,89,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.587+08:00","2019-09-24T14:19:54.597+08:00",True,False,False
+""222"",sysqnames,90,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.593+08:00","2009-04-13T12:59:12.607+08:00",True,False,False
+""222"",sysxmlcomponent,91,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.593+08:00","2009-04-13T12:59:12.617+08:00",True,False,False
+""222"",sysxmlfacet,92,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.61+08:00","2009-04-13T12:59:12.62+08:00",True,False,False
+""222"",sysxmlplacement,93,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.61+08:00","2009-04-13T12:59:12.87+08:00",True,False,False
+""222"",sysobjkeycrypts,94,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.013+08:00","2009-04-13T12:59:13.023+08:00",True,False,False
+""222"",sysasymkeys,95,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.03+08:00","2019-09-24T14:19:54.937+08:00",True,False,False
+""222"",syssqlguides,96,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:13.047+08:00","2019-09-24T14:19:54.28+08:00",True,False,False
+""222"",sysbinsubobjs,97,,4,0,S ,SYSTEM_TABLE,"2009-04-13T12:59:12.483+08:00","2009-04-13T12:59:12.587+08:00",True,False,False
+""222"",syssoftobjrefs,98,,4,0,S ,SYSTEM_TABLE,"2019-09-24T14:19:54.23+08:00","2019-09-24T14:19:54.24+08:00",True,False,False
+""222"",sqlagent_jobs,101575400,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.727+08:00","2019-09-24T14:19:54.737+08:00",True,False,False
+""222"",sqlagent_jobsteps,117575457,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.733+08:00","2019-09-24T14:19:54.747+08:00",True,False,False
+""222"",sqlagent_job_history,133575514,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.74+08:00","2019-09-24T14:19:54.753+08:00",True,False,False
+""222"",sqlagent_jobsteps_logs,149575571,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.747+08:00","2019-09-24T14:19:54.75+08:00",True,False,False
+""222"",plan_persist_query_text,165575628,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.827+08:00","2019-09-24T14:19:54.983+08:00",True,False,False
+""222"",plan_persist_query,181575685,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.83+08:00","2019-09-24T14:19:55.01+08:00",True,False,False
+""222"",plan_persist_plan,197575742,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.837+08:00","2019-09-24T14:19:54.92+08:00",True,False,False
+""222"",plan_persist_runtime_stats,213575799,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.84+08:00","2022-06-08T17:58:42.147+08:00",True,False,False
+""222"",plan_persist_runtime_stats_interval,229575856,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.853+08:00","2019-09-24T14:19:54.853+08:00",True,False,False
+""222"",plan_persist_context_settings,245575913,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.857+08:00","2019-09-24T14:19:54.857+08:00",True,False,False
+""222"",plan_persist_query_hints,261575970,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.97+08:00","2019-09-24T14:19:54.97+08:00",True,False,False
+""222"",plan_persist_query_template_parameterization,277576027,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.98+08:00","2019-09-24T14:19:54.98+08:00",True,False,False
+""222"",plan_persist_wait_stats,293576084,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:54.99+08:00","2019-09-24T14:19:54.99+08:00",True,False,False
+""222"",persistent_version_store,309576141,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:55.02+08:00","2019-09-24T14:19:55.02+08:00",True,False,False
+""222"",persistent_version_store_long_term,325576198,,4,0,IT,INTERNAL_TABLE,"2019-09-24T14:19:55.023+08:00","2019-09-24T14:19:55.023+08:00",True,False,False
+""222"",wpr_bucket_table,565577053,,4,0,IT,INTERNAL_TABLE,"2022-06-08T18:01:06.193+08:00","2022-06-08T18:01:06.193+08:00",True,False,False
+""222"",TT_udt_ErrorExceptionLoggingEntry_22AA2996,581577110,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.22+08:00","2022-06-08T18:01:06.22+08:00",True,False,False
+""222"",TT_udt_int_239E4DCF,597577167,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.22+08:00","2022-06-08T18:01:06.22+08:00",True,False,False
+""222"",TT_udt_RequestResponseLoggingEntry_24927208,613577224,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.223+08:00","2022-06-08T18:01:06.223+08:00",True,False,False
+""222"",TT_udt_varchar_25869641,629577281,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.223+08:00","2022-06-08T18:01:06.223+08:00",True,False,False
+""222"",TT_udt_vcidt_267ABA7A,645577338,,4,0,TT,TYPE_TABLE,"2022-06-08T18:01:06.223+08:00","2022-06-08T18:01:06.223+08:00",True,False,False
+""222"",zTVF_SplitStringToTable,661577395,,1,0,TF,SQL_TABLE_VALUED_FUNCTION,"2022-06-08T18:01:06.227+08:00","2022-06-08T18:01:06.227+08:00",False,False,False
+""222"",zv_all_PARAMETERS,677577452,,1,0,V ,VIEW,"2022-06-08T18:01:06.233+08:00","2022-06-08T18:01:06.233+08:00",False,False,False
+""222"",AppCenters,693577509,,1,0,U ,USER_TABLE,"2022-06-08T18:01:06.237+08:00","2022-06-08T18:01:06.237+08:00",False,False,False
+""222"",ErrorExceptionLogging,709577566,,1,0,U ,USER_TABLE,"2022-06-08T18:01:06.237+08:00","2022-06-08T18:01:06.247+08:00",False,False,False
+""222"",PK_ErrorExceptionLogging,725577623,,1,709577566,PK,PRIMARY_KEY_CONSTRAINT,"2022-06-08T18:01:06.24+08:00","2022-06-08T18:01:06.24+08:00",False,False,False
+""222"",RequestResponseLogging,741577680,,1,0,U ,USER_TABLE,"2022-06-08T18:01:06.24+08:00","2022-06-08T18:01:06.25+08:00",False,False,False
+""222"",PK_RequestResponseLogging,757577737,,1,741577680,PK,PRIMARY_KEY_CONSTRAINT,"2022-06-08T18:01:06.24+08:00","2022-06-08T18:01:06.24+08:00",False,False,False
+Rows,Executes,StmtText,StmtId,NodeId,Parent,PhysicalOp,LogicalOp,Argument,DefinedValues,EstimateRows,EstimateIO,EstimateCPU,AvgRowSize,TotalSubtreeCost,OutputList,Warnings,Type,Parallel,EstimateExecutions
+100,1,"select '""222""' as F, *
+from
+sys.objects",2,1,0,,,,,100,,,,0.042779766,,,SELECT,False,
+0,0,  |--Compute Scalar(DEFINE:([Expr1051]='""222""')),2,2,1,Compute Scalar,Compute Scalar,DEFINE:([Expr1051]='""222""'),[Expr1051]='""222""',100,0,0.00026410655,241,0.042779766,"[o].[id], [o].[name], [o].[nsid], [o].[pid], [o].[created], [o].[modified], [r].[indepid], [n].[name], [Expr1003], [Expr1004], [Expr1007], [Expr1008], [Expr1051]",,PLAN_ROW,False,1
+100,1,"       |--Nested Loops(Left Outer Join, OUTER REFERENCES:([o].[type]))",2,3,2,Nested Loops,Left Outer Join,OUTER REFERENCES:([o].[type]),,100,0,0.010768977,237,0.042769767,"[o].[id], [o].[name], [o].[nsid], [o].[pid], [o].[created], [o].[modified], [r].[indepid], [n].[name], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+100,1,"            |--Nested Loops(Left Outer Join, OUTER REFERENCES:([o].[id]))",2,4,3,Nested Loops,Left Outer Join,OUTER REFERENCES:([o].[id]),,97.548134,0,0.010767677,177,0.023658305,"[o].[id], [o].[name], [o].[nsid], [o].[type], [o].[pid], [o].[created], [o].[modified], [r].[indepid], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+100,1,"            |    |--Filter(WHERE:(has_access('CO',[Test].[sys].[sysschobjs].[id] as [o].[id])=(1)))",2,5,4,Filter,Filter,"WHERE:(has_access('CO',[Test].[sys].[sysschobjs].[id] as [o].[id])=(1))",,97.53636,0,0.00407166,173,0.0045529897,"[o].[id], [o].[name], [o].[nsid], [o].[type], [o].[pid], [o].[created], [o].[modified], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+0,0,"            |    |    |--Compute Scalar(DEFINE:([Expr1003]=CONVERT(char(2),CASE WHEN [Test].[sys].[sysschobjs].[type] as [o].[type]='ET' THEN 'U' ELSE [Test].[sys].[sysschobjs].[type] as [o].[type] END,0), [Expr1004]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(1),0), [Expr1007]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(16),0), [Expr1008]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(64),0)))",2,6,5,Compute Scalar,Compute Scalar,"DEFINE:([Expr1003]=CONVERT(char(2),CASE WHEN [Test].[sys].[sysschobjs].[type] as [o].[type]='ET' THEN 'U' ELSE [Test].[sys].[sysschobjs].[type] as [o].[type] END,0), [Expr1004]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(1),0), [Expr1007]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(16),0), [Expr1008]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(64),0))","[Expr1003]=CONVERT(char(2),CASE WHEN [Test].[sys].[sysschobjs].[type] as [o].[type]='ET' THEN 'U' ELSE [Test].[sys].[sysschobjs].[type] as [o].[type] END,0), [Expr1004]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(1),0), [Expr1007]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(16),0), [Expr1008]=CONVERT(bit,[Test].[sys].[sysschobjs].[status] as [o].[status]&(64),0)",97.53636,0,0.0002577,175,0.0043988223,"[o].[id], [o].[name], [o].[nsid], [o].[type], [o].[pid], [o].[created], [o].[modified], [Expr1003], [Expr1004], [Expr1007], [Expr1008]",,PLAN_ROW,False,1
+2547,1,"            |    |         |--Clustered Index Scan(OBJECT:([Test].[sys].[sysschobjs].[clst] AS [o]), WHERE:([Test].[sys].[sysschobjs].[nsclass] as [o].[nsclass]=(0) AND [Test].[sys].[sysschobjs].[pclass] as [o].[pclass]=(1)))",2,7,6,Clustered Index Scan,Clustered Index Scan,"OBJECT:([Test].[sys].[sysschobjs].[clst] AS [o]), WHERE:([Test].[sys].[sysschobjs].[nsclass] as [o].[nsclass]=(0) AND [Test].[sys].[sysschobjs].[pclass] as [o].[pclass]=(1))","[o].[id], [o].[name], [o].[nsid], [o].[status], [o].[type], [o].[pid], [o].[created], [o].[modified]",97.53636,0.029791666,0.0029917,176,0.0043890653,"[o].[id], [o].[name], [o].[nsid], [o].[status], [o].[type], [o].[pid], [o].[created], [o].[modified]",,PLAN_ROW,False,1
+0,100,"            |    |--Clustered Index Seek(OBJECT:([Test].[sys].[syssingleobjrefs].[clst] AS [r]), SEEK:([r].[depid]=[Test].[sys].[sysschobjs].[id] as [o].[id] AND [r].[class]=(97) AND [r].[depsubid]=(0)) ORDERED FORWARD)",2,8,4,Clustered Index Seek,Clustered Index Seek,"OBJECT:([Test].[sys].[syssingleobjrefs].[clst] AS [r]), SEEK:([r].[depid]=[Test].[sys].[sysschobjs].[id] as [o].[id] AND [r].[class]=(97) AND [r].[depsubid]=(0)) ORDERED FORWARD",[r].[indepid],1,0.003125,0.0001581,11,0.018697616,[r].[indepid],,PLAN_ROW,False,98.49853
+100,100,"            |--Clustered Index Seek(OBJECT:([mssqlsystemresource].[sys].[syspalnames].[cl] AS [n]), SEEK:([n].[class]='OBTY' AND [n].[value]=[Test].[sys].[sysschobjs].[type] as [o].[type]) ORDERED FORWARD)",2,9,3,Clustered Index Seek,Clustered Index Seek,"OBJECT:([mssqlsystemresource].[sys].[syspalnames].[cl] AS [n]), SEEK:([n].[class]='OBTY' AND [n].[value]=[Test].[sys].[sysschobjs].[type] as [o].[type]) ORDERED FORWARD",[n].[name],1,0.003125,0.0001581,71,0.018703602,[n].[name],,PLAN_ROW,False,98.536385
