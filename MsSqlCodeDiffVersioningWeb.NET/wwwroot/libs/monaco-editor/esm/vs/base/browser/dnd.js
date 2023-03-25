@@ -16,23 +16,5 @@ export const DataTransfers = {
     /**
      * Typically transfer type for copy/paste transfers.
      */
-    TEXT: Mimes.text,
-    /**
-     * Application specific terminal transfer type.
-     */
-    TERMINALS: 'Terminals'
-};
-export class DragAndDropData {
-    constructor(data) {
-        this.data = data;
-    }
-    update() {
-        // noop
-    }
-    getData() {
-        return this.data;
-    }
-}
-export const StaticDND = {
-    CurrentDragAndDropData: undefined
+    TEXT: Mimes.text
 };

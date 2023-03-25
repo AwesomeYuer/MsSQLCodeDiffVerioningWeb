@@ -32,10 +32,12 @@ export class LanguageFeaturesService {
         this.linkedEditingRangeProvider = new LanguageFeatureRegistry(this._score.bind(this));
         this.documentRangeSemanticTokensProvider = new LanguageFeatureRegistry(this._score.bind(this));
         this.documentSemanticTokensProvider = new LanguageFeatureRegistry(this._score.bind(this));
+        this.documentOnDropEditProvider = new LanguageFeatureRegistry(this._score.bind(this));
+        this.documentPasteEditProvider = new LanguageFeatureRegistry(this._score.bind(this));
     }
     _score(uri) {
         var _a;
         return (_a = this._notebookTypeResolver) === null || _a === void 0 ? void 0 : _a.call(this, uri);
     }
 }
-registerSingleton(ILanguageFeaturesService, LanguageFeaturesService, true);
+registerSingleton(ILanguageFeaturesService, LanguageFeaturesService, 1 /* InstantiationType.Delayed */);

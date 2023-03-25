@@ -12,12 +12,11 @@ import { Selection } from '../../../common/core/selection.js';
 import { EditorContextKeys } from '../../../common/editorContextKeys.js';
 import { OverviewRulerLane } from '../../../common/model.js';
 import { ModelDecorationOptions } from '../../../common/model/textModel.js';
-import { editorBracketMatchBackground, editorBracketMatchBorder } from '../../../common/core/editorColorRegistry.js';
 import * as nls from '../../../../nls.js';
 import { MenuId, MenuRegistry } from '../../../../platform/actions/common/actions.js';
 import { registerColor } from '../../../../platform/theme/common/colorRegistry.js';
-import { registerThemingParticipant, themeColorFromId } from '../../../../platform/theme/common/themeService.js';
-const overviewRulerBracketMatchForeground = registerColor('editorOverviewRuler.bracketMatchForeground', { dark: '#A0A0A0', light: '#A0A0A0', hc: '#A0A0A0' }, nls.localize('overviewRulerBracketMatchForeground', 'Overview ruler marker color for matching brackets.'));
+import { themeColorFromId } from '../../../../platform/theme/common/themeService.js';
+const overviewRulerBracketMatchForeground = registerColor('editorOverviewRuler.bracketMatchForeground', { dark: '#A0A0A0', light: '#A0A0A0', hcDark: '#A0A0A0', hcLight: '#A0A0A0' }, nls.localize('overviewRulerBracketMatchForeground', 'Overview ruler marker color for matching brackets.'));
 class JumpToBracketAction extends EditorAction {
     constructor() {
         super({
@@ -27,8 +26,8 @@ class JumpToBracketAction extends EditorAction {
             precondition: undefined,
             kbOpts: {
                 kbExpr: EditorContextKeys.editorTextFocus,
-                primary: 2048 /* CtrlCmd */ | 1024 /* Shift */ | 88 /* Backslash */,
-                weight: 100 /* EditorContrib */
+                primary: 2048 /* KeyMod.CtrlCmd */ | 1024 /* KeyMod.Shift */ | 88 /* KeyCode.Backslash */,
+                weight: 100 /* KeybindingWeight.EditorContrib */
             }
         });
     }
@@ -77,15 +76,18 @@ class BracketsData {
         this.options = options;
     }
 }
-export class BracketMatchingController extends Disposable {
+class BracketMatchingController extends Disposable {
+    static get(editor) {
+        return editor.getContribution(BracketMatchingController.ID);
+    }
     constructor(editor) {
         super();
         this._editor = editor;
         this._lastBracketsData = [];
         this._lastVersionId = 0;
-        this._decorations = [];
+        this._decorations = this._editor.createDecorationsCollection();
         this._updateBracketsSoon = this._register(new RunOnceScheduler(() => this._updateBrackets(), 50));
-        this._matchBrackets = this._editor.getOption(64 /* matchBrackets */);
+        this._matchBrackets = this._editor.getOption(68 /* EditorOption.matchBrackets */);
         this._updateBracketsSoon.schedule();
         this._register(editor.onDidChangeCursorPosition((e) => {
             if (this._matchBrackets === 'never') {
@@ -100,7 +102,6 @@ export class BracketMatchingController extends Disposable {
         }));
         this._register(editor.onDidChangeModel((e) => {
             this._lastBracketsData = [];
-            this._decorations = [];
             this._updateBracketsSoon.schedule();
         }));
         this._register(editor.onDidChangeModelLanguageConfiguration((e) => {
@@ -108,9 +109,9 @@ export class BracketMatchingController extends Disposable {
             this._updateBracketsSoon.schedule();
         }));
         this._register(editor.onDidChangeConfiguration((e) => {
-            if (e.hasChanged(64 /* matchBrackets */)) {
-                this._matchBrackets = this._editor.getOption(64 /* matchBrackets */);
-                this._decorations = this._editor.deltaDecorations(this._decorations, []);
+            if (e.hasChanged(68 /* EditorOption.matchBrackets */)) {
+                this._matchBrackets = this._editor.getOption(68 /* EditorOption.matchBrackets */);
+                this._decorations.clear();
                 this._lastBracketsData = [];
                 this._lastVersionId = 0;
                 this._updateBracketsSoon.schedule();
@@ -123,9 +124,6 @@ export class BracketMatchingController extends Disposable {
             this._updateBracketsSoon.schedule();
         }));
     }
-    static get(editor) {
-        return editor.getContribution(BracketMatchingController.ID);
-    }
     jumpToBracket() {
         if (!this._editor.hasModel()) {
             return;
@@ -137,7 +135,7 @@ export class BracketMatchingController extends Disposable {
             const brackets = model.bracketPairs.matchBracket(position);
             let newCursorPosition = null;
             if (brackets) {
-                if (brackets[0].containsPosition(position)) {
+                if (brackets[0].containsPosition(position) && !brackets[1].containsPosition(position)) {
                     newCursorPosition = brackets[1].getStartPosition();
                 }
                 else if (brackets[1].containsPosition(position)) {
@@ -148,7 +146,7 @@ export class BracketMatchingController extends Disposable {
                 // find the enclosing brackets if the position isn't on a matching bracket
                 const enclosingBrackets = model.bracketPairs.findEnclosingBrackets(position);
                 if (enclosingBrackets) {
-                    newCursorPosition = enclosingBrackets[0].getStartPosition();
+                    newCursorPosition = enclosingBrackets[1].getStartPosition();
                 }
                 else {
                     // no enclosing brackets, try the very first next bracket
@@ -212,15 +210,16 @@ export class BracketMatchingController extends Disposable {
             return;
         }
         this._recomputeBrackets();
-        let newDecorations = [], newDecorationsLen = 0;
+        const newDecorations = [];
+        let newDecorationsLen = 0;
         for (const bracketData of this._lastBracketsData) {
-            let brackets = bracketData.brackets;
+            const brackets = bracketData.brackets;
             if (brackets) {
                 newDecorations[newDecorationsLen++] = { range: brackets[0], options: bracketData.options };
                 newDecorations[newDecorationsLen++] = { range: brackets[1], options: bracketData.options };
             }
         }
-        this._decorations = this._editor.deltaDecorations(this._decorations, newDecorations);
+        this._decorations.set(newDecorations);
     }
     _recomputeBrackets() {
         if (!this._editor.hasModel() || !this._editor.hasWidgetFocus()) {
@@ -243,9 +242,10 @@ export class BracketMatchingController extends Disposable {
             // use the previous data only if the model is at the same version id
             previousData = this._lastBracketsData;
         }
-        let positions = [], positionsLen = 0;
+        const positions = [];
+        let positionsLen = 0;
         for (let i = 0, len = selections.length; i < len; i++) {
-            let selection = selections[i];
+            const selection = selections[i];
             if (selection.isEmpty()) {
                 // will bracket match a cursor only if the selection is collapsed
                 positions[positionsLen++] = selection.getStartPosition();
@@ -255,10 +255,12 @@ export class BracketMatchingController extends Disposable {
         if (positions.length > 1) {
             positions.sort(Position.compare);
         }
-        let newData = [], newDataLen = 0;
-        let previousIndex = 0, previousLen = previousData.length;
+        const newData = [];
+        let newDataLen = 0;
+        let previousIndex = 0;
+        const previousLen = previousData.length;
         for (let i = 0, len = positions.length; i < len; i++) {
-            let position = positions[i];
+            const position = positions[i];
             while (previousIndex < previousLen && previousData[previousIndex].position.isBefore(position)) {
                 previousIndex++;
             }
@@ -282,7 +284,7 @@ export class BracketMatchingController extends Disposable {
 BracketMatchingController.ID = 'editor.contrib.bracketMatchingController';
 BracketMatchingController._DECORATION_OPTIONS_WITH_OVERVIEW_RULER = ModelDecorationOptions.register({
     description: 'bracket-match-overview',
-    stickiness: 1 /* NeverGrowsWhenTypingAtEdges */,
+    stickiness: 1 /* TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges */,
     className: 'bracket-match',
     overviewRuler: {
         color: themeColorFromId(overviewRulerBracketMatchForeground),
@@ -291,22 +293,13 @@ BracketMatchingController._DECORATION_OPTIONS_WITH_OVERVIEW_RULER = ModelDecorat
 });
 BracketMatchingController._DECORATION_OPTIONS_WITHOUT_OVERVIEW_RULER = ModelDecorationOptions.register({
     description: 'bracket-match-no-overview',
-    stickiness: 1 /* NeverGrowsWhenTypingAtEdges */,
+    stickiness: 1 /* TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges */,
     className: 'bracket-match'
 });
-registerEditorContribution(BracketMatchingController.ID, BracketMatchingController);
+export { BracketMatchingController };
+registerEditorContribution(BracketMatchingController.ID, BracketMatchingController, 1 /* EditorContributionInstantiation.AfterFirstRender */);
 registerEditorAction(SelectToBracketAction);
 registerEditorAction(JumpToBracketAction);
-registerThemingParticipant((theme, collector) => {
-    const bracketMatchBackground = theme.getColor(editorBracketMatchBackground);
-    if (bracketMatchBackground) {
-        collector.addRule(`.monaco-editor .bracket-match { background-color: ${bracketMatchBackground}; }`);
-    }
-    const bracketMatchBorder = theme.getColor(editorBracketMatchBorder);
-    if (bracketMatchBorder) {
-        collector.addRule(`.monaco-editor .bracket-match { border: 1px solid ${bracketMatchBorder}; }`);
-    }
-});
 // Go to menu
 MenuRegistry.appendMenuItem(MenuId.MenubarGoMenu, {
     group: '5_infile_nav',

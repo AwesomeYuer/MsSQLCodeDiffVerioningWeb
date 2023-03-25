@@ -11,15 +11,16 @@ import { Range } from '../core/range.js';
 import { Selection } from '../core/selection.js';
 import { Token } from '../languages.js';
 import * as standaloneEnums from '../standalone/standaloneEnums.js';
-export class KeyMod {
+class KeyMod {
     static chord(firstPart, secondPart) {
         return KeyChord(firstPart, secondPart);
     }
 }
-KeyMod.CtrlCmd = 2048 /* CtrlCmd */;
-KeyMod.Shift = 1024 /* Shift */;
-KeyMod.Alt = 512 /* Alt */;
-KeyMod.WinCtrl = 256 /* WinCtrl */;
+KeyMod.CtrlCmd = 2048 /* ConstKeyMod.CtrlCmd */;
+KeyMod.Shift = 1024 /* ConstKeyMod.Shift */;
+KeyMod.Alt = 512 /* ConstKeyMod.Alt */;
+KeyMod.WinCtrl = 256 /* ConstKeyMod.WinCtrl */;
+export { KeyMod };
 export function createMonacoBaseAPI() {
     return {
         editor: undefined,

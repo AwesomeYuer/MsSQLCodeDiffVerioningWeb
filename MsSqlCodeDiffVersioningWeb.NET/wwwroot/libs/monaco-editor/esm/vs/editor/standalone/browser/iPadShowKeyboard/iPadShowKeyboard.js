@@ -7,7 +7,7 @@ import * as dom from '../../../../base/browser/dom.js';
 import { Disposable } from '../../../../base/common/lifecycle.js';
 import { registerEditorContribution } from '../../../browser/editorExtensions.js';
 import { isIOS } from '../../../../base/common/platform.js';
-export class IPadShowKeyboard extends Disposable {
+class IPadShowKeyboard extends Disposable {
     constructor(editor) {
         super();
         this.editor = editor;
@@ -18,7 +18,7 @@ export class IPadShowKeyboard extends Disposable {
         }
     }
     update() {
-        const shouldHaveWidget = (!this.editor.getOption(81 /* readOnly */));
+        const shouldHaveWidget = (!this.editor.getOption(86 /* EditorOption.readOnly */));
         if (!this.widget && shouldHaveWidget) {
             this.widget = new ShowKeyboardWidget(this.editor);
         }
@@ -36,6 +36,7 @@ export class IPadShowKeyboard extends Disposable {
     }
 }
 IPadShowKeyboard.ID = 'editor.contrib.iPadShowKeyboard';
+export { IPadShowKeyboard };
 class ShowKeyboardWidget extends Disposable {
     constructor(editor) {
         super();
@@ -63,9 +64,9 @@ class ShowKeyboardWidget extends Disposable {
     }
     getPosition() {
         return {
-            preference: 1 /* BOTTOM_RIGHT_CORNER */
+            preference: 1 /* OverlayWidgetPositionPreference.BOTTOM_RIGHT_CORNER */
         };
     }
 }
 ShowKeyboardWidget.ID = 'editor.contrib.ShowKeyboardWidget';
-registerEditorContribution(IPadShowKeyboard.ID, IPadShowKeyboard);
+registerEditorContribution(IPadShowKeyboard.ID, IPadShowKeyboard, 3 /* EditorContributionInstantiation.Eventually */);

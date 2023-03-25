@@ -15,13 +15,24 @@ import { ThrottledDelayer } from '../../../common/async.js';
 import { Emitter, Event } from '../../../common/event.js';
 import { Disposable } from '../../../common/lifecycle.js';
 import { isUndefinedOrNull } from '../../../common/types.js';
-var StorageState;
+export var StorageHint;
+(function (StorageHint) {
+    // A hint to the storage that the storage
+    // does not exist on disk yet. This allows
+    // the storage library to improve startup
+    // time by not checking the storage for data.
+    StorageHint[StorageHint["STORAGE_DOES_NOT_EXIST"] = 0] = "STORAGE_DOES_NOT_EXIST";
+    // A hint to the storage that the storage
+    // is backed by an in-memory storage.
+    StorageHint[StorageHint["STORAGE_IN_MEMORY"] = 1] = "STORAGE_IN_MEMORY";
+})(StorageHint || (StorageHint = {}));
+export var StorageState;
 (function (StorageState) {
     StorageState[StorageState["None"] = 0] = "None";
     StorageState[StorageState["Initialized"] = 1] = "Initialized";
     StorageState[StorageState["Closed"] = 2] = "Closed";
 })(StorageState || (StorageState = {}));
-export class Storage extends Disposable {
+class Storage extends Disposable {
     constructor(database, options = Object.create(null)) {
         super();
         this.database = database;
@@ -172,19 +183,17 @@ export class Storage extends Disposable {
     }
 }
 Storage.DEFAULT_FLUSH_DELAY = 100;
+export { Storage };
 export class InMemoryStorageDatabase {
     constructor() {
         this.onDidChangeItemsExternal = Event.None;
         this.items = new Map();
     }
     updateItems(request) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
-            if (request.insert) {
-                request.insert.forEach((value, key) => this.items.set(key, value));
-            }
-            if (request.delete) {
-                request.delete.forEach(key => this.items.delete(key));
-            }
+            (_a = request.insert) === null || _a === void 0 ? void 0 : _a.forEach((value, key) => this.items.set(key, value));
+            (_b = request.delete) === null || _b === void 0 ? void 0 : _b.forEach(key => this.items.delete(key));
         });
     }
 }

@@ -38,7 +38,21 @@ function getWorker(label) {
 // 		const blob = new Blob([js], { type: 'application/javascript' });
 // 		return URL.createObjectURL(blob);
 // 	}
-// 	return scriptPath + '#' + label;
+// 
+// 	const start = scriptPath.lastIndexOf('?');
+// 	const end = scriptPath.lastIndexOf('#', start);
+// 	const params = start > 0
+// 		? new URLSearchParams(scriptPath.substring(start + 1, ~end ? end : undefined))
+// 		: new URLSearchParams();
+// 
+// 	COI.addSearchParam(params, true, true);
+// 	const search = params.toString();
+// 
+// 	if (!search) {
+// 		return `${scriptPath}#${label}`;
+// 	} else {
+// 		return `${scriptPath}?${params.toString()}#${label}`;
+// 	}
 // }
 // ESM-comment-end
 function isPromiseLike(obj) {
@@ -76,24 +90,22 @@ class WebWorker {
         return this.id;
     }
     postMessage(message, transfer) {
-        if (this.worker) {
-            this.worker.then(w => w.postMessage(message, transfer));
-        }
+        var _a;
+        (_a = this.worker) === null || _a === void 0 ? void 0 : _a.then(w => w.postMessage(message, transfer));
     }
     dispose() {
-        if (this.worker) {
-            this.worker.then(w => w.terminate());
-        }
+        var _a;
+        (_a = this.worker) === null || _a === void 0 ? void 0 : _a.then(w => w.terminate());
         this.worker = null;
     }
 }
-export class DefaultWorkerFactory {
+class DefaultWorkerFactory {
     constructor(label) {
         this._label = label;
         this._webWorkerFailedBeforeError = false;
     }
     create(moduleId, onMessageCallback, onErrorCallback) {
-        let workerId = (++DefaultWorkerFactory.LAST_WORKER_ID);
+        const workerId = (++DefaultWorkerFactory.LAST_WORKER_ID);
         if (this._webWorkerFailedBeforeError) {
             throw this._webWorkerFailedBeforeError;
         }
@@ -105,3 +117,4 @@ export class DefaultWorkerFactory {
     }
 }
 DefaultWorkerFactory.LAST_WORKER_ID = 0;
+export { DefaultWorkerFactory };

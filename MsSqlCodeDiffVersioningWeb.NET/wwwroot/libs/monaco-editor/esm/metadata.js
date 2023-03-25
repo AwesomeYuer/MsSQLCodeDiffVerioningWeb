@@ -48,6 +48,10 @@ exports.features = [
     "entry": "vs/editor/contrib/contextmenu/browser/contextmenu"
   },
   {
+    "label": "copyPaste",
+    "entry": "vs/editor/contrib/copyPaste/browser/copyPasteContribution"
+  },
+  {
     "label": "cursorUndo",
     "entry": "vs/editor/contrib/cursorUndo/browser/cursorUndo"
   },
@@ -58,6 +62,10 @@ exports.features = [
   {
     "label": "documentSymbols",
     "entry": "vs/editor/contrib/documentSymbols/browser/documentSymbols"
+  },
+  {
+    "label": "dropIntoEditor",
+    "entry": "vs/editor/contrib/dropIntoEditor/browser/dropIntoEditorContribution"
   },
   {
     "label": "find",
@@ -112,7 +120,7 @@ exports.features = [
   },
   {
     "label": "inlineCompletions",
-    "entry": "vs/editor/contrib/inlineCompletions/browser/inlineCompletionsContribution"
+    "entry": "vs/editor/contrib/inlineCompletions/browser/ghostText.contribution"
   },
   {
     "label": "inspectTokens",
@@ -135,6 +143,10 @@ exports.features = [
     "entry": "vs/editor/contrib/links/browser/links"
   },
   {
+    "label": "longLinesHelper",
+    "entry": "vs/editor/contrib/longLinesHelper/browser/longLinesHelper"
+  },
+  {
     "label": "multicursor",
     "entry": "vs/editor/contrib/multicursor/browser/multicursor"
   },
@@ -155,12 +167,23 @@ exports.features = [
     "entry": "vs/editor/standalone/browser/quickAccess/standaloneGotoSymbolQuickAccess"
   },
   {
+    "label": "readOnlyMessage",
+    "entry": "vs/editor/contrib/readOnlyMessage/browser/contribution"
+  },
+  {
     "label": "referenceSearch",
     "entry": "vs/editor/standalone/browser/referenceSearch/standaloneReferenceSearch"
   },
   {
     "label": "rename",
     "entry": "vs/editor/contrib/rename/browser/rename"
+  },
+  {
+    "label": "semanticTokens",
+    "entry": [
+      "vs/editor/contrib/semanticTokens/browser/documentSemanticTokens",
+      "vs/editor/contrib/semanticTokens/browser/viewportSemanticTokens"
+    ]
   },
   {
     "label": "smartSelect",
@@ -171,8 +194,15 @@ exports.features = [
     "entry": "vs/editor/contrib/snippet/browser/snippetController2"
   },
   {
+    "label": "stickyScroll",
+    "entry": "vs/editor/contrib/stickyScroll/browser/stickyScrollContribution"
+  },
+  {
     "label": "suggest",
-    "entry": "vs/editor/contrib/suggest/browser/suggestController"
+    "entry": [
+      "vs/editor/contrib/suggest/browser/suggestController",
+      "vs/editor/contrib/suggest/browser/suggestInlineCompletions"
+    ]
   },
   {
     "label": "toggleHighContrast",
@@ -193,10 +223,6 @@ exports.features = [
   {
     "label": "unusualLineTerminators",
     "entry": "vs/editor/contrib/unusualLineTerminators/browser/unusualLineTerminators"
-  },
-  {
-    "label": "viewportSemanticTokens",
-    "entry": "vs/editor/contrib/viewportSemanticTokens/browser/viewportSemanticTokens"
   },
   {
     "label": "wordHighlighter",
@@ -266,6 +292,10 @@ exports.languages = [
       "id": "vs/language/css/cssWorker",
       "entry": "vs/language/css/css.worker"
     }
+  },
+  {
+    "label": "cypher",
+    "entry": "vs/basic-languages/cypher/cypher.contribution"
   },
   {
     "label": "dart",

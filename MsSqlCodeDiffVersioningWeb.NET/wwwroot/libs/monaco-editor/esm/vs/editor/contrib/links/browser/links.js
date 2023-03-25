@@ -40,9 +40,10 @@ import { getLinks } from './getLinks.js';
 import * as nls from '../../../../nls.js';
 import { INotificationService } from '../../../../platform/notification/common/notification.js';
 import { IOpenerService } from '../../../../platform/opener/common/opener.js';
-import { editorActiveLinkForeground } from '../../../../platform/theme/common/colorRegistry.js';
-import { registerThemingParticipant } from '../../../../platform/theme/common/themeService.js';
 let LinkDetector = class LinkDetector extends Disposable {
+    static get(editor) {
+        return editor.getContribution(LinkDetector.ID);
+    }
     constructor(editor, openerService, notificationService, languageFeaturesService, languageFeatureDebounceService) {
         super();
         this.editor = editor;
@@ -67,7 +68,7 @@ let LinkDetector = class LinkDetector extends Disposable {
             this.cleanUpActiveLinkDecoration();
         }));
         this._register(editor.onDidChangeConfiguration((e) => {
-            if (!e.hasChanged(63 /* links */)) {
+            if (!e.hasChanged(67 /* EditorOption.links */)) {
                 return;
             }
             // Remove any links (for the getting disabled case)
@@ -99,12 +100,9 @@ let LinkDetector = class LinkDetector extends Disposable {
         }));
         this.computeLinks.schedule(0);
     }
-    static get(editor) {
-        return editor.getContribution(LinkDetector.ID);
-    }
     computeLinksNow() {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.editor.hasModel() || !this.editor.getOption(63 /* links */)) {
+            if (!this.editor.hasModel() || !this.editor.getOption(67 /* EditorOption.links */)) {
                 return;
             }
             const model = this.editor.getModel();
@@ -134,7 +132,7 @@ let LinkDetector = class LinkDetector extends Disposable {
         });
     }
     updateDecorations(links) {
-        const useMetaKey = (this.editor.getOption(70 /* multiCursorModifier */) === 'altKey');
+        const useMetaKey = (this.editor.getOption(74 /* EditorOption.multiCursorModifier */) === 'altKey');
         const oldDecorations = [];
         const keys = Object.keys(this.currentOccurrences);
         for (const decorationId of keys) {
@@ -148,16 +146,18 @@ let LinkDetector = class LinkDetector extends Disposable {
                 newDecorations.push(LinkOccurrence.decoration(link, useMetaKey));
             }
         }
-        const decorations = this.editor.deltaDecorations(oldDecorations, newDecorations);
-        this.currentOccurrences = {};
-        this.activeLinkDecorationId = null;
-        for (let i = 0, len = decorations.length; i < len; i++) {
-            const occurence = new LinkOccurrence(links[i], decorations[i]);
-            this.currentOccurrences[occurence.decorationId] = occurence;
-        }
+        this.editor.changeDecorations((changeAccessor) => {
+            const decorations = changeAccessor.deltaDecorations(oldDecorations, newDecorations);
+            this.currentOccurrences = {};
+            this.activeLinkDecorationId = null;
+            for (let i = 0, len = decorations.length; i < len; i++) {
+                const occurence = new LinkOccurrence(links[i], decorations[i]);
+                this.currentOccurrences[occurence.decorationId] = occurence;
+            }
+        });
     }
     _onEditorMouseMove(mouseEvent, withKey) {
-        const useMetaKey = (this.editor.getOption(70 /* multiCursorModifier */) === 'altKey');
+        const useMetaKey = (this.editor.getOption(74 /* EditorOption.multiCursorModifier */) === 'altKey');
         if (this.isEnabled(mouseEvent, withKey)) {
             this.cleanUpActiveLinkDecoration(); // always remove previous link decoration as their can only be one
             const occurrence = this.getLinkOccurrence(mouseEvent.target.position);
@@ -173,7 +173,7 @@ let LinkDetector = class LinkDetector extends Disposable {
         }
     }
     cleanUpActiveLinkDecoration() {
-        const useMetaKey = (this.editor.getOption(70 /* multiCursorModifier */) === 'altKey');
+        const useMetaKey = (this.editor.getOption(74 /* EditorOption.multiCursorModifier */) === 'altKey');
         if (this.activeLinkDecorationId) {
             const occurrence = this.currentOccurrences[this.activeLinkDecorationId];
             if (occurrence) {
@@ -220,7 +220,7 @@ let LinkDetector = class LinkDetector extends Disposable {
                     }
                 }
             }
-            return this.openerService.open(uri, { openToSide, fromUserGesture, allowContributedOpeners: true, allowCommands: true });
+            return this.openerService.open(uri, { openToSide, fromUserGesture, allowContributedOpeners: true, allowCommands: true, fromWorkspace: true });
         }, err => {
             const messageOrError = err instanceof Error ? err.message : err;
             // different error cases
@@ -254,7 +254,7 @@ let LinkDetector = class LinkDetector extends Disposable {
         return null;
     }
     isEnabled(mouseEvent, withKey) {
-        return Boolean((mouseEvent.target.type === 6 /* CONTENT_TEXT */)
+        return Boolean((mouseEvent.target.type === 6 /* MouseTargetType.CONTENT_TEXT */)
             && (mouseEvent.hasTriggerModifier || (withKey && withKey.keyCodeIsTriggerKey)));
     }
     stop() {
@@ -285,22 +285,18 @@ export { LinkDetector };
 const decoration = {
     general: ModelDecorationOptions.register({
         description: 'detected-link',
-        stickiness: 1 /* NeverGrowsWhenTypingAtEdges */,
+        stickiness: 1 /* TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges */,
         collapseOnReplaceEdit: true,
         inlineClassName: 'detected-link'
     }),
     active: ModelDecorationOptions.register({
         description: 'detected-link-active',
-        stickiness: 1 /* NeverGrowsWhenTypingAtEdges */,
+        stickiness: 1 /* TrackedRangeStickiness.NeverGrowsWhenTypingAtEdges */,
         collapseOnReplaceEdit: true,
         inlineClassName: 'detected-link-active'
     })
 };
 class LinkOccurrence {
-    constructor(link, decorationId) {
-        this.link = link;
-        this.decorationId = decorationId;
-    }
     static decoration(link, useMetaKey) {
         return {
             range: link.range,
@@ -311,6 +307,10 @@ class LinkOccurrence {
         const options = Object.assign({}, (isActive ? decoration.active : decoration.general));
         options.hoverMessage = getHoverMessage(link, useMetaKey);
         return options;
+    }
+    constructor(link, decorationId) {
+        this.link = link;
+        this.decorationId = decorationId;
     }
     activate(changeAccessor, useMetaKey) {
         changeAccessor.changeDecorationOptions(this.decorationId, LinkOccurrence._getOptions(this.link, useMetaKey, true));
@@ -340,11 +340,12 @@ function getHoverMessage(link, useMetaKey) {
             const match = link.url.toString().match(/^command:([^?#]+)/);
             if (match) {
                 const commandId = match[1];
-                const nativeLabelText = nls.localize('tooltip.explanation', "Execute command {0}", commandId);
-                nativeLabel = ` "${nativeLabelText}"`;
+                nativeLabel = nls.localize('tooltip.explanation', "Execute command {0}", commandId);
             }
         }
-        const hoverMessage = new MarkdownString('', true).appendMarkdown(`[${label}](${link.url.toString(true).replace(/ /g, '%20')}${nativeLabel}) (${kb})`);
+        const hoverMessage = new MarkdownString('', true)
+            .appendLink(link.url.toString(true).replace(/ /g, '%20'), label, nativeLabel)
+            .appendMarkdown(` (${kb})`);
         return hoverMessage;
     }
     else {
@@ -377,11 +378,5 @@ class OpenLinkAction extends EditorAction {
         }
     }
 }
-registerEditorContribution(LinkDetector.ID, LinkDetector);
+registerEditorContribution(LinkDetector.ID, LinkDetector, 1 /* EditorContributionInstantiation.AfterFirstRender */);
 registerEditorAction(OpenLinkAction);
-registerThemingParticipant((theme, collector) => {
-    const activeLinkForeground = theme.getColor(editorActiveLinkForeground);
-    if (activeLinkForeground) {
-        collector.addRule(`.monaco-editor .detected-link-active { color: ${activeLinkForeground} !important; }`);
-    }
-});

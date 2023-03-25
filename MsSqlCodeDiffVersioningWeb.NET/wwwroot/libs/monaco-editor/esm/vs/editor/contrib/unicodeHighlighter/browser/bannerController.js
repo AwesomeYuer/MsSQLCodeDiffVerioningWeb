@@ -20,7 +20,7 @@ import { MarkdownRenderer } from '../../markdownRenderer/browser/markdownRendere
 import { IInstantiationService } from '../../../../platform/instantiation/common/instantiation.js';
 import { Link } from '../../../../platform/opener/browser/link.js';
 import { widgetClose } from '../../../../platform/theme/common/iconRegistry.js';
-import { ThemeIcon } from '../../../../platform/theme/common/themeService.js';
+import { ThemeIcon } from '../../../../base/common/themables.js';
 const BANNER_ELEMENT_HEIGHT = 26;
 let BannerController = class BannerController extends Disposable {
     constructor(_editor, instantiationService) {
@@ -35,10 +35,9 @@ let BannerController = class BannerController extends Disposable {
     }
     show(item) {
         this.banner.show(Object.assign(Object.assign({}, item), { onClose: () => {
+                var _a;
                 this.hide();
-                if (item.onClose) {
-                    item.onClose();
-                }
+                (_a = item.onClose) === null || _a === void 0 ? void 0 : _a.call(item);
             } }));
         this._editor.setBanner(this.banner.element, BANNER_ELEMENT_HEIGHT);
     }

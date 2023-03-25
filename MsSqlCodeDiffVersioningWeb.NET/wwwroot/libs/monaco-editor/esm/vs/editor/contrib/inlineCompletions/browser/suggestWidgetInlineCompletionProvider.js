@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import { compareBy, findMaxBy, numberComparator } from '../../../../base/common/arrays.js';
-import { RunOnceScheduler } from '../../../../base/common/async.js';
 import { Emitter, Event } from '../../../../base/common/event.js';
 import { Disposable } from '../../../../base/common/lifecycle.js';
 import { Position } from '../../../common/core/position.js';
@@ -11,9 +10,17 @@ import { Range } from '../../../common/core/range.js';
 import { SnippetParser } from '../../snippet/browser/snippetParser.js';
 import { SnippetSession } from '../../snippet/browser/snippetSession.js';
 import { SuggestController } from '../../suggest/browser/suggestController.js';
-import { minimizeInlineCompletion } from './inlineCompletionsModel.js';
-import { normalizedInlineCompletionsEquals } from './inlineCompletionToGhostText.js';
+import { minimizeInlineCompletion, normalizedInlineCompletionsEquals } from './inlineCompletionToGhostText.js';
 export class SuggestWidgetInlineCompletionProvider extends Disposable {
+    /**
+     * Returns undefined if the suggest widget is not active.
+    */
+    get state() {
+        if (!this._isActive) {
+            return undefined;
+        }
+        return { selectedItem: this._currentSuggestItemInfo };
+    }
     constructor(editor, suggestControllerPreselector) {
         super();
         this.editor = editor;
@@ -24,15 +31,6 @@ export class SuggestWidgetInlineCompletionProvider extends Disposable {
         this._currentSuggestItemInfo = undefined;
         this.onDidChangeEmitter = new Emitter();
         this.onDidChange = this.onDidChangeEmitter.event;
-        // This delay fixes a suggest widget issue when typing "." immediately restarts the suggestion session.
-        this.setInactiveDelayed = this._register(new RunOnceScheduler(() => {
-            if (!this.isSuggestWidgetVisible) {
-                if (this._isActive) {
-                    this._isActive = false;
-                    this.onDidChangeEmitter.fire();
-                }
-            }
-        }, 100));
         // See the command acceptAlternativeSelectedSuggestion that is bound to shift+tab
         this._register(editor.onKeyDown(e => {
             if (e.shiftKey && !this.isShiftKeyPressed) {
@@ -65,8 +63,8 @@ export class SuggestWidgetInlineCompletionProvider extends Disposable {
                             return undefined;
                         }
                         const valid = rangeStartsWith(normalizedItemToPreselect.range, normalizedSuggestItem.range) &&
-                            normalizedItemToPreselect.text.startsWith(normalizedSuggestItem.text);
-                        return { index, valid, prefixLength: normalizedSuggestItem.text.length, suggestItem };
+                            normalizedItemToPreselect.insertText.startsWith(normalizedSuggestItem.insertText);
+                        return { index, valid, prefixLength: normalizedSuggestItem.insertText.length, suggestItem };
                     })
                         .filter(item => item && item.valid);
                     const result = findMaxBy(candidates, compareBy(s => s.prefixLength, numberComparator));
@@ -85,8 +83,7 @@ export class SuggestWidgetInlineCompletionProvider extends Disposable {
                 }));
                 this._register(suggestController.widget.value.onDidHide(() => {
                     this.isSuggestWidgetVisible = false;
-                    this.setInactiveDelayed.schedule();
-                    this.update(this._isActive);
+                    this.update(false);
                 }));
                 this._register(suggestController.widget.value.onDidFocus(() => {
                     this.isSuggestWidgetVisible = true;
@@ -98,15 +95,6 @@ export class SuggestWidgetInlineCompletionProvider extends Disposable {
             }));
         }
         this.update(this._isActive);
-    }
-    /**
-     * Returns undefined if the suggest widget is not active.
-    */
-    get state() {
-        if (!this._isActive) {
-            return undefined;
-        }
-        return { selectedItem: this._currentSuggestItemInfo };
     }
     update(newActive) {
         const newInlineCompletion = this.getSuggestItemInfo();
@@ -140,15 +128,11 @@ export class SuggestWidgetInlineCompletionProvider extends Disposable {
     }
     stopForceRenderingAbove() {
         const suggestController = SuggestController.get(this.editor);
-        if (suggestController) {
-            suggestController.stopForceRenderingAbove();
-        }
+        suggestController === null || suggestController === void 0 ? void 0 : suggestController.stopForceRenderingAbove();
     }
     forceRenderingAbove() {
         const suggestController = SuggestController.get(this.editor);
-        if (suggestController) {
-            suggestController.forceRenderingAbove();
-        }
+        suggestController === null || suggestController === void 0 ? void 0 : suggestController.forceRenderingAbove();
     }
 }
 export function rangeStartsWith(rangeToTest, prefix) {
@@ -172,20 +156,23 @@ function suggestItemInfoEquals(a, b) {
 function suggestionToSuggestItemInfo(suggestController, position, item, toggleMode) {
     // additionalTextEdits might not be resolved here, this could be problematic.
     if (Array.isArray(item.completion.additionalTextEdits) && item.completion.additionalTextEdits.length > 0) {
-        // cannot represent additional text edits
+        // cannot represent additional text edits. TODO: Now we can.
         return {
             completionItemKind: item.completion.kind,
             isSnippetText: false,
             normalizedInlineCompletion: {
                 // Dummy element, so that space is reserved, but no text is shown
                 range: Range.fromPositions(position, position),
-                text: ''
+                insertText: '',
+                filterText: '',
+                snippetInfo: undefined,
+                additionalTextEdits: [],
             },
         };
     }
     let { insertText } = item.completion;
     let isSnippetText = false;
-    if (item.completion.insertTextRules & 4 /* InsertAsSnippet */) {
+    if (item.completion.insertTextRules & 4 /* CompletionItemInsertTextRule.InsertAsSnippet */) {
         const snippet = new SnippetParser().parse(insertText);
         const model = suggestController.editor.getModel();
         // Ignore snippets that are too large.
@@ -193,7 +180,7 @@ function suggestionToSuggestItemInfo(suggestController, position, item, toggleMo
         if (snippet.children.length > 100) {
             return undefined;
         }
-        SnippetSession.adjustWhitespace(model, position, snippet, true, true);
+        SnippetSession.adjustWhitespace(model, position, true, snippet);
         insertText = snippet.toString();
         isSnippetText = true;
     }
@@ -202,8 +189,11 @@ function suggestionToSuggestItemInfo(suggestController, position, item, toggleMo
         isSnippetText,
         completionItemKind: item.completion.kind,
         normalizedInlineCompletion: {
-            text: insertText,
+            insertText: insertText,
+            filterText: insertText,
             range: Range.fromPositions(position.delta(0, -info.overwriteBefore), position.delta(0, Math.max(info.overwriteAfter, 0))),
+            snippetInfo: undefined,
+            additionalTextEdits: [],
         }
     };
 }

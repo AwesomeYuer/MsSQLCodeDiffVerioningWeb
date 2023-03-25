@@ -23,6 +23,7 @@ import { CancellationError } from './errors.js';
 import { Emitter, Event } from './event.js';
 import { toDisposable } from './lifecycle.js';
 import { setTimeout0 } from './platform.js';
+import { MicrotaskDelay } from './symbols.js';
 export function isThenable(obj) {
     return !!obj && typeof obj.then === 'function';
 }
@@ -158,8 +159,6 @@ const microtaskDeferred = (fn) => {
         dispose: () => { scheduled = false; },
     };
 };
-/** Can be passed into the Delayed to defer using a microtask */
-export const MicrotaskDelay = Symbol('MicrotaskDelay');
 /**
  * A helper to delay (debounce) execution of a task that is being requested often.
  *
@@ -223,11 +222,10 @@ export class Delayer {
         return !!((_a = this.deferred) === null || _a === void 0 ? void 0 : _a.isTriggered());
     }
     cancel() {
+        var _a;
         this.cancelTimeout();
         if (this.completionPromise) {
-            if (this.doReject) {
-                this.doReject(new CancellationError());
-            }
+            (_a = this.doReject) === null || _a === void 0 ? void 0 : _a.call(this, new CancellationError());
             this.completionPromise = null;
         }
     }
@@ -256,6 +254,9 @@ export class ThrottledDelayer {
     }
     trigger(promiseFactory, delay) {
         return this.delayer.trigger(() => this.throttler.queue(promiseFactory), delay);
+    }
+    cancel() {
+        this.delayer.cancel();
     }
     dispose() {
         this.delayer.dispose();
@@ -402,13 +403,27 @@ export class RunOnceScheduler {
         }
     }
     doRun() {
-        if (this.runner) {
-            this.runner();
-        }
+        var _a;
+        (_a = this.runner) === null || _a === void 0 ? void 0 : _a.call(this);
     }
 }
 /**
- * Execute the callback the next time the browser is idle
+ * Execute the callback the next time the browser is idle, returning an
+ * {@link IDisposable} that will cancel the callback when disposed. This wraps
+ * [requestIdleCallback] so it will fallback to [setTimeout] if the environment
+ * doesn't support it.
+ *
+ * @param callback The callback to run when idle, this includes an
+ * [IdleDeadline] that provides the time alloted for the idle callback by the
+ * browser. Not respecting this deadline will result in a degraded user
+ * experience.
+ * @param timeout A timeout at which point to queue no longer wait for an idle
+ * callback but queue it on the regular event loop (like setTimeout). Typically
+ * this should not be used.
+ *
+ * [IdleDeadline]: https://developer.mozilla.org/en-US/docs/Web/API/IdleDeadline
+ * [requestIdleCallback]: https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback
+ * [setTimeout]: https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout
  */
 export let runWhenIdle;
 (function () {
@@ -494,6 +509,12 @@ export class IdleValue {
  * Creates a promise whose resolution or rejection can be controlled imperatively.
  */
 export class DeferredPromise {
+    get isRejected() {
+        return this.rejected;
+    }
+    get isSettled() {
+        return this.rejected || this.resolved;
+    }
     constructor() {
         this.rejected = false;
         this.resolved = false;
@@ -501,12 +522,6 @@ export class DeferredPromise {
             this.completeCallback = c;
             this.errorCallback = e;
         });
-    }
-    get isRejected() {
-        return this.rejected;
-    }
-    get isSettled() {
-        return this.rejected || this.resolved;
     }
     complete(value) {
         return new Promise(resolve => {
@@ -576,9 +591,51 @@ export var Promises;
 /**
  * A rich implementation for an `AsyncIterable<T>`.
  */
-export class AsyncIterableObject {
+class AsyncIterableObject {
+    static fromArray(items) {
+        return new AsyncIterableObject((writer) => {
+            writer.emitMany(items);
+        });
+    }
+    static fromPromise(promise) {
+        return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
+            emitter.emitMany(yield promise);
+        }));
+    }
+    static fromPromises(promises) {
+        return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
+            yield Promise.all(promises.map((p) => __awaiter(this, void 0, void 0, function* () { return emitter.emitOne(yield p); })));
+        }));
+    }
+    static merge(iterables) {
+        return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
+            yield Promise.all(iterables.map((iterable) => { var _a, iterable_1, iterable_1_1; return __awaiter(this, void 0, void 0, function* () {
+                var _b, e_1, _c, _d;
+                try {
+                    for (_a = true, iterable_1 = __asyncValues(iterable); iterable_1_1 = yield iterable_1.next(), _b = iterable_1_1.done, !_b;) {
+                        _d = iterable_1_1.value;
+                        _a = false;
+                        try {
+                            const item = _d;
+                            emitter.emitOne(item);
+                        }
+                        finally {
+                            _a = true;
+                        }
+                    }
+                }
+                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                finally {
+                    try {
+                        if (!_a && !_b && (_c = iterable_1.return)) yield _c.call(iterable_1);
+                    }
+                    finally { if (e_1) throw e_1.error; }
+                }
+            }); }));
+        }));
+    }
     constructor(executor) {
-        this._state = 0 /* Initial */;
+        this._state = 0 /* AsyncIterableSourceState.Initial */;
         this._results = [];
         this._error = null;
         this._onStateChanged = new Emitter();
@@ -602,53 +659,18 @@ export class AsyncIterableObject {
             }
         }));
     }
-    static fromArray(items) {
-        return new AsyncIterableObject((writer) => {
-            writer.emitMany(items);
-        });
-    }
-    static fromPromise(promise) {
-        return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
-            emitter.emitMany(yield promise);
-        }));
-    }
-    static fromPromises(promises) {
-        return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
-            yield Promise.all(promises.map((p) => __awaiter(this, void 0, void 0, function* () { return emitter.emitOne(yield p); })));
-        }));
-    }
-    static merge(iterables) {
-        return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
-            yield Promise.all(iterables.map((iterable) => { var iterable_1, iterable_1_1; return __awaiter(this, void 0, void 0, function* () {
-                var e_1, _a;
-                try {
-                    for (iterable_1 = __asyncValues(iterable); iterable_1_1 = yield iterable_1.next(), !iterable_1_1.done;) {
-                        const item = iterable_1_1.value;
-                        emitter.emitOne(item);
-                    }
-                }
-                catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                finally {
-                    try {
-                        if (iterable_1_1 && !iterable_1_1.done && (_a = iterable_1.return)) yield _a.call(iterable_1);
-                    }
-                    finally { if (e_1) throw e_1.error; }
-                }
-            }); }));
-        }));
-    }
     [Symbol.asyncIterator]() {
         let i = 0;
         return {
             next: () => __awaiter(this, void 0, void 0, function* () {
                 do {
-                    if (this._state === 2 /* DoneError */) {
+                    if (this._state === 2 /* AsyncIterableSourceState.DoneError */) {
                         throw this._error;
                     }
                     if (i < this._results.length) {
                         return { done: false, value: this._results[i++] };
                     }
-                    if (this._state === 1 /* DoneOK */) {
+                    if (this._state === 1 /* AsyncIterableSourceState.DoneOK */) {
                         return { done: true, value: undefined };
                     }
                     yield Event.toPromise(this._onStateChanged.event);
@@ -658,17 +680,24 @@ export class AsyncIterableObject {
     }
     static map(iterable, mapFn) {
         return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
-            var e_2, _a;
+            var _a, e_2, _b, _c;
             try {
-                for (var iterable_2 = __asyncValues(iterable), iterable_2_1; iterable_2_1 = yield iterable_2.next(), !iterable_2_1.done;) {
-                    const item = iterable_2_1.value;
-                    emitter.emitOne(mapFn(item));
+                for (var _d = true, iterable_2 = __asyncValues(iterable), iterable_2_1; iterable_2_1 = yield iterable_2.next(), _a = iterable_2_1.done, !_a;) {
+                    _c = iterable_2_1.value;
+                    _d = false;
+                    try {
+                        const item = _c;
+                        emitter.emitOne(mapFn(item));
+                    }
+                    finally {
+                        _d = true;
+                    }
                 }
             }
             catch (e_2_1) { e_2 = { error: e_2_1 }; }
             finally {
                 try {
-                    if (iterable_2_1 && !iterable_2_1.done && (_a = iterable_2.return)) yield _a.call(iterable_2);
+                    if (!_d && !_a && (_b = iterable_2.return)) yield _b.call(iterable_2);
                 }
                 finally { if (e_2) throw e_2.error; }
             }
@@ -679,19 +708,26 @@ export class AsyncIterableObject {
     }
     static filter(iterable, filterFn) {
         return new AsyncIterableObject((emitter) => __awaiter(this, void 0, void 0, function* () {
-            var e_3, _a;
+            var _a, e_3, _b, _c;
             try {
-                for (var iterable_3 = __asyncValues(iterable), iterable_3_1; iterable_3_1 = yield iterable_3.next(), !iterable_3_1.done;) {
-                    const item = iterable_3_1.value;
-                    if (filterFn(item)) {
-                        emitter.emitOne(item);
+                for (var _d = true, iterable_3 = __asyncValues(iterable), iterable_3_1; iterable_3_1 = yield iterable_3.next(), _a = iterable_3_1.done, !_a;) {
+                    _c = iterable_3_1.value;
+                    _d = false;
+                    try {
+                        const item = _c;
+                        if (filterFn(item)) {
+                            emitter.emitOne(item);
+                        }
+                    }
+                    finally {
+                        _d = true;
                     }
                 }
             }
             catch (e_3_1) { e_3 = { error: e_3_1 }; }
             finally {
                 try {
-                    if (iterable_3_1 && !iterable_3_1.done && (_a = iterable_3.return)) yield _a.call(iterable_3);
+                    if (!_d && !_a && (_b = iterable_3.return)) yield _b.call(iterable_3);
                 }
                 finally { if (e_3) throw e_3.error; }
             }
@@ -707,20 +743,27 @@ export class AsyncIterableObject {
         return AsyncIterableObject.coalesce(this);
     }
     static toPromise(iterable) {
-        var iterable_4, iterable_4_1;
-        var e_4, _a;
+        var _a, iterable_4, iterable_4_1;
+        var _b, e_4, _c, _d;
         return __awaiter(this, void 0, void 0, function* () {
             const result = [];
             try {
-                for (iterable_4 = __asyncValues(iterable); iterable_4_1 = yield iterable_4.next(), !iterable_4_1.done;) {
-                    const item = iterable_4_1.value;
-                    result.push(item);
+                for (_a = true, iterable_4 = __asyncValues(iterable); iterable_4_1 = yield iterable_4.next(), _b = iterable_4_1.done, !_b;) {
+                    _d = iterable_4_1.value;
+                    _a = false;
+                    try {
+                        const item = _d;
+                        result.push(item);
+                    }
+                    finally {
+                        _a = true;
+                    }
                 }
             }
             catch (e_4_1) { e_4 = { error: e_4_1 }; }
             finally {
                 try {
-                    if (iterable_4_1 && !iterable_4_1.done && (_a = iterable_4.return)) yield _a.call(iterable_4);
+                    if (!_a && !_b && (_c = iterable_4.return)) yield _c.call(iterable_4);
                 }
                 finally { if (e_4) throw e_4.error; }
             }
@@ -736,7 +779,7 @@ export class AsyncIterableObject {
      * **NOTE** If `resolve()` or `reject()` have already been called, this method has no effect.
      */
     emitOne(value) {
-        if (this._state !== 0 /* Initial */) {
+        if (this._state !== 0 /* AsyncIterableSourceState.Initial */) {
             return;
         }
         // it is important to add new values at the end,
@@ -750,7 +793,7 @@ export class AsyncIterableObject {
      * **NOTE** If `resolve()` or `reject()` have already been called, this method has no effect.
      */
     emitMany(values) {
-        if (this._state !== 0 /* Initial */) {
+        if (this._state !== 0 /* AsyncIterableSourceState.Initial */) {
             return;
         }
         // it is important to add new values at the end,
@@ -765,10 +808,10 @@ export class AsyncIterableObject {
      * **NOTE** If `resolve()` or `reject()` have already been called, this method has no effect.
      */
     resolve() {
-        if (this._state !== 0 /* Initial */) {
+        if (this._state !== 0 /* AsyncIterableSourceState.Initial */) {
             return;
         }
-        this._state = 1 /* DoneOK */;
+        this._state = 1 /* AsyncIterableSourceState.DoneOK */;
         this._onStateChanged.fire();
     }
     /**
@@ -778,15 +821,16 @@ export class AsyncIterableObject {
      * **NOTE** If `resolve()` or `reject()` have already been called, this method has no effect.
      */
     reject(error) {
-        if (this._state !== 0 /* Initial */) {
+        if (this._state !== 0 /* AsyncIterableSourceState.Initial */) {
             return;
         }
-        this._state = 2 /* DoneError */;
+        this._state = 2 /* AsyncIterableSourceState.DoneError */;
         this._error = error;
         this._onStateChanged.fire();
     }
 }
 AsyncIterableObject.EMPTY = AsyncIterableObject.fromArray([]);
+export { AsyncIterableObject };
 export class CancelableAsyncIterableObject extends AsyncIterableObject {
     constructor(_source, executor) {
         super(executor);
@@ -800,7 +844,7 @@ export function createCancelableAsyncIterable(callback) {
     const source = new CancellationTokenSource();
     const innerIterable = callback(source.token);
     return new CancelableAsyncIterableObject(source, (emitter) => __awaiter(this, void 0, void 0, function* () {
-        var e_5, _a;
+        var _a, e_5, _b, _c;
         const subscription = source.token.onCancellationRequested(() => {
             subscription.dispose();
             source.dispose();
@@ -808,19 +852,26 @@ export function createCancelableAsyncIterable(callback) {
         });
         try {
             try {
-                for (var innerIterable_1 = __asyncValues(innerIterable), innerIterable_1_1; innerIterable_1_1 = yield innerIterable_1.next(), !innerIterable_1_1.done;) {
-                    const item = innerIterable_1_1.value;
-                    if (source.token.isCancellationRequested) {
-                        // canceled in the meantime
-                        return;
+                for (var _d = true, innerIterable_1 = __asyncValues(innerIterable), innerIterable_1_1; innerIterable_1_1 = yield innerIterable_1.next(), _a = innerIterable_1_1.done, !_a;) {
+                    _c = innerIterable_1_1.value;
+                    _d = false;
+                    try {
+                        const item = _c;
+                        if (source.token.isCancellationRequested) {
+                            // canceled in the meantime
+                            return;
+                        }
+                        emitter.emitOne(item);
                     }
-                    emitter.emitOne(item);
+                    finally {
+                        _d = true;
+                    }
                 }
             }
             catch (e_5_1) { e_5 = { error: e_5_1 }; }
             finally {
                 try {
-                    if (innerIterable_1_1 && !innerIterable_1_1.done && (_a = innerIterable_1.return)) yield _a.call(innerIterable_1);
+                    if (!_d && !_a && (_b = innerIterable_1.return)) yield _b.call(innerIterable_1);
                 }
                 finally { if (e_5) throw e_5.error; }
             }

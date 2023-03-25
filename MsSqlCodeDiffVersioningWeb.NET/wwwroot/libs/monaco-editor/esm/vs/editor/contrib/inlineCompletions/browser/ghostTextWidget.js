@@ -21,13 +21,13 @@ import { EditorFontLigatures } from '../../../common/config/editorOptions.js';
 import { LineTokens } from '../../../common/tokens/lineTokens.js';
 import { Position } from '../../../common/core/position.js';
 import { Range } from '../../../common/core/range.js';
-import { createStringBuilder } from '../../../common/core/stringBuilder.js';
+import { StringBuilder } from '../../../common/core/stringBuilder.js';
+import { InjectedTextCursorStops } from '../../../common/model.js';
 import { ILanguageService } from '../../../common/languages/language.js';
-import { ghostTextBackground, ghostTextBorder, ghostTextForeground } from '../../../common/core/editorColorRegistry.js';
 import { LineDecoration } from '../../../common/viewLayout/lineDecorations.js';
 import { RenderLineInput, renderViewLine } from '../../../common/viewLayout/viewLineRenderer.js';
+import { GhostTextReplacement } from './ghostText.js';
 import { IInstantiationService } from '../../../../platform/instantiation/common/instantiation.js';
-import { registerThemingParticipant } from '../../../../platform/theme/common/themeService.js';
 const ttPolicy = (_a = window.trustedTypes) === null || _a === void 0 ? void 0 : _a.createPolicy('editorGhostText', { createHTML: value => value });
 let GhostTextWidget = class GhostTextWidget extends Disposable {
     constructor(editor, model, instantiationService, languageService) {
@@ -40,14 +40,15 @@ let GhostTextWidget = class GhostTextWidget extends Disposable {
         this.partsWidget = this._register(this.instantiationService.createInstance(DecorationsWidget, this.editor));
         this.additionalLinesWidget = this._register(new AdditionalLinesWidget(this.editor, this.languageService.languageIdCodec));
         this.viewMoreContentWidget = undefined;
+        this.replacementDecoration = this._register(new DisposableDecorations(this.editor));
         this._register(this.editor.onDidChangeConfiguration((e) => {
-            if (e.hasChanged(29 /* disableMonospaceOptimizations */)
-                || e.hasChanged(105 /* stopRenderingLineAfter */)
-                || e.hasChanged(88 /* renderWhitespace */)
-                || e.hasChanged(83 /* renderControlCharacters */)
-                || e.hasChanged(45 /* fontLigatures */)
-                || e.hasChanged(44 /* fontInfo */)
-                || e.hasChanged(59 /* lineHeight */)) {
+            if (e.hasChanged(30 /* EditorOption.disableMonospaceOptimizations */)
+                || e.hasChanged(111 /* EditorOption.stopRenderingLineAfter */)
+                || e.hasChanged(93 /* EditorOption.renderWhitespace */)
+                || e.hasChanged(88 /* EditorOption.renderControlCharacters */)
+                || e.hasChanged(48 /* EditorOption.fontLigatures */)
+                || e.hasChanged(47 /* EditorOption.fontInfo */)
+                || e.hasChanged(63 /* EditorOption.lineHeight */)) {
                 this.update();
             }
         }));
@@ -72,6 +73,7 @@ let GhostTextWidget = class GhostTextWidget extends Disposable {
         if (!this.editor.hasModel() || !ghostText || this.disposed) {
             this.partsWidget.clear();
             this.additionalLinesWidget.clear();
+            this.replacementDecoration.clear();
             return;
         }
         const inlineTexts = new Array();
@@ -80,7 +82,7 @@ let GhostTextWidget = class GhostTextWidget extends Disposable {
             if (additionalLines.length > 0) {
                 const lastLine = additionalLines[additionalLines.length - 1];
                 if (className) {
-                    lastLine.decorations.push(new LineDecoration(lastLine.content.length + 1, lastLine.content.length + 1 + lines[0].length, className, 0 /* Regular */));
+                    lastLine.decorations.push(new LineDecoration(lastLine.content.length + 1, lastLine.content.length + 1 + lines[0].length, className, 0 /* InlineDecorationType.Regular */));
                 }
                 lastLine.content += lines[0];
                 lines = lines.slice(1);
@@ -88,12 +90,25 @@ let GhostTextWidget = class GhostTextWidget extends Disposable {
             for (const line of lines) {
                 additionalLines.push({
                     content: line,
-                    decorations: className ? [new LineDecoration(1, line.length + 1, className, 0 /* Regular */)] : []
+                    decorations: className ? [new LineDecoration(1, line.length + 1, className, 0 /* InlineDecorationType.Regular */)] : []
                 });
             }
         }
+        if (ghostText instanceof GhostTextReplacement) {
+            this.replacementDecoration.setDecorations([
+                {
+                    range: new Range(ghostText.lineNumber, ghostText.columnStart, ghostText.lineNumber, ghostText.columnStart + ghostText.length),
+                    options: {
+                        inlineClassName: 'inline-completion-text-to-replace',
+                        description: 'GhostTextReplacement'
+                    }
+                },
+            ]);
+        }
+        else {
+            this.replacementDecoration.setDecorations([]);
+        }
         const textBufferLine = this.editor.getModel().getLineContent(ghostText.lineNumber);
-        this.editor.getModel().getLineTokens(ghostText.lineNumber);
         let hiddenTextStartColumn = undefined;
         let lastIdx = 0;
         for (const part of ghostText.parts) {
@@ -122,7 +137,7 @@ let GhostTextWidget = class GhostTextWidget extends Disposable {
         }
         this.partsWidget.setParts(ghostText.lineNumber, inlineTexts, hiddenTextStartColumn !== undefined ? { column: hiddenTextStartColumn, length: textBufferLine.length + 1 - hiddenTextStartColumn } : undefined);
         this.additionalLinesWidget.updateLines(ghostText.lineNumber, additionalLines, ghostText.additionalReservedLineCount);
-        if (ghostText.parts.some(p => p.lines.length < 0)) {
+        if (0 < 0) {
             // Not supported at the moment, condition is always false.
             this.viewMoreContentWidget = this.renderViewMoreLines(new Position(ghostText.lineNumber, this.editor.getModel().getLineMaxColumn(ghostText.lineNumber)), '', 0);
         }
@@ -132,7 +147,7 @@ let GhostTextWidget = class GhostTextWidget extends Disposable {
         }
     }
     renderViewMoreLines(position, firstLineText, remainingLinesLength) {
-        const fontInfo = this.editor.getOption(44 /* fontInfo */);
+        const fontInfo = this.editor.getOption(47 /* EditorOption.fontInfo */);
         const domNode = document.createElement('div');
         domNode.className = 'suggest-preview-additional-widget';
         applyFontInfo(domNode, fontInfo);
@@ -163,22 +178,39 @@ GhostTextWidget = __decorate([
     __param(3, ILanguageService)
 ], GhostTextWidget);
 export { GhostTextWidget };
+class DisposableDecorations {
+    constructor(editor) {
+        this.editor = editor;
+        this.decorationIds = [];
+    }
+    setDecorations(decorations) {
+        // Using change decorations ensures that we update the id's before some event handler is called.
+        this.editor.changeDecorations(accessor => {
+            this.decorationIds = accessor.deltaDecorations(this.decorationIds, decorations);
+        });
+    }
+    clear() {
+        this.setDecorations([]);
+    }
+    dispose() {
+        this.clear();
+    }
+}
 class DecorationsWidget {
     constructor(editor) {
         this.editor = editor;
         this.decorationIds = [];
-        this.disposableStore = new DisposableStore();
     }
     dispose() {
         this.clear();
-        this.disposableStore.dispose();
     }
     clear() {
-        this.editor.deltaDecorations(this.decorationIds, []);
-        this.disposableStore.clear();
+        // Using change decorations ensures that we update the id's before some event handler is called.
+        this.editor.changeDecorations(accessor => {
+            this.decorationIds = accessor.deltaDecorations(this.decorationIds, []);
+        });
     }
     setParts(lineNumber, parts, hiddenText) {
-        this.disposableStore.clear();
         const textModel = this.editor.getModel();
         if (!textModel) {
             return;
@@ -189,29 +221,32 @@ class DecorationsWidget {
                 range: Range.fromPositions(new Position(lineNumber, hiddenText.column), new Position(lineNumber, hiddenText.column + hiddenText.length)),
                 options: {
                     inlineClassName: 'ghost-text-hidden',
-                    description: 'ghost-text-hidden'
+                    description: 'ghost-text-hidden',
                 }
             });
         }
-        this.decorationIds = this.editor.deltaDecorations(this.decorationIds, parts.map(p => {
-            return ({
-                range: Range.fromPositions(new Position(lineNumber, p.column)),
-                options: {
-                    description: 'ghost-text',
-                    after: { content: p.text, inlineClassName: p.preview ? 'ghost-text-decoration-preview' : 'ghost-text-decoration' },
-                    showIfCollapsed: true,
-                }
-            });
-        }).concat(hiddenTextDecorations));
+        // Using change decorations ensures that we update the id's before some event handler is called.
+        this.editor.changeDecorations(accessor => {
+            this.decorationIds = accessor.deltaDecorations(this.decorationIds, parts.map(p => {
+                return ({
+                    range: Range.fromPositions(new Position(lineNumber, p.column)),
+                    options: {
+                        description: 'ghost-text',
+                        after: { content: p.text, inlineClassName: p.preview ? 'ghost-text-decoration-preview' : 'ghost-text-decoration', cursorStops: InjectedTextCursorStops.Left },
+                        showIfCollapsed: true,
+                    }
+                });
+            }).concat(hiddenTextDecorations));
+        });
     }
 }
 class AdditionalLinesWidget {
+    get viewZoneId() { return this._viewZoneId; }
     constructor(editor, languageIdCodec) {
         this.editor = editor;
         this.languageIdCodec = languageIdCodec;
         this._viewZoneId = undefined;
     }
-    get viewZoneId() { return this._viewZoneId; }
     dispose() {
         this.clear();
     }
@@ -242,37 +277,37 @@ class AdditionalLinesWidget {
                     afterLineNumber: lineNumber,
                     heightInLines: heightInLines,
                     domNode,
-                    afterColumnAffinity: 1 /* Right */
+                    afterColumnAffinity: 1 /* PositionAffinity.Right */
                 });
             }
         });
     }
 }
 function renderLines(domNode, tabSize, lines, opts, languageIdCodec) {
-    const disableMonospaceOptimizations = opts.get(29 /* disableMonospaceOptimizations */);
-    const stopRenderingLineAfter = opts.get(105 /* stopRenderingLineAfter */);
+    const disableMonospaceOptimizations = opts.get(30 /* EditorOption.disableMonospaceOptimizations */);
+    const stopRenderingLineAfter = opts.get(111 /* EditorOption.stopRenderingLineAfter */);
     // To avoid visual confusion, we don't want to render visible whitespace
     const renderWhitespace = 'none';
-    const renderControlCharacters = opts.get(83 /* renderControlCharacters */);
-    const fontLigatures = opts.get(45 /* fontLigatures */);
-    const fontInfo = opts.get(44 /* fontInfo */);
-    const lineHeight = opts.get(59 /* lineHeight */);
-    const sb = createStringBuilder(10000);
-    sb.appendASCIIString('<div class="suggest-preview-text">');
+    const renderControlCharacters = opts.get(88 /* EditorOption.renderControlCharacters */);
+    const fontLigatures = opts.get(48 /* EditorOption.fontLigatures */);
+    const fontInfo = opts.get(47 /* EditorOption.fontInfo */);
+    const lineHeight = opts.get(63 /* EditorOption.lineHeight */);
+    const sb = new StringBuilder(10000);
+    sb.appendString('<div class="suggest-preview-text">');
     for (let i = 0, len = lines.length; i < len; i++) {
         const lineData = lines[i];
         const line = lineData.content;
-        sb.appendASCIIString('<div class="view-line');
-        sb.appendASCIIString('" style="top:');
-        sb.appendASCIIString(String(i * lineHeight));
-        sb.appendASCIIString('px;width:1000000px;">');
+        sb.appendString('<div class="view-line');
+        sb.appendString('" style="top:');
+        sb.appendString(String(i * lineHeight));
+        sb.appendString('px;width:1000000px;">');
         const isBasicASCII = strings.isBasicASCII(line);
         const containsRTL = strings.containsRTL(line);
         const lineTokens = LineTokens.createEmpty(line, languageIdCodec);
         renderViewLine(new RenderLineInput((fontInfo.isMonospace && !disableMonospaceOptimizations), fontInfo.canUseHalfwidthRightwardsArrow, line, false, isBasicASCII, containsRTL, 0, lineTokens, lineData.decorations, tabSize, 0, fontInfo.spaceWidth, fontInfo.middotWidth, fontInfo.wsmiddotWidth, stopRenderingLineAfter, renderWhitespace, renderControlCharacters, fontLigatures !== EditorFontLigatures.OFF, null), sb);
-        sb.appendASCIIString('</div>');
+        sb.appendString('</div>');
     }
-    sb.appendASCIIString('</div>');
+    sb.appendString('</div>');
     applyFontInfo(domNode, fontInfo);
     const html = sb.build();
     const trustedhtml = ttPolicy ? ttPolicy.createHTML(html) : html;
@@ -301,28 +336,7 @@ class ViewMoreLinesContentWidget extends Disposable {
     getPosition() {
         return {
             position: this.position,
-            preference: [0 /* EXACT */]
+            preference: [0 /* ContentWidgetPositionPreference.EXACT */]
         };
     }
 }
-registerThemingParticipant((theme, collector) => {
-    const foreground = theme.getColor(ghostTextForeground);
-    if (foreground) {
-        // `!important` ensures that other decorations don't cause a style conflict (#132017).
-        collector.addRule(`.monaco-editor .ghost-text-decoration { color: ${foreground.toString()} !important; }`);
-        collector.addRule(`.monaco-editor .ghost-text-decoration-preview { color: ${foreground.toString()} !important; }`);
-        collector.addRule(`.monaco-editor .suggest-preview-text .ghost-text { color: ${foreground.toString()} !important; }`);
-    }
-    const background = theme.getColor(ghostTextBackground);
-    if (background) {
-        collector.addRule(`.monaco-editor .ghost-text-decoration { background-color: ${background.toString()}; }`);
-        collector.addRule(`.monaco-editor .ghost-text-decoration-preview { background-color: ${background.toString()}; }`);
-        collector.addRule(`.monaco-editor .suggest-preview-text .ghost-text { background-color: ${background.toString()}; }`);
-    }
-    const border = theme.getColor(ghostTextBorder);
-    if (border) {
-        collector.addRule(`.monaco-editor .suggest-preview-text .ghost-text { border: 1px solid ${border}; }`);
-        collector.addRule(`.monaco-editor .ghost-text-decoration { border: 1px solid ${border}; }`);
-        collector.addRule(`.monaco-editor .ghost-text-decoration-preview { border: 1px solid ${border}; }`);
-    }
-});

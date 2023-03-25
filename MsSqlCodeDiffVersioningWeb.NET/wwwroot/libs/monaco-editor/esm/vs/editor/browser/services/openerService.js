@@ -43,12 +43,18 @@ let CommandOpener = class CommandOpener {
             }
             if (!(options === null || options === void 0 ? void 0 : options.allowCommands)) {
                 // silently ignore commands when command-links are disabled, also
-                // surpress other openers by returning TRUE
+                // suppress other openers by returning TRUE
                 return true;
             }
-            // run command or bail out if command isn't known
             if (typeof target === 'string') {
                 target = URI.parse(target);
+            }
+            if (Array.isArray(options.allowCommands)) {
+                // Only allow specific commands
+                if (!options.allowCommands.includes(target.path)) {
+                    // Suppress other openers by returning TRUE
+                    return true;
+                }
             }
             // execute as command
             let args = [];
@@ -137,25 +143,6 @@ let OpenerService = class OpenerService {
         this._openers.push(new CommandOpener(commandService));
         this._openers.push(new EditorOpener(editorService));
     }
-    registerOpener(opener) {
-        const remove = this._openers.unshift(opener);
-        return { dispose: remove };
-    }
-    registerValidator(validator) {
-        const remove = this._validators.push(validator);
-        return { dispose: remove };
-    }
-    registerExternalUriResolver(resolver) {
-        const remove = this._resolvers.push(resolver);
-        return { dispose: remove };
-    }
-    setDefaultExternalOpener(externalOpener) {
-        this._defaultExternalOpener = externalOpener;
-    }
-    registerExternalOpener(opener) {
-        const remove = this._externalOpeners.push(opener);
-        return { dispose: remove };
-    }
     open(target, options) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
@@ -164,7 +151,7 @@ let OpenerService = class OpenerService {
             // validate against the original URI that this URI resolves to, if one exists
             const validationTarget = (_a = this._resolvedUriTargets.get(targetURI)) !== null && _a !== void 0 ? _a : target;
             for (const validator of this._validators) {
-                if (!(yield validator.shouldOpen(validationTarget))) {
+                if (!(yield validator.shouldOpen(validationTarget, options))) {
                     return false;
                 }
             }

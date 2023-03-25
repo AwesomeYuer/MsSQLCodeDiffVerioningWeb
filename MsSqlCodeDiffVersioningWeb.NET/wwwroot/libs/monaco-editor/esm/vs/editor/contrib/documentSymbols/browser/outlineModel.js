@@ -35,9 +35,8 @@ import { DisposableStore } from '../../../../base/common/lifecycle.js';
 import { ILanguageFeaturesService } from '../../../common/services/languageFeatures.js';
 export class TreeElement {
     remove() {
-        if (this.parent) {
-            this.parent.children.delete(this.id);
-        }
+        var _a;
+        (_a = this.parent) === null || _a === void 0 ? void 0 : _a.children.delete(this.id);
     }
     static findId(candidate, container) {
         // complex id-computation which contains the origin/extension,
@@ -82,24 +81,14 @@ export class OutlineGroup extends TreeElement {
     }
 }
 export class OutlineModel extends TreeElement {
-    constructor(uri) {
-        super();
-        this.uri = uri;
-        this.id = 'root';
-        this.parent = undefined;
-        this._groups = new Map();
-        this.children = new Map();
-        this.id = 'root';
-        this.parent = undefined;
-    }
     static create(registry, textModel, token) {
         const cts = new CancellationTokenSource(token);
         const result = new OutlineModel(textModel.uri);
         const provider = registry.ordered(textModel);
         const promises = provider.map((provider, index) => {
             var _a;
-            let id = TreeElement.findId(`provider_${index}`, result);
-            let group = new OutlineGroup(id, result, (_a = provider.displayName) !== null && _a !== void 0 ? _a : 'Unknown Outline Provider', index);
+            const id = TreeElement.findId(`provider_${index}`, result);
+            const group = new OutlineGroup(id, result, (_a = provider.displayName) !== null && _a !== void 0 ? _a : 'Unknown Outline Provider', index);
             return Promise.resolve(provider.provideDocumentSymbols(textModel, cts.token)).then(result => {
                 for (const info of result || []) {
                     OutlineModel._makeOutlineElement(info, group);
@@ -135,14 +124,24 @@ export class OutlineModel extends TreeElement {
         });
     }
     static _makeOutlineElement(info, container) {
-        let id = TreeElement.findId(info, container);
-        let res = new OutlineElement(id, container, info);
+        const id = TreeElement.findId(info, container);
+        const res = new OutlineElement(id, container, info);
         if (info.children) {
             for (const childInfo of info.children) {
                 OutlineModel._makeOutlineElement(childInfo, res);
             }
         }
         container.children.set(res.id, res);
+    }
+    constructor(uri) {
+        super();
+        this.uri = uri;
+        this.id = 'root';
+        this.parent = undefined;
+        this._groups = new Map();
+        this.children = new Map();
+        this.id = 'root';
+        this.parent = undefined;
     }
     _compact() {
         let count = 0;
@@ -160,8 +159,8 @@ export class OutlineModel extends TreeElement {
         }
         else {
             // adopt all elements of the first group
-            let group = Iterable.first(this._groups.values());
-            for (let [, child] of group.children) {
+            const group = Iterable.first(this._groups.values());
+            for (const [, child] of group.children) {
                 child.parent = this;
                 this.children.set(child.id, child);
             }
@@ -226,7 +225,7 @@ let OutlineModelService = class OutlineModelService {
             const provider = registry.ordered(textModel);
             let data = this._cache.get(textModel.id);
             if (!data || data.versionId !== textModel.getVersionId() || !equals(data.provider, provider)) {
-                let source = new CancellationTokenSource();
+                const source = new CancellationTokenSource();
                 data = {
                     versionId: textModel.getVersionId(),
                     provider,
@@ -272,4 +271,4 @@ OutlineModelService = __decorate([
     __param(2, IModelService)
 ], OutlineModelService);
 export { OutlineModelService };
-registerSingleton(IOutlineModelService, OutlineModelService, true);
+registerSingleton(IOutlineModelService, OutlineModelService, 1 /* InstantiationType.Delayed */);

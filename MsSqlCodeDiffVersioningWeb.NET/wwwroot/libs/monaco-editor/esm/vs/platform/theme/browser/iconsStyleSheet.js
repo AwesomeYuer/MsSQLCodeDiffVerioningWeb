@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 import { asCSSPropertyValue, asCSSUrl } from '../../../base/browser/dom.js';
 import { Emitter } from '../../../base/common/event.js';
+import { ThemeIcon } from '../../../base/common/themables.js';
 import { getIconRegistry } from '../common/iconRegistry.js';
-import { ThemeIcon } from '../common/themeService.js';
 export function getIconsStyleSheet(themeService) {
     const onDidChangeEmmiter = new Emitter();
     const iconRegistry = getIconRegistry();
@@ -30,13 +30,13 @@ export function getIconsStyleSheet(themeService) {
                 return `.codicon-${contribution.id}:before { content: '${definition.fontCharacter}'; }`;
             };
             const rules = [];
-            for (let contribution of iconRegistry.getIcons()) {
+            for (const contribution of iconRegistry.getIcons()) {
                 const rule = formatIconRule(contribution);
                 if (rule) {
                     rules.push(rule);
                 }
             }
-            for (let id in usedFontIds) {
+            for (const id in usedFontIds) {
                 const definition = usedFontIds[id];
                 const fontWeight = definition.weight ? `font-weight: ${definition.weight};` : '';
                 const fontStyle = definition.style ? `font-style: ${definition.style};` : '';

@@ -8,7 +8,7 @@ import { LanguagesRegistry } from './languagesRegistry.js';
 import { firstOrDefault } from '../../../base/common/arrays.js';
 import { TokenizationRegistry } from '../languages.js';
 import { PLAINTEXT_LANGUAGE_ID } from '../languages/modesRegistry.js';
-export class LanguageService extends Disposable {
+class LanguageService extends Disposable {
     constructor(warnOnOverwrite = false) {
         super();
         this._onDidEncounterLanguage = this._register(new Emitter());
@@ -65,6 +65,7 @@ export class LanguageService extends Disposable {
     }
 }
 LanguageService.instanceCount = 0;
+export { LanguageService };
 class LanguageSelection {
     constructor(_onDidChangeLanguages, _selector) {
         this._onDidChangeLanguages = _onDidChangeLanguages;
@@ -89,7 +90,7 @@ class LanguageSelection {
         }
         if (!this._emitter) {
             this._emitter = new Emitter({
-                onLastListenerRemove: () => {
+                onDidRemoveLastListener: () => {
                     this._dispose();
                 }
             });
@@ -97,14 +98,13 @@ class LanguageSelection {
         return this._emitter.event;
     }
     _evaluate() {
+        var _a;
         const languageId = this._selector();
         if (languageId === this.languageId) {
             // no change
             return;
         }
         this.languageId = languageId;
-        if (this._emitter) {
-            this._emitter.fire(this.languageId);
-        }
+        (_a = this._emitter) === null || _a === void 0 ? void 0 : _a.fire(this.languageId);
     }
 }
