@@ -2,6 +2,45 @@
 
 public static class LinqHelper
 {
+    public static async Task<IEnumerable<T>>
+                AsIEnumerableAsync<T>
+                            (
+                                this IAsyncEnumerable<T> @this
+                            )
+    {
+        var list = new List<T>();
+        await foreach (var item in @this)
+        {
+            list.Add (item);
+        }
+        return list.AsEnumerable();
+    }
+
+    public static IEnumerable<T> AsIEnumerable<T>
+            (
+                this IAsyncEnumerable<T> @this
+            )
+    {
+        return
+            AsIEnumerableAsync(@this).Result;
+        //var list = new List<T>();
+        //Func<Task<List<T>>> funcAsync = new
+        //    (
+        //        async () =>
+        //        {
+        //            await foreach (var item in @this)
+        //            {
+        //                list.Add(item);
+        //            };
+        //            return await Task.FromResult(list);
+        //        }
+        //    );
+        //return
+        //    funcAsync()
+        //            .Result
+        //            .AsEnumerable();
+    }
+
     public static void ForEach<T>(this IEnumerable<T> @this, Func<int, T, bool> predict = null!)
     {
         var i = 0;

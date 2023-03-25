@@ -8,6 +8,51 @@ public static class ZipHelper
     public static async Task<Stream>
                         CompressAsync<T>
                                     (
+                                        this IAsyncEnumerable<T>
+                                                    @this
+                                        , Func
+                                            <
+                                                T
+                                                , Task
+                                                    <
+                                                        (
+                                                            string EntryFullName
+                                                            , Stream EntryStream
+                                                        )
+                                                    >
+                                            >
+                                                    onUpdateEntryProcessFuncAsync
+                                        , Encoding?
+                                                    entryNameEncoding = null
+                                        , CompressionLevel
+                                                    entryCompressionLevelOnCreate = CompressionLevel.Optimal
+                                        , string?
+                                                    extractToDirectoryName = null
+                                    )
+    {
+        return
+            await
+                CompressAsync
+                        (
+                            @this
+                            , async (x) =>
+                            {
+                                (var entryFullName, var entryStream) =
+                                                await onUpdateEntryProcessFuncAsync(x);
+                                return (false, true, entryFullName, entryStream, true);
+                            }
+                            , entryNameEncoding
+                            , entryCompressionLevelOnCreate
+                            , extractToDirectoryName
+                        );
+
+
+    }
+
+
+    public static async Task<Stream>
+                        CompressAsync<T>
+                                    (
                                         this IEnumerable<T>
                                                     @this
                                         , Func
@@ -48,6 +93,60 @@ public static class ZipHelper
 
 
     }
+
+    public static async Task<Stream>
+                    CompressAsync<T>
+                                (
+                                    this IAsyncEnumerable<T>
+                                                @this
+                                    , Func
+                                        <
+                                            T
+                                            , Task
+                                                <
+                                                    (
+                                                          bool NeedBreak
+                                                        , bool NeedUpdateEntry
+                                                        , string entryFullName
+                                                        , Stream EntryStream
+                                                        , bool NeedDisposeEntryStream
+                                                    )
+                                                >
+                                        >
+                                                onUpdateEntryProcessFuncAsync
+                                    , Encoding?
+                                                entryNameEncoding = null
+                                    , CompressionLevel
+                                                entryCompressionLevelOnCreate =
+                                                                    CompressionLevel.Optimal
+                                    , string?
+                                                extractToDirectoryName = null
+                                )
+    {
+        ZipArchive zipArchive = null!;
+        try
+        {
+            (
+                zipArchive
+                , Stream zipStream
+            )
+            = await ZipCompressAsync
+                            (
+                                @this
+                                , onUpdateEntryProcessFuncAsync
+                                , entryNameEncoding
+                                , entryCompressionLevelOnCreate
+                                , extractToDirectoryName
+                            );
+            return zipStream;
+        }
+        finally
+        {
+            zipArchive?.Dispose();
+        }
+    }
+
+
 
     public static async Task<Stream>
                         CompressAsync<T>
@@ -100,6 +199,50 @@ public static class ZipHelper
             zipArchive?.Dispose();
         }
     }
+
+    public static async Task<(ZipArchive, Stream)>
+                    ZipCompressAsync<T>
+                                (
+                                    this IAsyncEnumerable<T>
+                                                @this
+                                    , Func
+                                        <
+                                            T
+                                            , Task
+                                                <
+                                                    (
+                                                        string EntryFullName
+                                                        , Stream EntryStream
+                                                    )
+                                                >
+                                        >
+                                                onUpdateEntryProcessFuncAsync
+                                    , Encoding?
+                                                entryNameEncoding = null
+                                    , CompressionLevel
+                                                entryCompressionLevelOnCreate =
+                                                                    CompressionLevel.Optimal
+                                    , string?
+                                                extractToDirectoryName = null
+                                )
+    {
+        return
+            await
+                ZipCompressAsync
+                    (
+                        @this
+                        , async (x) =>
+                        {
+                            (var entryFullName, var entryStream) =
+                                                await onUpdateEntryProcessFuncAsync(x);
+                            return (false, true, entryFullName, entryStream, true);
+                        }
+                        , entryNameEncoding
+                        , entryCompressionLevelOnCreate
+                        , extractToDirectoryName
+                    );
+    }
+
 
     public static async Task<(ZipArchive, Stream)>
                         ZipCompressAsync<T>

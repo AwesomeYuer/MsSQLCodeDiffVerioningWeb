@@ -1,5 +1,6 @@
 namespace UnitTests;
 
+using Castle.Components.DictionaryAdapter.Xml;
 using Microshaoft;
 using Newtonsoft.Json.Linq;
 using System.IO.Compression;
@@ -152,7 +153,6 @@ public class ZipHelperUnitTests
                                                                         }
                                                                     );
 
-
                                             await foreach (var entry in entries)
                                             {
                                                 //entry.Result.F1 = 10;
@@ -184,17 +184,41 @@ public class ZipHelperUnitTests
                                                 MAssert.IsTrue(r);
                                                 NAssert.IsTrue(r);
                                                 xAssert.True(r);
-
-                                               
-
                                             }
 
+                                            var entries2 = entries.AsIEnumerable();
 
-
-
-
+                                            r = entries2
+                                                        .All
+                                                            (
+                                                                (entry) =>
+                                                                {
+                                                                    var filePath = Path.Combine
+                                                                            (
+                                                                                x.ExtractToDirectoryPath
+                                                                                , entry.Source.FullName
+                                                                            );
+                                                                    var r = File.Exists(filePath);
+                                                                    Console.WriteLine(entry.Source.FullName);
+                                                                    using var entryStream = entry.Source.Open();
+                                                                    using var textReader = new StreamReader(entryStream);
+                                                                    var json = textReader.ReadToEnd();
+                                                                    try
+                                                                    {
+                                                                        _ = JToken.Parse(json);
+                                                                        r = true;
+                                                                    }
+                                                                    catch
+                                                                    {
+                                                                        r = false;
+                                                                    }
+                                                                    return r;
+                                                                }
+                                                            );
+                                            MAssert.IsTrue(r);
+                                            NAssert.IsTrue(r);
+                                            xAssert.True(r);
                                             //Directory.Delete(@"zip", true);
-
                                         }
                                     );
     }

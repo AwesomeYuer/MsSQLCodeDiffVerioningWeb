@@ -46,14 +46,15 @@ public static class ZipHelperUnitTestsUtility
                                                 ,
                                                 MaxRecursionDepth = 3
                                             }
-                                        );
-            zipStream = await files
-                                    .CompressAsync
+                                        )
+                                    .ForEachAsIAsyncEnumerableAsyncAsync<string, string>();
+         zipStream = await files
+                               .CompressAsync
                                         (
                                             async (filePath) =>
                                             {
-                                                var entryName = filePath;
-                                                Stream entryStream = File.OpenRead(filePath);
+                                                var entryName = filePath.Item1;
+                                                Stream entryStream = File.OpenRead(filePath.Item1);
                                                 var result = (entryName, entryStream);
                                                 entriesStreams.Add(result);
                                                 await Task.CompletedTask;
