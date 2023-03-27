@@ -10,8 +10,11 @@
 
   <ItemGroup>
     <Compile Remove="AntiNet\**" />
+    <Compile Remove="Evaluator\**" />
     <EmbeddedResource Remove="AntiNet\**" />
+    <EmbeddedResource Remove="Evaluator\**" />
     <None Remove="AntiNet\**" />
+    <None Remove="Evaluator\**" />
   </ItemGroup>
 
   <ItemGroup>

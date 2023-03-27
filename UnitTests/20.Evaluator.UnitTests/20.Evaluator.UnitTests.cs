@@ -7,12 +7,12 @@ using System.IO.Compression;
 using System.Reflection;
 using UnitTests.Utilities;
 
-[TestClass]
+//[TestClass]
 public class EvaluatorUnitTests
 {
-    [Fact]
-    [TestCase]
-    [TestMethod]
+    //[Fact]
+    //[TestCase]
+    //[TestMethod]
     public void TestMethod1()
     {
         //Evaluator
