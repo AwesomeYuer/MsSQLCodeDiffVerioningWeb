@@ -278,7 +278,7 @@
 
         public static bool IsJObject(this string @this, bool validate = false)
         {
-            char c = StringHelper
+            char c = StringsHelper
                             .FirstNonWhitespaceCharacter(@this);
             //IL_0018: Unknown result type (might be due to invalid IL or missing references)
             var r = (c == '{');
