@@ -9,6 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="20.Evaluator.UnitTests\20.Evaluator.UnitTests.cs" />
 	  <Compile Remove="SystemSemanticVersionCompare\NugetSemanticVersionCompare.UnitTests.NUnitTest.cs" />
 	  <Compile Remove="SystemSemanticVersionCompare\NugetSemanticVersionCompare.UnitTests.xUnitTest.cs" />
 	  <Compile Remove="10.ZipHelper.UnitTests\ZipHelper.UnitTests.NUnitTest.cs" />
@@ -172,6 +173,10 @@
 	  <None Update="10.ZipHelper.UnitTests\SourceFiles\createSqlDatabasePrivateEndpoint.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="20.Evaluator.UnitTests\" />
 	</ItemGroup>
 
 </Project>

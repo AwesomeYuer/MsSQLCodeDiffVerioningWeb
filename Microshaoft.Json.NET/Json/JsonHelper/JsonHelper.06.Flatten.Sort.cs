@@ -162,10 +162,15 @@ public static partial class JsonHelper
         var r = string.IsNullOrEmpty(prefix) ? properyName : $"{prefix}{seprator}{properyName}";
         if (onPropertySegmentsNamingProcessFunc != null)
         {
-            r = onPropertySegmentsNamingProcessFunc
+            var newPropertyName = onPropertySegmentsNamingProcessFunc
                         (
                             (prefix, properyName, indexInArray, seprator, r)
                         );
+            if (properyName != newPropertyName)
+            {
+                properyName = newPropertyName;
+                r = string.IsNullOrEmpty(prefix) ? properyName : $"{prefix}{seprator}{properyName}";
+            }
         }
         return r;
     }

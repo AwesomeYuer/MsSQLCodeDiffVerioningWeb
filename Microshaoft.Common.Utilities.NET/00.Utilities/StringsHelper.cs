@@ -4,8 +4,87 @@
     using System.Collections.Generic;
     using System.Text;
 
-    public static class StringHelper
+    public static class StringsHelper
     {
+
+        public static string TrimEndString
+                                (
+                                    this string @this
+                                    , string trimString
+                                    , StringComparison
+                                            stringComparison
+                                                = StringComparison
+                                                        .OrdinalIgnoreCase
+                                )
+        {
+            if
+                (
+                    @this?
+                        .EndsWith
+                            (
+                                trimString
+                                , stringComparison
+                            )!
+                            ?? false
+                )
+            {
+                @this = @this[..(@this.Length - trimString.Length)];
+            }
+            return @this!;
+        }
+
+        public static string TrimStartString
+                                    (
+                                        this string @this
+                                        , string trimString
+                                        , StringComparison
+                                                stringComparison
+                                                    = StringComparison
+                                                            .OrdinalIgnoreCase
+                                    )
+        {
+            if
+                (
+                    @this?
+                        .StartsWith
+                            (
+                                trimString
+                                , stringComparison
+                            )!
+                            ?? false
+                )
+            {
+                @this = @this[trimString.Length..];
+            }
+            return @this!;
+        }
+
+        public static string TrimString
+                                (
+                                    this string @this
+                                    , string trimString
+                                    , StringComparison
+                                            stringComparison
+                                                = StringComparison
+                                                        .OrdinalIgnoreCase
+
+
+                                )
+        {
+            return
+                @this
+                    .TrimStartString
+                        (
+                            trimString
+                            , stringComparison
+                        )
+                    .TrimEndString
+                        (
+                            trimString
+                            , stringComparison
+                        );
+        }
+
         // 控制字符
         //private static readonly Regex _controlCharRegex = new Regex(@"[\p{C}]", RegexOptions.Compiled);
 
@@ -210,9 +289,8 @@
                             , paddingChar
                         );
         }
-    }
-    public static class StringsHelper
-    {
+    
+    
         public static bool StringsCompareWithWild
                                 (
                                     Tuple<string, string>[] a
@@ -294,7 +372,7 @@ namespace Microshaoft
                                         , var
                                         , httpRequestFields[var]
                                     );
-                if (StringHelper.IsValidString(s))
+                if (StringsHelper.IsValidString(s))
                 {
                     sb.Append(s);
                 }

@@ -65,12 +65,13 @@
             
             var os = Environment.OSVersion;
             Console.WriteLine("Current OS Information:\n");
-            Console.WriteLine("Platform: {0:G}", os.Platform);
-            Console.WriteLine("Version String: {0}", os.VersionString);
+            Console.WriteLine($"{nameof(os.Platform)}: {{0:G}}", os.Platform);
+            Console.WriteLine($"{nameof(os.VersionString)}: {{0}}", os.VersionString);
             Console.WriteLine("Version Information:");
-            Console.WriteLine("   Major: {0}", os.Version.Major);
-            Console.WriteLine("   Minor: {0}", os.Version.Minor);
-            Console.WriteLine("Service Pack: '{0}'", os.ServicePack);
+            Console.WriteLine($"{nameof(os.Version.Major)}: {{0}}", os.Version.Major);
+            Console.WriteLine($"{nameof(os.Version.Minor)}: {{0}}", os.Version.Minor);
+            Console.WriteLine($"{nameof(os.Version.Revision)}: {{0}}", os.Version.Revision);
+            Console.WriteLine($"{nameof(os.ServicePack)}: '{{0}}'", os.ServicePack);
 
             CreateWebHostBuilder
                             (args!)
