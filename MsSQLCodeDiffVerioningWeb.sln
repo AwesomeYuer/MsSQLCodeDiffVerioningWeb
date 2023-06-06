@@ -55,6 +55,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swagger.WebApplication", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "StoreProceduresExecutor.Console.NET\ConsoleApp.csproj", "{7CBA50EF-AC60-4058-91CC-DAC52C493D4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microshaoft.EventSourceCounters.NET", "Microshaoft.EventSourceCounters.NET\Microshaoft.EventSourceCounters.NET.csproj", "{D54F499E-C8EF-440F-A3AA-5F0C07ACFAFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{7CBA50EF-AC60-4058-91CC-DAC52C493D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CBA50EF-AC60-4058-91CC-DAC52C493D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CBA50EF-AC60-4058-91CC-DAC52C493D4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D54F499E-C8EF-440F-A3AA-5F0C07ACFAFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D54F499E-C8EF-440F-A3AA-5F0C07ACFAFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D54F499E-C8EF-440F-A3AA-5F0C07ACFAFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D54F499E-C8EF-440F-A3AA-5F0C07ACFAFC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +135,7 @@ Global
 		{1E6D7175-1A02-4D82-A6C1-6FE4081265DD} = {E3A62127-E4C7-407D-92FF-345700FA60A5}
 		{D60AA1B8-C774-4FBE-88AC-49A5989C9EF7} = {FD82A25A-90B0-4D20-B7CF-C47FD1E6C8B7}
 		{7CBA50EF-AC60-4058-91CC-DAC52C493D4D} = {72D81A5D-93BB-467F-BB3B-6FD89A3F197C}
+		{D54F499E-C8EF-440F-A3AA-5F0C07ACFAFC} = {484B7499-6589-468A-9E49-32383C89F05D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0669E030-A1FE-4EF0-994F-FC8C85086896}
