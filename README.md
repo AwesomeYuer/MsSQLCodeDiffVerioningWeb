@@ -1,5 +1,6 @@
 # MsSQLCodeDiffVerioningWeb
 
+
 ## 以下介绍由 ChatGPT 生成:
 
 MsSQL Code Diff Verioning Web 是一个实用 Web 门户工具，用于跟踪和比较不同历史版本的 Microsoft SQL Server 数据库对象 (如: 表、存储过程、视图、函数 等)代码，可检测和对比代码差异，方便管理数据库，有效提升代码开发和维护工作的效率。
