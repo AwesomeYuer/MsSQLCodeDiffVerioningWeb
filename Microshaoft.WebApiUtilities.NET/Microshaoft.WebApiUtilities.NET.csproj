@@ -30,7 +30,7 @@
 
   <ItemGroup>
     
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+    <!--<PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />-->
     
     <PackageReference Include="Microsoft.AspNetCore.ConcurrencyLimiter" Version="6.0.6" />
     
