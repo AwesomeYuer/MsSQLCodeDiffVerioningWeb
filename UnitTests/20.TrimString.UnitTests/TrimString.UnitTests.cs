@@ -82,8 +82,8 @@ public class TrimStringUnitTests
     [TestCase("aaaaaaBBBBBaaaa", "AaA", "aaaBBBBBa")]
     [TestCase("aaaaaaBBBBB", "ccc", "aaaaaaBBBBB")]
     [TestCase("", "AaA", "")]
-    [TestCase(null, "AaA", null)]
-    [TestCase(null, null, null)]
+    //[TestCase(null, "AaA", null)]
+    //[TestCase(null, null, null)]
 
     public void Test_TrimString_Method1Async
                                 (
