@@ -75,7 +75,7 @@ public partial class NugetSemanticVersionUnitTests
         var xx = System.Version.Parse(left);
 
 
-        r = NuGetVersion.TryParse(left, out NuGetVersion leftNugetVersion);
+        r = NuGetVersion.TryParse(left, out NuGetVersion? leftNugetVersion);
 
         var failedMessage = $"failed! {nameof(left)} is not a {nameof(NuGetVersion)}";
 
@@ -90,7 +90,7 @@ public partial class NugetSemanticVersionUnitTests
         NAssert.IsNotNull(leftSemanticVersion, failedMessage);
         xAssert.NotNull(leftSemanticVersion);
 
-        r = NuGetVersion.TryParse(right, out NuGetVersion rightNugetVersion);
+        r = NuGetVersion.TryParse(right, out NuGetVersion? rightNugetVersion);
 
         failedMessage = $"failed! {nameof(right)} is not a {nameof(NuGetVersion)}";
         MAssert.IsTrue(r, failedMessage);
@@ -131,7 +131,7 @@ public partial class NugetSemanticVersionUnitTests
         NAssert.IsTrue(r, failedMessage);
         xAssert.True(r, failedMessage);
 
-        x = leftNugetVersion.ToString();
+        x = leftNugetVersion!.ToString();
         r = x == left;
         failedMessage = $"failed! {nameof(leftNugetVersion)}.{nameof(leftNugetVersion.ToString)} [{x}] != [{left}] {nameof(left)}";
         MAssert.IsTrue(r, failedMessage);
@@ -146,7 +146,7 @@ public partial class NugetSemanticVersionUnitTests
         NAssert.IsTrue(r, failedMessage);
         xAssert.True(r, failedMessage);
 
-        x = rightNugetVersion.ToString();
+        x = rightNugetVersion!.ToString();
         r = x == right;
 
         failedMessage = $"failed! {nameof(rightNugetVersion)}.{nameof(rightNugetVersion.ToString)} [{x}] != [{right}] {nameof(right)}";
